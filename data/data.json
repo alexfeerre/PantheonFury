@@ -1,0 +1,284 @@
+[
+    {
+      "id": 1,
+      "pregunta": "¿Quién es el dios del cielo y el trueno en la mitología griega?",
+      "opciones": [ "Poseidón", "Hades", "Apolo", "Zeus"],
+      "respuesta_correcta": "Zeus"
+    },
+    {
+      "id": 2,
+      "pregunta": "¿Quién es el dios del mar y los terremotos en la mitología griega?",
+      "opciones": [ "Zeus", "Hades","Poseidón", "Apolo"],
+      "respuesta_correcta": "Poseidón"
+    },
+    {
+      "id": 3,
+      "pregunta": "¿Quién es el dios del inframundo en la mitología griega?",
+      "opciones": ["Hades", "Zeus", "Atenea", "Dionisio"],
+      "respuesta_correcta": "Hades"
+    },
+    {
+      "id": 4,
+      "pregunta": "¿Quién es el dios del sol y la luz en la mitología griega?",
+      "opciones": ["Apolo", "Helios", "Hermes", "Dionisio"],
+      "respuesta_correcta": "Helios"
+    },
+    {
+      "id": 5,
+      "pregunta": "¿Quién es el dios de la medicina y la curación en la mitología griega?",
+      "opciones": ["Apolo", "Hermes", "Atenea", "Asclepio"],
+      "respuesta_correcta": "Asclepio"
+    },
+    {
+      "id": 6,
+      "pregunta": "¿Quién es el dios del vino y la vegetación en la mitología griega?",
+      "opciones": ["Dionisio", "Hermes", "Apolo", "Hades"],
+      "respuesta_correcta": "Dionisio"
+    },
+    {
+      "id": 7,
+      "pregunta": "¿Quién es el dios del amor y el deseo sexual en la mitología griega?",
+      "opciones": ["Afrodita", "Dionisio", "Eros", "Hermes"],
+      "respuesta_correcta": "Eros"
+    },
+    {
+      "id": 8, 
+      "pregunta": "¿Quién es la diosa de la sabiduría y la estrategia en la mitología griega?",
+      "opciones": ["Afrodita", "Artemisa", "Hera", "Atenea"],
+      "respuesta_correcta": "Atenea"
+    },
+    {
+      "id": 9,
+      "pregunta": "¿Cuál es el nombre del río que separa el mundo de los vivos del inframundo en la mitología griega?",
+      "opciones": ["Aqueronte", "Cocito", "Lethe", "Estigia"],
+      "respuesta_correcta": "Estigia"
+    },
+    {
+      "id": 10,
+      "pregunta": "¿Cuál es el nombre del río que los muertos deben cruzar para llegar al inframundo en la mitología griega?",
+      "opciones": ["Aqueronte", "Estigia", "Cocito", "Lethe"],
+      "respuesta_correcta": "Aqueronte"
+    },
+    {
+      "id": 11,
+      "pregunta": "¿Cuál es el nombre del río que se cree que corre por el inframundo en la mitología griega?",
+      "opciones": ["Estigia","Leteo", "Aqueronte", "Cocito"],
+      "respuesta_correcta": "Leteo"
+    },
+    {
+      "id": 12,
+      "pregunta": "¿Cuál es el nombre del perro de tres cabezas que guarda la entrada del inframundo en la mitología griega?",
+      "opciones": ["Ortro", "Cerbero", "Tifón", "Esquilo"],
+      "respuesta_correcta": "Cerbero"
+    },
+    {
+      "id": 13,
+      "pregunta": "¿Cuál es el nombre del barquero que transporta las almas a través del río Estigia en la mitología griega?",
+      "opciones": ["Caronte", "Caribdis", "Caros", "Centauro"],
+      "respuesta_correcta": "Caronte"
+    },
+    {
+      "id": 14,
+      "pregunta": "¿Cuál es el nombre del monstruo con cuerpo de león, cabeza de cabra y cola de serpiente en la mitología griega?",
+      "opciones": ["Cerbero", "Tifón","Quimera", "Esfinge"],
+      "respuesta_correcta": "Quimera"
+    },
+    {
+      "id": 15,
+      "pregunta": "¿Cuál es el nombre del monstruo con cabeza de toro y cuerpo de hombre en la mitología griega?",
+      "opciones": ["Quimera", "Cerbero", "Esquilo", "Minotauro"],
+      "respuesta_correcta": "Minotauro"
+    },
+    {
+      "id": 16,
+      "pregunta": "¿Cuál es el nombre de las criaturas con cola de serpiente y cabeza de mujer en la mitología griega?",
+      "opciones": ["Hespérides", "Ninfas", "Centauros", "Gorgonas"],
+      "respuesta_correcta": "Gorgonas"
+    },
+    {
+      "id": 17,
+      "pregunta": "¿Cuál es el nombre del titán que fue condenado a sostener el cielo sobre sus hombros en la mitología griega?",
+      "opciones": ["Atlas", "Prometeo", "Cronos", "Urano"],
+      "respuesta_correcta": "Atlas"
+    },
+    {
+      "id": 18,
+      "pregunta": "¿Cuál es el nombre del dios alado del amor en la mitología griega?",
+      "opciones": ["Hermes", "Eros", "Dionisio", "Apolo"],
+      "respuesta_correcta": "Eros"
+    },
+    {
+      "id": 19,
+      "pregunta": "¿Cuál es el nombre del dios del viento del norte en la mitología griega?",
+      "opciones": ["Eolo", "Zéfiro","Bóreas", "Notos"],
+      "respuesta_correcta": "Bóreas"
+    },
+    {
+      "id": 20,
+      "pregunta": "¿Cuál es el nombre del dios alado mensajero en la mitología griega?",
+      "opciones": ["Hermes", "Eros", "Apolo", "Dionisio"],
+      "respuesta_correcta": "Hermes"
+    },
+    {
+      "id": 21,  
+      "pregunta": "¿Cuál es el nombre de la diosa de la caza y la luna en la mitología griega?",
+      "opciones": ["Atenea", "Hera", "Afrodita", "Artemisa"],
+      "respuesta_correcta": "Artemisa"
+    },
+    {
+      "id": 22, 
+      "pregunta": "¿Cuál es el nombre del dios de la aurora en la mitología griega?",
+      "opciones": [ "Éos", "Selene", "Hemera", "Hécate"],
+      "respuesta_correcta": "Éos"
+    },
+    {
+      "id": 23, 
+      "pregunta": "¿Cuál es el nombre del dios de la aurora en la mitología griega?",
+      "opciones": [ "Deméter", "Persefone", "Hades", "Cronos"],
+      "respuesta_correcta": "Deméter"
+    },
+    {
+      "id": 24,
+      "pregunta": "¿Cuál es el nombre de la diosa de la luna en la mitología griega?",
+      "opciones": ["Eos","Selene", "Hera", "Atenea"],
+      "respuesta_correcta": "Selene"
+    },
+    {
+      "id": 25,
+      "pregunta": "¿Cuál es el nombre de la diosa de la discordia y la rivalidad en la mitología griega?",
+      "opciones": ["Eris", "Némesis", "Hécate", "Atenea"],
+      "respuesta_correcta": "Eris"
+    },
+    {
+      "id": 26,
+      "pregunta": "¿Cuál es el nombre de la diosa del amor y la belleza en la mitología griega?",
+      "opciones": ["Afrodita", "Atenea", "Hera", "Artemisa"],
+      "respuesta_correcta": "Afrodita"
+    },
+    {
+      "id": 27,
+      "pregunta": "¿Cuál es el nombre del dios del sol, la música y la poesía en la mitología griega?",
+      "opciones": [ "Dionisio", "Hermes", "Helios", "Apolo"],
+      "respuesta_correcta": "Apolo"
+    },
+    {
+      "id": 28, 
+      "pregunta": "¿Cuál es el nombre del dios del sueño en la mitología griega?",
+      "opciones": [ "Morfeo", "Thanatos", "Oneiroi", "Hipnos"],
+      "respuesta_correcta": "Hipnos"
+    },
+    {
+      "id": 29, 
+      "pregunta": "¿Quién es el dios del tiempo y el destino en la mitología griega?",
+      "opciones": [ "Ananké", "Tique","Cronos", "Moiras"],
+      "respuesta_correcta": "Cronos"
+    }, {
+      "id": 30, 
+      "pregunta": "¿Cuál es el nombre de la diosa de la justicia y la ley en la mitología griega?",
+      "opciones": [ "Némesis","Temis", "Diké", "Eunomia"],
+      "respuesta_correcta": "Temis"
+    },{
+      "id": 31, 
+      "pregunta": "¿Quién es el dios del comercio, los viajeros y los ladrones en la mitología griega?",
+      "opciones": [ "Hermes", "Mercurio", "Tique", "Afrodita"],
+      "respuesta_correcta": "Hermes"
+    },
+    {
+      "id": 32, 
+      "pregunta": "¿Cuál es el nombre de la diosa de la venganza en la mitología griega?",
+      "opciones": [ "Erínies","Némesis", "Tisífone", "Electra"],
+      "respuesta_correcta": "Némesis"
+    }, {
+      "id": 33, 
+      "pregunta": "¿Cuál es el nombre de la diosa de la memoria en la mitología griega?",
+      "opciones": [ "Melpómene", "Clío", "Terpsícore", "Mnemósine"],
+      "respuesta_correcta": "Mnemósine"
+    },{
+      "id": 34, 
+      "pregunta": "¿Quién es el dios del miedo y el terror en la mitología griega?",
+      "opciones": [ "Deimos","Fobos", "Eris", "Érebo"],
+      "respuesta_correcta": "Fobos"
+    },{
+      "id": 35, 
+      "pregunta": "¿Qué héroe griego mató al Minotauro en el laberinto de Creta?",
+      "opciones": [ "Perseo", "Heracles", "Jasón", "Teseo"],
+      "respuesta_correcta": "Teseo"
+    },{
+      "id": 36, 
+      "pregunta": "¿Quién fue la esposa de Hades y reina del inframundo en la mitología griega?",
+      "opciones": [ "Perséfone", "Hera", "Artemisa", "Afrodita"],
+      "respuesta_correcta": "Perséfone"
+    },{
+      "id": 37, 
+      "pregunta": "¿Qué héroe griego utilizó la cabeza de Medusa para convertir a sus enemigos en piedra?",
+      "opciones": [ "Teseo","Perseo", "Aquiles", "Odiseo"],
+      "respuesta_correcta": "Perseo"
+    },{
+      "id": 38, 
+      "pregunta": "¿Qué figura mitológica griega es conocida por su habilidad para cambiar objetos en oro mediante su toque?",
+      "opciones": [ "Dédalo", "Ícaro", "Dánae", "Midas"],
+      "respuesta_correcta": "Midas"
+    },{
+      "id": 39, 
+      "pregunta": "¿Cuál es el nombre del titán que robó el fuego de los dioses para entregárselo a los humanos en la mitología griega?",
+      "opciones": [ "Atlas","Prometeo", "Cronos", "Urano"],
+      "respuesta_correcta": "Prometeo"
+    },{
+      "id": 40, 
+      "pregunta": "¿Quién fue el músico y poeta legendario que perdió a su amada Eurídice y descendió al inframundo para intentar recuperarla?",
+      "opciones": ["Anfión", "Arion", "Orfeo", "Talos"],
+      "respuesta_correcta": "Orfeo"
+    },{
+      "id": 41, 
+      "pregunta": "¿Cuál es el nombre de la profetisa en la mitología griega que emitía oráculos en Delfos?",
+      "opciones": ["Sibila", "Cassandra", "Helena","Pitia"],
+      "respuesta_correcta": "Pitia"
+    },{
+      "id": 42, 
+      "pregunta": "¿Qué héroe de la mitología griega fue enviado a buscar las manzanas doradas del Jardín de las Hespérides como uno de sus doce trabajos?",
+      "opciones": ["Perseo","Heracles (Hércules)", "Jasón", "Teseo"],
+      "respuesta_correcta": "Heracles (Hércules)"
+    },{
+      "id": 43, 
+      "pregunta": "¿Dónde se encontraba el Jardín de las Hespérides, donde crecían las manzanas doradas?",
+      "opciones": ["Al oeste del mundo", "En el monte Olimpo", "En el inframundo", "En el reino de Hades"],
+      "respuesta_correcta": "Al oeste del mundo"
+    },{
+      "id": 44, 
+      "pregunta": "¿En la Odisea de Homero, ¿en qué lugar encuentra Ulises (Odiseo) a los compañeros que han olvidado su hogar después de comer el loto?",
+      "opciones": ["En la Isla de Circe", "En la cueva de Polifemo", "En la Isla de los Lotófagos", "En la isla de Calipso"],
+      "respuesta_correcta": "En la Isla de los Lotófagos"
+    },{
+      "id": 45, 
+      "pregunta": "¿Cuál era el nombre de lahechicera que convertía a los hombres en cerdos en la Odisea de Homero?",
+      "opciones": ["Calipso","Circe", "Medea", "Penélope"],
+      "respuesta_correcta": "Circe"
+    }
+    ,{
+      "id": 46, 
+      "pregunta": "En la historia de Jasón y los Argonautas, ¿qué papel desempeñó Medea, la hija del rey Eetes de Cólquida?",
+      "opciones": ["Hechicera y amante de Jasón", "Princesa encarcelada", "Guardiana del Vellocino de Oro", "Navegante experta"],
+      "respuesta_correcta": "Hechicera y amante de Jasón"
+    } ,{
+      "id": 47, 
+      "pregunta": "¿Cuál era el nombre del rey de Cólquida que poseía el Vellocino de Oro en la mitología griega?",
+      "opciones": ["Pelias", "Laertes", "Creonte", "Eetes"],
+      "respuesta_correcta": "Eetes"
+    },{
+      "id": 48, 
+      "pregunta": "En la mitología griega, ¿quién era el cíclope que fue cegado por Ulises (Odiseo) en la Odisea de Homero?",
+      "opciones": ["Circe", "Escila","Polifemo", "Caribdis"],
+      "respuesta_correcta": "Polifemo"
+    },{
+      "id": 49, 
+      "pregunta": "¿Quién era el esposo de Afrodita en la mitología griega, engañado por la relación clandestina entre Afrodita y Ares?",
+      "opciones": ["Hefesto", "Zeus", "Poseidón", "Hermes"],
+      "respuesta_correcta": "Hefesto"
+    },{
+      "id": 50, 
+      "pregunta": "¿Qué truco ideó Hefesto para atrapar a Afrodita y Ares en adulterio en la mitología griega?",
+      "opciones": ["Creó una ilusión de un amante", "Los espió con un espejo","Los atrapó en una red mágica", "Los llamó a una falsa reunión"],
+      "respuesta_correcta": "Los atrapó en una red mágica"
+    }
+  ]
+  
