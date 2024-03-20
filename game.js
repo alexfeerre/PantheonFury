@@ -888,7 +888,7 @@ showTurnOverlay() {
 
 
     let config = {
-        type: Phaser.AUTO,
+        type: Phaser.WEBGL,
         scale: {
             mode: Phaser.Scale.FIT,
             parent: 'phaser-example',
