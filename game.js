@@ -589,19 +589,14 @@ processAnswer(characterKey, selectedAnswer, correctAnswer) {
         this.showTurnOverlay();
         // Actualizar la interactividad de los botones según el nuevo turno
         if (this.currentPlayer === 'p1') {
-            this.player1Button.setInteractive();
-            this.player2Button.disableInteractive();
-
+           
             this.player1Button.setAlpha(1); // Activar el botón del jugador 1
             this.player2Button.setAlpha(0.5); // Desactivar el botón del jugador 2
             this.player2Button.anims.stop().setFrame(0); // Detener la animación del botón del jugador 2
             this.player1Button.anims.play(`button_idle_p1`, true); // Reproducir la animación idle del botón del jugador 1
     
         } else {
-            this.player1Button.disableInteractive();
-            this.player2Button.setInteractive();
-
-
+           
             this.player1Button.setAlpha(0.5); // Desactivar el botón del jugador 1
             this.player2Button.setAlpha(1); // Activar el botón del jugador 2
             this.player1Button.anims.stop().setFrame(0); // Detener la animación del botón del jugador 1
@@ -720,9 +715,12 @@ reduceCharacter2Health(damage) {
     this.updateHealthBar2(); // Actualizar la barra de vida del jugador 2
     this.player2HealthText.setText(`Player 2 Health: ${this.character2Health}`); // Actualizar el texto de los puntos de vida del jugador 2
 }
-
-
+// Función para mostrar el overlay de turno
 showTurnOverlay() {
+    // Deshabilitar interactividad de los botones durante la visualización del overlay
+    this.player1Button.disableInteractive();
+    this.player2Button.disableInteractive();
+    
     // Mostrar overlay de turno con el jugador actual
     const overlayText = this.currentPlayer === 'p1' ? 'Jugador 1' : 'Jugador 2';
     const overlayMessage = `${overlayText}, tu turno`;
@@ -738,23 +736,27 @@ showTurnOverlay() {
     const overlayTextObject = this.add.text(this.sys.game.canvas.width / 2, this.sys.game.canvas.height / 2, overlayMessage, { fontFamily: 'Arial', fontSize: 48, color: '#000' }).setOrigin(0.5);
     overlayContainer.add(overlayTextObject);
 
-    // Deshabilitar interactividad de los botones durante la visualización del overlay
-    this.player1Button.disableInteractive();
-    this.player2Button.disableInteractive();
-
     // Configurar duración del overlay (3 segundos)
     this.time.delayedCall(3000, () => {
         // Eliminar el contenedor del overlay
         overlayContainer.destroy();
 
-        // Volver a habilitar interactividad de los botones según el turno actual
+        // Habilitar interactividad del botón del jugador actual
         if (this.currentPlayer === 'p1') {
             this.player1Button.setInteractive();
         } else {
             this.player2Button.setInteractive();
         }
     });
+
+    // Si el overlay está mostrando, deshabilitar todos los botones
+    if (overlayContainer.visible) {
+        this.player1Button.disableInteractive();
+        this.player2Button.disableInteractive();
+    }
 }
+
+
 
     
     updateHealthBar1() {
