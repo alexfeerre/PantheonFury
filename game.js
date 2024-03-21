@@ -7,7 +7,7 @@ class InicioJuego extends Phaser.Scene {
 
     preload() {
         // Cargar la imagen para el background
-        this.load.spritesheet('background', 'assets/FONDO_INICIO.png', { frameWidth: 1920, frameHeight: 1085 });
+        this.load.spritesheet('background', 'assets/FONDO_INICIO.png', { frameWidth: 640, frameHeight: 360 });
     }
 
     create() {
