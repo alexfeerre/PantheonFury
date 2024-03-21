@@ -891,6 +891,7 @@ showTurnOverlay() {
     update() {
         // Verificar si algún personaje ha perdido toda su vida
         this.checkWinner();
+        
 
     }
     
