@@ -7,7 +7,7 @@ class InicioJuego extends Phaser.Scene {
 
     preload() {
         // Cargar la imagen para el background
-        this.load.spritesheet('background', 'assets/FONDO_INICIO.png', { frameWidth: 161, frameHeight: 91 });
+        this.load.spritesheet('background', 'assets/FONDO_INICIO.png', { frameWidth: 160, frameHeight: 100 });
     }
 
     create() {
@@ -15,8 +15,8 @@ class InicioJuego extends Phaser.Scene {
         this.cameras.main.setBackgroundColor('#000');
 
         // Calcular la escala para ajustar el fondo al tamaño del canvas
-        const scaleX = this.sys.game.canvas.width / 161;
-        const scaleY = this.sys.game.canvas.height / 91;
+        const scaleX = this.sys.game.canvas.width / 160;
+        const scaleY = this.sys.game.canvas.height / 100;
         const scale = Math.max(scaleX, scaleY);
 
         // Añadir el background y hacer que se reproduzca en bucle
@@ -898,8 +898,8 @@ showTurnOverlay() {
 
 const config = {
     type: Phaser.WEBGL,
-    width: 161,
-    height: 91,
+    width: 160,
+    height: 100,
     parent: 'game',
     pixelArt: true,
     scale: {
