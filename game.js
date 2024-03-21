@@ -269,6 +269,7 @@ this.player2HealthText = this.add.text(700, 180, `Player 2 Health: ${this.charac
                 frameRate: 8,
                 repeat: -1
             });
+            this.textures.remove('background_poseidon');
         } else if (randomBackground === 'background_poseidon') {
             this.background.anims.create({
                 key: 'background_anim',
@@ -276,6 +277,8 @@ this.player2HealthText = this.add.text(700, 180, `Player 2 Health: ${this.charac
                 frameRate: 10,
                 repeat: -1
             });
+            this.textures.remove('background_hades');
+
         }
     
         this.background.anims.play(`background_anim`);
@@ -888,17 +891,18 @@ showTurnOverlay() {
 }
 
 
+const config = {
+    type: Phaser.WEBGL,
+    width: 128,
+    height: 72,
+    parent: 'game',
+    zoom: 9,
+    pixelArt: true,
+    mode: Phaser.Scale.FIT,
+    autoCenter: Phaser.Scale.CENTER_BOTH,
+    scene: [InicioJuego, SelectorPersonaje, Pelea] // Añadir la escena SelectorPersonaje al array de escenas
 
-    let config = {
-        type: Phaser.WEBGL,
-        scale: {
-            mode: Phaser.Scale.FIT,
-            parent: 'phaser-example',
-            autoCenter: Phaser.Scale.CENTER_BOTH,
-            width: '1920',
-            height: '1080'
-        },
-        scene: [InicioJuego, SelectorPersonaje, Pelea] // Añadir la escena SelectorPersonaje al array de escenas
-    };
+  };
+
 
     let game = new Phaser.Game(config);
