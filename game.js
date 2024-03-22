@@ -1,5 +1,4 @@
 
-
 class InicioJuego extends Phaser.Scene {
     constructor() {
         super({ key: 'InicioJuego' });
@@ -7,20 +6,15 @@ class InicioJuego extends Phaser.Scene {
 
     preload() {
         // Cargar la imagen para el background
-        this.load.spritesheet('background', 'assets/FONDO_INICIO.png', { frameWidth: 160, frameHeight: 100 });
+        this.load.spritesheet('background', 'assets/FONDO_INICIO.png', { frameWidth: 1920, frameHeight: 1085 });
     }
 
     create() {
         // Fondo negro para la pantalla de inicio
         this.cameras.main.setBackgroundColor('#000');
 
-        // Calcular la escala para ajustar el fondo al tamaño del canvas
-        const scaleX = this.sys.game.canvas.width / 160;
-        const scaleY = this.sys.game.canvas.height / 100;
-        const scale = Math.max(scaleX, scaleY);
-
         // Añadir el background y hacer que se reproduzca en bucle
-        const background = this.add.sprite(0, 0, 'background').setOrigin(0, 0).setScale(scale);
+        const background = this.add.sprite(0, 0, 'background').setOrigin(0, 0);
         this.anims.create({
             key: 'fondo',
             frames: this.anims.generateFrameNumbers('background', { start: 0, end: 32 }),
@@ -29,19 +23,18 @@ class InicioJuego extends Phaser.Scene {
         });
         background.anims.play('fondo', true);
 
-        // Centrar el fondo en el canvas
-        background.setPosition((this.sys.game.canvas.width - background.displayWidth) / 2, (this.sys.game.canvas.height - background.displayHeight) / 2);
-        // Crear un rectángulo invisible como botón en el centro del canvas
-        let startButton = this.add.rectangle(this.sys.game.canvas.width / 2, (this.sys.game.canvas.height / 2) + 25, 60, 12, 0xffffff, 0).setInteractive().setOrigin(0.5);
+   // Crear un rectángulo invisible como botón
+let startButton = this.add.rectangle(this.cameras.main.centerX, 845, 670, 100, 0xffffff, 0).setInteractive().setOrigin(0.5);
 
-        // Establecer cursor de puntero al pasar el ratón sobre el botón
-        startButton.on('pointerover', () => {
-            document.body.style.cursor = 'pointer';
-        });
-        // Restaurar cursor por defecto al salir del botón
-        startButton.on('pointerout', () => {
-            document.body.style.cursor = 'default';
-        });
+// Establecer cursor de puntero al pasar el ratón sobre el botón
+startButton.on('pointerover', () => {
+    document.body.style.cursor = 'pointer';
+});
+
+// Restaurar cursor por defecto al salir del botón
+startButton.on('pointerout', () => {
+    document.body.style.cursor = 'default';
+});
 
 // Hacer clic en el área del botón incluso si no es visible
 startButton.on('pointerdown', () => {
@@ -891,23 +884,23 @@ showTurnOverlay() {
     update() {
         // Verificar si algún personaje ha perdido toda su vida
         this.checkWinner();
-        
 
     }
     
 }
 
-const config = {
-    type: Phaser.WEBGL,
-    width: 160,
-    height: 100,
-    parent: 'game',
-    pixelArt: true,
-    scale: {
-        mode: Phaser.Scale.FIT,
-        autoCenter: Phaser.Scale.CENTER_BOTH
-    },
-    scene: [InicioJuego, SelectorPersonaje, Pelea] // Añadir la escena SelectorPersonaje al array de escenas
-};
 
-let game = new Phaser.Game(config);
+
+    let config = {
+        type: Phaser.WEBGL,
+        scale: {
+            mode: Phaser.Scale.FIT,
+            parent: 'phaser-example',
+            autoCenter: Phaser.Scale.CENTER_BOTH,
+            width: '1920',
+            height: '1080'
+        },
+        scene: [InicioJuego, SelectorPersonaje, Pelea] // Añadir la escena SelectorPersonaje al array de escenas
+    };
+
+    let game = new Phaser.Game(config);
