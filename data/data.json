@@ -250,7 +250,7 @@
       "respuesta_correcta": "En la Isla de los Lotófagos"
     },{
       "id": 45, 
-      "pregunta": "¿Cuál era el nombre de lahechicera que convertía a los hombres en cerdos en la Odisea de Homero?",
+      "pregunta": "¿Cuál era el nombre de la hechicera que convertía a los hombres en cerdos en la Odisea de Homero?",
       "opciones": ["Calipso","Circe", "Medea", "Penélope"],
       "respuesta_correcta": "Circe"
     }
@@ -279,6 +279,11 @@
       "pregunta": "¿Qué truco ideó Hefesto para atrapar a Afrodita y Ares en adulterio en la mitología griega?",
       "opciones": ["Creó una ilusión de un amante", "Los espió con un espejo","Los atrapó en una red mágica", "Los llamó a una falsa reunión"],
       "respuesta_correcta": "Los atrapó en una red mágica"
+    },{
+      "id": 51, 
+      "pregunta": "¿Qué héroe griego da ahora nombre a una debilidad 'única'?",
+      "opciones": ["Ares", "Perseo", "Aquiles", "Hércules"],
+      "respuesta_correcta": "Aquiles"
     }
   ]
   

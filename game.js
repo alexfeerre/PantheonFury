@@ -1,4 +1,3 @@
-
 class InicioJuego extends Phaser.Scene {
     constructor() {
         super({ key: 'InicioJuego' });
@@ -6,15 +5,20 @@ class InicioJuego extends Phaser.Scene {
 
     preload() {
         // Cargar la imagen para el background
-        this.load.spritesheet('background', 'assets/FONDO_INICIO.png', { frameWidth: 1920, frameHeight: 1085 });
+        this.load.spritesheet('background', 'assets/FONDO_INICIO.png', { frameWidth: 160, frameHeight: 90 });
     }
 
     create() {
         // Fondo negro para la pantalla de inicio
         this.cameras.main.setBackgroundColor('#000');
 
+        // Calcular la escala para ajustar el fondo al tamaño del canvas
+        const scaleX = this.sys.game.canvas.width / 160;
+        const scaleY = this.sys.game.canvas.height / 90;
+        const scale = Math.max(scaleX, scaleY);
+
         // Añadir el background y hacer que se reproduzca en bucle
-        const background = this.add.sprite(0, 0, 'background').setOrigin(0, 0);
+        const background = this.add.sprite(0, 0, 'background').setOrigin(0, 0).setScale(scale);
         this.anims.create({
             key: 'fondo',
             frames: this.anims.generateFrameNumbers('background', { start: 0, end: 32 }),
@@ -23,18 +27,19 @@ class InicioJuego extends Phaser.Scene {
         });
         background.anims.play('fondo', true);
 
-   // Crear un rectángulo invisible como botón
-let startButton = this.add.rectangle(this.cameras.main.centerX, 845, 670, 100, 0xffffff, 0).setInteractive().setOrigin(0.5);
+        // Centrar el fondo en el canvas
+        background.setPosition((this.sys.game.canvas.width - background.displayWidth) / 2, (this.sys.game.canvas.height - background.displayHeight) / 2);
+        // Crear un rectángulo invisible como botón en el centro del canvas
+        let startButton = this.add.rectangle(this.sys.game.canvas.width / 2, (this.sys.game.canvas.height / 2) + 102, 240, 45, 0xffffff, 0).setInteractive().setOrigin(0.5);
 
-// Establecer cursor de puntero al pasar el ratón sobre el botón
-startButton.on('pointerover', () => {
-    document.body.style.cursor = 'pointer';
-});
-
-// Restaurar cursor por defecto al salir del botón
-startButton.on('pointerout', () => {
-    document.body.style.cursor = 'default';
-});
+        // Establecer cursor de puntero al pasar el ratón sobre el botón
+        startButton.on('pointerover', () => {
+            document.body.style.cursor = 'pointer';
+        });
+        // Restaurar cursor por defecto al salir del botón
+        startButton.on('pointerout', () => {
+            document.body.style.cursor = 'default';
+        });
 
 // Hacer clic en el área del botón incluso si no es visible
 startButton.on('pointerdown', () => {
@@ -51,33 +56,50 @@ startButton.on('pointerdown', () => {
     }
 }
 
-
-
 class SelectorPersonaje extends Phaser.Scene {
     constructor() {
         super({ key: 'SelectorPersonaje' });
     }
 
     preload(){
-
+         
+        
     }
     create() {
+        const screenWidth = this.cameras.main.width;
+        const screenHeight = this.cameras.main.height;
+    
         // Fondo negro para la pantalla de selección de personajes
         this.cameras.main.setBackgroundColor('#000');
-
+    
         // Texto de turno de elección para el jugador 1
-        this.turnText = this.add.text(400, 50, 'Turno de elección del Jugador 1', { fontSize: '24px', fill: '#fff' });
-
+        this.turnText = this.add.text(screenWidth / 2, screenHeight * 0.1, 'JUGADOR 1 ELIGE', { 
+            fontSize: '22px',
+            fill: '#fff', 
+            fontFamily: 'BMmini',
+            resolution: 1
+        }).setOrigin(0.5);
+    
         // Variable para almacenar la elección de cada jugador
         this.p1 = null;
         this.p2 = null;
-
+    
         // Botones para seleccionar personajes
-        this.button1 = this.add.text(150, 300, 'Zeus', { fontSize: '24px', fill: '#fff' }).setInteractive();
-        this.button2 = this.add.text(450, 300, 'Poseidón', { fontSize: '24px', fill: '#fff' }).setInteractive();
-        this.button3 = this.add.text(750, 300, 'Hades', { fontSize: '24px', fill: '#fff' }).setInteractive();
-
-        // Eventos de clic para los botones de selección de personajes
+        const buttonWidth = 100;
+        const buttonHeight = 30;
+        const buttonSpacing = 20;
+        const totalButtonWidth = buttonWidth * 3 + buttonSpacing * 2;
+    
+        const button1X = screenWidth / 2 - totalButtonWidth / 2 + buttonWidth / 2;
+        const button2X = screenWidth / 2 - totalButtonWidth / 2 + buttonWidth + buttonSpacing + buttonWidth / 2;
+        const button3X = screenWidth / 2 - totalButtonWidth / 2 + (buttonWidth + buttonSpacing) * 2 + buttonWidth / 2;
+        const startY = screenHeight * 0.4;
+    
+        // Los botones también se establecen en 6px y se desactiva el antialiasing para mantener la coherencia visual
+        this.button1 = this.add.text(button1X, startY, 'Zeus', { fontSize: '12px', fill: '#fff', resolution: 1 }).setInteractive().setOrigin(0.5);
+        this.button2 = this.add.text(button2X, startY, 'Poseidón', { fontSize: '12px', fill: '#fff', resolution: 1 }).setInteractive().setOrigin(0.5);
+        this.button3 = this.add.text(button3X, startY, 'Hades', { fontSize: '12px', fill: '#fff', resolution: 1 }).setInteractive().setOrigin(0.5);
+          // Eventos de clic para los botones de selección de personajes
         this.button1.on('pointerdown', () => {
             if (!this.p1) {
                 this.p1 = 'Zeus';
@@ -149,39 +171,47 @@ class SelectorPersonaje extends Phaser.Scene {
 
     startCountdown() {
         let counter = 5; // Contador de 10 segundos
-
+        const screenWidth = this.cameras.main.width;
+        const screenHeight = this.cameras.main.height;
+    
         // Crear texto para mostrar el contador
-        let countdownText = this.add.text(400, 400, 'Tiempo restante: ' + counter, { fontSize: '24px', fill: '#fff' });
-
+        let countdownText = this.add.text(screenWidth / 2, screenHeight * 0.6, 'Tiempo restante: ' + counter, { fontSize: '12px', fill: '#fff' }).setOrigin(0.5);
+    
         // Actualizar el contador cada segundo
         let countdownTimer = this.time.addEvent({
             delay: 1000,
             callback: () => {
                 counter--;
-
+    
                 // Actualizar el texto del contador
                 countdownText.setText('Tiempo restante: ' + counter);
-
+    
                 // Verificar si el contador llega a cero
                 if (counter === 0) {
                     countdownTimer.remove(); // Detener el contador
-                // En la escena SelectorPersonaje
-                this.scene.start('Pelea', { p1: this.p1, p2: this.p2 });
-              
+    
+                    // Iniciar animación de transición
+                    this.cameras.main.fadeOut(2000); // Desvanece la pantalla durante 1 segundo
+    
+                    // Después del desvanecimiento, iniciar la siguiente escena
+                    this.cameras.main.once(Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE, () => {
+                        this.scene.start('Pelea', { p1: this.p1, p2: this.p2 });
+                    });
                 }
             },
             callbackScope: this,
             loop: true // Hacer que el contador se repita
         });
-
+    
         // Botón para cancelar la selección de personajes y volver al inicio
-        let cancelButton = this.add.text(400, 500, 'Cancelar Selección', { fontSize: '24px', fill: '#fff' }).setInteractive();
+        let cancelButton = this.add.text(screenWidth / 2, screenHeight * 0.7, 'Cancelar Selección', { fontSize: '12px', fill: '#fff' }).setInteractive().setOrigin(0.5);
         cancelButton.on('pointerdown', () => {
             this.p1 = null;
             this.p2 = null;
             this.scene.start('SelectorPersonaje'); // Volver a la pantalla de selección de personaje
         });
     }
+    
 }
 
 
@@ -228,43 +258,47 @@ class Pelea extends Phaser.Scene {
 
     preload() {
         // Cargar los assets necesarios para la escena de pelea
-        this.load.spritesheet('Zeus', 'assets/character1_spritesheet.png', { frameWidth: 1200, frameHeight: 762 });
-        this.load.spritesheet('Hades', 'assets/character2_spritesheet.png', { frameWidth: 1200, frameHeight: 762 });
-        this.load.spritesheet('Poseidon', 'assets/character3_spritesheet.png', { frameWidth: 1200, frameHeight: 760 });
-        this.load.spritesheet('button', 'assets/button1_spritesheet.png', { frameWidth: 620, frameHeight: 560 });
-        this.load.spritesheet('background_hades', 'assets/fondo_hades.png', { frameWidth: 1920, frameHeight: 1080 });
-    this.load.spritesheet('background_poseidon', 'assets/fondo_poseidon.png', { frameWidth: 1920, frameHeight: 1080 });
+        this.load.spritesheet('Zeus', 'assets/character1_spritesheet.png', { frameWidth: 160, frameHeight: 90 });
+        this.load.spritesheet('Hades', 'assets/character2_spritesheet.png', { frameWidth: 160, frameHeight: 90 });
+        this.load.spritesheet('Poseidon', 'assets/character3_spritesheet.png', { frameWidth: 160, frameHeight: 90 });
+        this.load.spritesheet('button', 'assets/button1_spritesheet.png', { frameWidth: 100, frameHeight: 60 });
+        this.load.spritesheet('background_hades', 'assets/fondo_hades.png', { frameWidth: 160, frameHeight: 90 });
+    this.load.spritesheet('background_poseidon', 'assets/fondo_poseidon.png', { frameWidth: 160, frameHeight: 90 });
     this.load.image('overlay', 'assets/overlay.png');
-    this.load.spritesheet('healthBar1', 'assets/healthbar1_spritesheet.png', { frameWidth: 550, frameHeight: 156 });
-    this.load.spritesheet('healthBar2', 'assets/healthbar2_spritesheet.png', { frameWidth: 550, frameHeight: 156 });
+    this.load.spritesheet('healthBar1', 'assets/healthbar1_spritesheet.png', { frameWidth: 60, frameHeight: 17 });
+    this.load.spritesheet('healthBar2', 'assets/healthbar2_spritesheet.png', { frameWidth: 60, frameHeight: 17 });
    
         this.load.json('questions', 'data/data.json'); 
     }
 
     create(data) {
-
+      
         const p1 = data.p1;
         const p2 = data.p2;
        // Crear textos para mostrar los puntos de vida de cada jugador
-this.player1HealthText = this.add.text(30, 180, `Player 1 Health: ${this.characterHealth}`, { fontFamily: 'Arial', fontSize: 24, color: '#ffffff' }).setDepth(999).setAlpha(0);
-this.player2HealthText = this.add.text(700, 180, `Player 2 Health: ${this.character2Health}`, { fontFamily: 'Arial', fontSize: 24, color: '#ffffff' }).setDepth(999).setAlpha(0);
+this.player1HealthText = this.add.text(30, 180, `Player 1 Health: ${this.characterHealth}`, { fontFamily: 'BMmini', fontSize: 24, color: '#ffffff' }).setDepth(999).setAlpha(0);
+this.player2HealthText = this.add.text(700, 180, `Player 2 Health: ${this.character2Health}`, { fontFamily: 'BMmini', fontSize: 24, color: '#ffffff' }).setDepth(999).setAlpha(0);
 
-        
+             // Calcular la escala para ajustar el fondo al tamaño del canvas
+             const scaleX = this.sys.game.canvas.width / 160;
+             const scaleY = this.sys.game.canvas.height / 90;
+             const scale = Math.max(scaleX, scaleY);
         // Crear la escena de pelea
         const backgrounds = ['background_hades', 'background_poseidon'];
         const randomBackground = Phaser.Math.RND.pick(backgrounds);
         this.background = this.add.sprite(0, 0, randomBackground).setOrigin(0).setDisplaySize(this.sys.game.canvas.width, this.sys.game.canvas.height);
        
          // Crear las barras de vida para cada jugador
-         this.healthBar1 = this.add.sprite(30, 10, 'healthBar1').setOrigin(0).setScale(1.2);
-         this.healthBar2 = this.add.sprite(1890, 10, 'healthBar2').setOrigin(0, 0).setScale(-1.2, 1.2);
-         this.character = this.add.sprite(700, 1900, p1).setScale(-1.5, 1.5).setOrigin(0.5);
-        this.character2 = this.add.sprite(1300, this.cameras.main.centerY, p2).setScale(1.5).setOrigin(0.5);
+         this.healthBar1 = this.add.sprite(12, 5, 'healthBar1').setOrigin(0).setScale(4);
+         this.healthBar2 = this.add.sprite(628, 5, 'healthBar2').setOrigin(0).setScale(-4, 4);
+    
+        this.character = this.add.sprite(214, 180, p1).setScale(-scale, scale);   
+        this.character2 = this.add.sprite(428, 180, p2).setScale(scale, scale);    
        
         if (randomBackground === 'background_hades') {
             this.background.anims.create({
                 key: 'background_anim',
-                frames: this.anims.generateFrameNumbers(randomBackground, { start: 0, end: 27 }),
+                frames: this.anims.generateFrameNumbers(randomBackground, { start: 0, end: 26 }),
                 frameRate: 8,
                 repeat: -1
             });
@@ -293,12 +327,11 @@ this.player2HealthText = this.add.text(700, 180, `Player 2 Health: ${this.charac
 
         // Inicializar el primer turno
         this.currentPlayer = Math.random() < 0.5 ? 'p1' : 'p2';
-        
 
         // Cargar preguntas y respuestas
         this.questionsData = this.cache.json.get('questions');
-        this.player1Button = this.createPlayerButton(200, 890, 'p1', p1).setScale(0.9).setDepth(999);
-        this.player2Button = this.createPlayerButton(1720, 890, 'p2', p2).setScale(0.9).setDepth(999);
+        this.player1Button = this.createPlayerButton(70, 290, 'p1', p1).setScale(2.5).setDepth(999);
+        this.player2Button = this.createPlayerButton(570, 290, 'p2', p2).setScale(2.5).setDepth(999);
 
              // Agregar evento de clic para los botones de jugador
              this.player1Button.on('pointerdown', () => {
@@ -426,17 +459,20 @@ this.player2HealthText = this.add.text(700, 180, `Player 2 Health: ${this.charac
 
 }
     this.showTurnOverlay();
+
+
+    
     }
 
     setAnimationsForCharacter(characterKey, sprite) {
-        let posY = 500; // Posición y predeterminada
-
+        let posY = 180; // Posición y predeterminada
+       
         if (characterKey === 'Zeus') {
-            posY = 488; // Posición y específica para Zeus
+            posY = 190; // Posición y específica para Zeus
         } else if (characterKey === 'Poseidon') {
-            posY = 488; // Posición y específica para Poseidón
+            posY = 190; // Posición y específica para Poseidón
         } else if (characterKey === 'Hades') {
-            posY = 503; // Posición y específica para Hades
+            posY = 190; // Posición y específica para Hades
         }
         // Comprueba el nombre del personaje y define las animaciones en consecuencia
         if (characterKey === 'Zeus') {
@@ -547,24 +583,29 @@ showQuestionOverlay(characterKey) {
     const randomQuestion = Phaser.Math.RND.pick(this.questionsData);
     
     // Mostrar overlay con la pregunta y opciones
-    this.questionOverlay = this.add.image(this.sys.game.canvas.width / 2, this.sys.game.canvas.height / 2, 'overlay').setScale(0.7).setDepth(1100);
-    this.questionText = this.add.text(this.sys.game.canvas.width / 2, this.sys.game.canvas.height / 2 - 50, randomQuestion.pregunta, { fontFamily: 'Arial', fontSize: 24, color: '#000000' }).setOrigin(0.5).setDepth(1101);
-    
-    // Crear botones para las opciones de respuesta
-    this.answerButtons = [];
-    const startX = this.sys.game.canvas.width / 2;
-    const startY = this.sys.game.canvas.height / 2 + 50;
-    randomQuestion.opciones.forEach((opcion, index) => {
-        const button = this.add.text(startX, startY + index * 40, opcion, { fontFamily: 'Arial', fontSize: 20, color: '#000000' }).setOrigin(0.5).setInteractive().setDepth(1101);
-        button.on('pointerdown', () => {
-            this.processAnswer(characterKey, opcion, randomQuestion.respuesta_correcta);
-            this.removeQuestionOverlay(); // Eliminar el overlay después de responder
-        });
-        this.answerButtons.push(button);
-    });
+    this.questionOverlay = this.add.image(this.sys.game.canvas.width / 2, this.sys.game.canvas.height / 2, 'overlay').setOrigin(0.5).setScale(3.2).setDepth(1100);
+    this.questionText = this.add.text(this.sys.game.canvas.width / 2, this.sys.game.canvas.height / 2 - 48, randomQuestion.pregunta, { fontFamily: 'BMmini', fontSize: 16, color: '#b35410', wordWrap: { width: 340 } }).setOrigin(0.5).setDepth(1101);
 
-    // Actualizar la variable de control
-    this.isShowingQuestion = true;
+   // Crear botones para las opciones de respuesta
+this.answerButtons = [];
+const startX = this.sys.game.canvas.width / 2 - 100; // Ajustar el inicio de la primera columna
+const startY = this.sys.game.canvas.height / 2 + 10; 
+randomQuestion.opciones.forEach((opcion, index) => {
+    const columnIndex = index % 2; // Calcular la columna actual
+    const rowIndex = Math.floor(index / 2); // Calcular la fila actual
+    const buttonX = startX + columnIndex * 200; // Calcular la coordenada x del botón
+    const buttonY = startY + rowIndex * 40; // Calcular la coordenada y del botón
+    const button = this.add.text(buttonX, buttonY, opcion, { fontFamily: 'BMmini', fontSize: 14, color: '#b35410' }).setOrigin(0.5).setInteractive().setDepth(1101);
+    button.on('pointerdown', () => {
+        this.processAnswer(characterKey, opcion, randomQuestion.respuesta_correcta);
+        this.removeQuestionOverlay(); // Eliminar el overlay después de responder
+    });
+    this.answerButtons.push(button);
+});
+
+// Actualizar la variable de control
+this.isShowingQuestion = true;
+
 }
 
 // Función para eliminar el overlay de la pregunta
@@ -724,18 +765,18 @@ showTurnOverlay() {
     this.player2Button.disableInteractive();
     
     // Mostrar overlay de turno con el jugador actual
-    const overlayText = this.currentPlayer === 'p1' ? 'Jugador 1' : 'Jugador 2';
-    const overlayMessage = `${overlayText}, tu turno`;
+    const overlayText = this.currentPlayer === 'p1' ? 'JUGADOR 1' : 'JUGADOR 2';
+    const overlayMessage = `${overlayText}, TU TURNO`;
 
     // Crear un contenedor para el overlay
     const overlayContainer = this.add.container(0, 0).setDepth(1000);
 
     // Agregar la imagen de fondo del overlay
-    const overlayBackground = this.add.image(this.sys.game.canvas.width / 2, this.sys.game.canvas.height / 2, 'overlay').setOrigin(0.5).setScale(0.7);
+    const overlayBackground = this.add.image(this.sys.game.canvas.width / 2, this.sys.game.canvas.height / 2, 'overlay').setOrigin(0.5).setScale(3.2);
     overlayContainer.add(overlayBackground);
 
     // Mostrar overlay con el texto
-    const overlayTextObject = this.add.text(this.sys.game.canvas.width / 2, this.sys.game.canvas.height / 2, overlayMessage, { fontFamily: 'Arial', fontSize: 48, color: '#000' }).setOrigin(0.5);
+    const overlayTextObject = this.add.text(this.sys.game.canvas.width / 2, this.sys.game.canvas.height / 2, overlayMessage, { fontFamily: 'BMmini', fontSize: 22, color: '#b35410' }).setOrigin(0.5);
     overlayContainer.add(overlayTextObject);
 
     // Configurar duración del overlay (3 segundos)
@@ -831,11 +872,11 @@ showTurnOverlay() {
         this.cameras.main.setBackgroundColor('#000000');
     
         // Mostrar el mensaje de ganador
-        const winnerText = this.add.text(this.sys.game.canvas.width / 2, this.sys.game.canvas.height / 2, `${winner} ha ganado!`, { fontFamily: 'Arial', fontSize: 48, color: '#ffffff' }).setOrigin(0.5);
+        const winnerText = this.add.text(this.sys.game.canvas.width / 2, this.sys.game.canvas.height / 2, `${winner} ha ganado!`, { fontFamily: 'BMmini', fontSize: 48, color: '#ffffff' }).setOrigin(0.5);
         winnerText.setDepth(1001);
     
         // Crear el botón de reinicio
-        const restartButton = this.add.text(this.sys.game.canvas.width / 2, this.sys.game.canvas.height / 2 + 100, 'Restart', { fontFamily: 'Arial', fontSize: 32, color: '#ffffff' }).setOrigin(0.5);
+        const restartButton = this.add.text(this.sys.game.canvas.width / 2, this.sys.game.canvas.height / 2 + 100, 'Restart', { fontFamily: 'BMmini', fontSize: 32, color: '#ffffff' }).setOrigin(0.5);
         restartButton.setDepth(1002);
     
         // Establecer el estilo del botón de reinicio
@@ -884,23 +925,23 @@ showTurnOverlay() {
     update() {
         // Verificar si algún personaje ha perdido toda su vida
         this.checkWinner();
+        
 
     }
     
 }
 
+const config = {
+    type: Phaser.WEBGL,
+    width: 640,
+    height: 360,
+    parent: 'game',
+    pixelArt: true,
+    scale: {
+        mode: Phaser.Scale.FIT,
+        autoCenter: Phaser.Scale.CENTER_BOTH
+    },
+    scene: [InicioJuego, SelectorPersonaje, Pelea] // Añadir la escena SelectorPersonaje al array de escenas
+};
 
-
-    let config = {
-        type: Phaser.WEBGL,
-        scale: {
-            mode: Phaser.Scale.FIT,
-            parent: 'phaser-example',
-            autoCenter: Phaser.Scale.CENTER_BOTH,
-            width: '1920',
-            height: '1080'
-        },
-        scene: [InicioJuego, SelectorPersonaje, Pelea] // Añadir la escena SelectorPersonaje al array de escenas
-    };
-
-    let game = new Phaser.Game(config);
+let game = new Phaser.Game(config);
