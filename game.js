@@ -6,6 +6,12 @@ class InicioJuego extends Phaser.Scene {
     preload() {
         // Cargar la imagen para el background
         this.load.spritesheet('background', 'assets/FONDO_INICIO.png', { frameWidth: 160, frameHeight: 90 });
+        // Cargar la música de fondo
+        this.load.audio('INICIOMUSIC', 'audios/INICIOMUSIC.mp3');
+        this.load.audio('BUTTONEF1', 'audios/BUTTONEFFECT1.mp3');
+        this.load.audio('BUTTONEF2', 'audios/BUTTONEFECT2.mp3');
+
+
     }
 
     create() {
@@ -29,6 +35,11 @@ class InicioJuego extends Phaser.Scene {
 
         // Centrar el fondo en el canvas
         background.setPosition((this.sys.game.canvas.width - background.displayWidth) / 2, (this.sys.game.canvas.height - background.displayHeight) / 2);
+
+        // Reproducir música de fondo en bucle
+        this.backgroundMusic = this.sound.add('INICIOMUSIC', { loop: true, volume: 0.3 }); // Volumen reducido a la mitad
+        this.backgroundMusic.play();
+
         // Crear un rectángulo invisible como botón en el centro del canvas
         let startButton = this.add.rectangle(this.sys.game.canvas.width / 2, (this.sys.game.canvas.height / 2) + 102, 240, 45, 0xffffff, 0).setInteractive().setOrigin(0.5);
 
@@ -41,20 +52,21 @@ class InicioJuego extends Phaser.Scene {
             document.body.style.cursor = 'default';
         });
 
-// Hacer clic en el área del botón incluso si no es visible
-startButton.on('pointerdown', () => {
-    this.scene.start('SelectorPersonaje'); // Cambiar a la escena de selección de personaje cuando se presiona el botón
-});
-
-
+        // Hacer clic en el área del botón incluso si no es visible
+        startButton.on('pointerdown', () => {
+            this.sound.play('BUTTONEF2');
+            this.scene.start('SelectorPersonaje'); // Cambiar a la escena de selección de personaje cuando se presiona el botón
+        });
     }
-      // Cambiar el cursor a su estado normal cuando se inicia la escena de selección de personaje
-      update() {
+
+    // Cambiar el cursor a su estado normal cuando se inicia la escena de selección de personaje
+    update() {
         this.scene.get('SelectorPersonaje').events.on('start', () => {
             document.body.style.cursor = 'default';
         });
     }
 }
+
 
 class SelectorPersonaje extends Phaser.Scene {
     constructor() {
@@ -63,9 +75,14 @@ class SelectorPersonaje extends Phaser.Scene {
 
     preload(){
          
+        this.load.audio('BUTTONEF2', 'audios/BUTTONEFECT2.mp3');
+        this.load.audio('CHARACTERSELECTED', 'audios/CHARACTERSELECTED.mp3');
+        this.load.audio('CHOOSE', 'audios/CHOOSE.mp3');
+
         
     }
     create() {
+        this.sound.play('CHOOSE',{volume: 0.5});
         const screenWidth = this.cameras.main.width;
         const screenHeight = this.cameras.main.height;
     
@@ -103,10 +120,12 @@ class SelectorPersonaje extends Phaser.Scene {
         this.button1.on('pointerdown', () => {
             if (!this.p1) {
                 this.p1 = 'Zeus';
+                this.sound.play('CHARACTERSELECTED');
                 this.nextPlayerTurn();
             } else if (!this.p2) {
                 if (this.p1 !== 'Zeus') {
                     this.p2 = 'Zeus';
+                    this.sound.play('CHARACTERSELECTED');
                     this.nextPlayerTurn();
                 } else {
                     this.turnText.setText('Jugador 1 ya eligió este personaje. Elige otro.');
@@ -117,10 +136,12 @@ class SelectorPersonaje extends Phaser.Scene {
         this.button2.on('pointerdown', () => {
             if (!this.p1) {
                 this.p1 = 'Poseidon';
+                this.sound.play('CHARACTERSELECTED');
                 this.nextPlayerTurn();
             } else if (!this.p2) {
                 if (this.p1 !== 'Poseidon') {
                     this.p2 = 'Poseidon';
+                    this.sound.play('CHARACTERSELECTED');
                     this.nextPlayerTurn();
                 } else {
                     this.turnText.setText('Jugador 1 ya eligió este personaje. Elige otro.');
@@ -131,10 +152,12 @@ class SelectorPersonaje extends Phaser.Scene {
         this.button3.on('pointerdown', () => {
             if (!this.p1) {
                 this.p1 = 'Hades';
+                this.sound.play('CHARACTERSELECTED');
                 this.nextPlayerTurn();
             } else if (!this.p2) {
                 if (this.p1 !== 'Hades') {
                     this.p2 = 'Hades';
+                    this.sound.play('CHARACTERSELECTED');
                     this.nextPlayerTurn();
                 } else {
                     this.turnText.setText('Jugador 1 ya eligió este personaje. Elige otro.');
@@ -170,12 +193,14 @@ class SelectorPersonaje extends Phaser.Scene {
     }
 
     startCountdown() {
-        let counter = 5; // Contador de 10 segundos
+        let counter = 5; // Contador de 5 segundos
         const screenWidth = this.cameras.main.width;
         const screenHeight = this.cameras.main.height;
     
         // Crear texto para mostrar el contador
         let countdownText = this.add.text(screenWidth / 2, screenHeight * 0.6, 'Tiempo restante: ' + counter, { fontSize: '12px', fill: '#fff' }).setOrigin(0.5);
+    
+       
     
         // Actualizar el contador cada segundo
         let countdownTimer = this.time.addEvent({
@@ -190,8 +215,21 @@ class SelectorPersonaje extends Phaser.Scene {
                 if (counter === 0) {
                     countdownTimer.remove(); // Detener el contador
     
+                                 
+                      // Detener la música con un fadeout gradual
+                if (this.scene.get('InicioJuego').backgroundMusic) {
+                    this.tweens.add({
+                        targets: this.scene.get('InicioJuego').backgroundMusic,
+                        volume: 0,
+                        duration: 2000, // 2 segundos de fadeout
+                        onComplete: () => {
+                            this.scene.get('InicioJuego').backgroundMusic.stop();
+                        }
+                    });
+                }
+    
                     // Iniciar animación de transición
-                    this.cameras.main.fadeOut(2000); // Desvanece la pantalla durante 1 segundo
+                    this.cameras.main.fadeOut(2000); // Desvanece la pantalla durante 2 segundos
     
                     // Después del desvanecimiento, iniciar la siguiente escena
                     this.cameras.main.once(Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE, () => {
@@ -206,12 +244,12 @@ class SelectorPersonaje extends Phaser.Scene {
         // Botón para cancelar la selección de personajes y volver al inicio
         let cancelButton = this.add.text(screenWidth / 2, screenHeight * 0.7, 'Cancelar Selección', { fontSize: '12px', fill: '#fff' }).setInteractive().setOrigin(0.5);
         cancelButton.on('pointerdown', () => {
+            this.sound.play('BUTTONEF1');
             this.p1 = null;
             this.p2 = null;
-            this.scene.start('SelectorPersonaje'); // Volver a la pantalla de selección de personaje
+            this.scene.start('SelectorPersonaje'); // Volver a la pantalla de inicio
         });
     }
-    
 }
 
 
@@ -267,7 +305,13 @@ class Pelea extends Phaser.Scene {
     this.load.image('overlay', 'assets/overlay.png');
     this.load.spritesheet('healthBar1', 'assets/healthbar1_spritesheet.png', { frameWidth: 60, frameHeight: 17 });
     this.load.spritesheet('healthBar2', 'assets/healthbar2_spritesheet.png', { frameWidth: 60, frameHeight: 17 });
-   
+    this.load.audio('music_hades', 'audios/HADESFONDO.mp3');
+    this.load.audio('music_poseidon', 'audios/POSEIDONFONDO.mp3');
+    this.load.audio('BUTTONEF1', 'audios/BUTTONEFFECT1.mp3');
+    this.load.audio('WRONG', 'audios/WRONG.mp3');
+    this.load.audio('RIGHT', 'audios/RIGHT.mp3');
+    this.load.audio('VICTORY', 'audios/VICTORYSOUND.mp3');
+
         this.load.json('questions', 'data/data.json'); 
     }
 
@@ -288,6 +332,17 @@ this.player2HealthText = this.add.text(700, 180, `Player 2 Health: ${this.charac
         const randomBackground = Phaser.Math.RND.pick(backgrounds);
         this.background = this.add.sprite(0, 0, randomBackground).setOrigin(0).setDisplaySize(this.sys.game.canvas.width, this.sys.game.canvas.height);
        
+         // Reproducir música de fondo según el fondo aleatorio seleccionado
+         if (randomBackground === 'background_hades') {
+            this.backgroundMusic = this.sound.add('music_hades', { loop: true, volume: 0.3 });
+            
+            this.backgroundMusic.play();
+        } else if (randomBackground === 'background_poseidon') {
+            this.backgroundMusic = this.sound.add('music_poseidon', { loop: true, volume: 0.3 });
+            this.backgroundMusic.play();
+        }
+
+
          // Crear las barras de vida para cada jugador
          this.healthBar1 = this.add.sprite(12, 5, 'healthBar1').setOrigin(0).setScale(4);
          this.healthBar2 = this.add.sprite(628, 5, 'healthBar2').setOrigin(0).setScale(-4, 4);
@@ -330,8 +385,8 @@ this.player2HealthText = this.add.text(700, 180, `Player 2 Health: ${this.charac
 
         // Cargar preguntas y respuestas
         this.questionsData = this.cache.json.get('questions');
-        this.player1Button = this.createPlayerButton(70, 290, 'p1', p1).setScale(2.5).setDepth(999);
-        this.player2Button = this.createPlayerButton(570, 290, 'p2', p2).setScale(2.5).setDepth(999);
+        this.player1Button = this.createPlayerButton(65, 297, 'p1', p1).setScale(2.3).setDepth(999);
+        this.player2Button = this.createPlayerButton(575, 297, 'p2', p2).setScale(2.3).setDepth(999);
 
              // Agregar evento de clic para los botones de jugador
              this.player1Button.on('pointerdown', () => {
@@ -563,6 +618,7 @@ this.player2HealthText = this.add.text(700, 180, `Player 2 Health: ${this.charac
         // Al hacer clic en el botón, mostrar la pregunta
         button.on('pointerdown', () => {
             if (!this.isShowingQuestion && this.currentPlayer === player) {
+                this.sound.play('BUTTONEF1');
                 this.showQuestionOverlay(characterKey);
             }
         });
@@ -583,7 +639,7 @@ showQuestionOverlay(characterKey) {
     const randomQuestion = Phaser.Math.RND.pick(this.questionsData);
     
     // Mostrar overlay con la pregunta y opciones
-    this.questionOverlay = this.add.image(this.sys.game.canvas.width / 2, this.sys.game.canvas.height / 2, 'overlay').setOrigin(0.5).setScale(3.2).setDepth(1100);
+    this.questionOverlay = this.add.image(this.sys.game.canvas.width / 2, this.sys.game.canvas.height / 2, 'overlay').setOrigin(0.5).setScale(3.4).setDepth(1100);
     this.questionText = this.add.text(this.sys.game.canvas.width / 2, this.sys.game.canvas.height / 2 - 48, randomQuestion.pregunta, { fontFamily: 'BMmini', fontSize: 16, color: '#b35410', wordWrap: { width: 340 } }).setOrigin(0.5).setDepth(1101);
 
    // Crear botones para las opciones de respuesta
@@ -624,9 +680,13 @@ processAnswer(characterKey, selectedAnswer, correctAnswer) {
 
     // Al responder correctamente
     if (selectedAnswer === correctAnswer) {
+        this.sound.play('RIGHT',{ volume: 0.5 });
+
         // Ejecutar animación de ataque
         this.attackAnimation(characterKey, this.currentPlayer === 'p1' ? this.character : this.character2);
     } else {
+        this.sound.play('WRONG',{ volume: 0.5 });
+
         // Cambiar de turno directamente sin atacar
         this.currentPlayer = this.currentPlayer === 'p1' ? 'p2' : 'p1';
         this.showTurnOverlay();
@@ -760,6 +820,7 @@ reduceCharacter2Health(damage) {
 }
 // Función para mostrar el overlay de turno
 showTurnOverlay() {
+  
     // Deshabilitar interactividad de los botones durante la visualización del overlay
     this.player1Button.disableInteractive();
     this.player2Button.disableInteractive();
@@ -772,7 +833,7 @@ showTurnOverlay() {
     const overlayContainer = this.add.container(0, 0).setDepth(1000);
 
     // Agregar la imagen de fondo del overlay
-    const overlayBackground = this.add.image(this.sys.game.canvas.width / 2, this.sys.game.canvas.height / 2, 'overlay').setOrigin(0.5).setScale(3.2);
+    const overlayBackground = this.add.image(this.sys.game.canvas.width / 2, this.sys.game.canvas.height / 2, 'overlay').setOrigin(0.5).setScale(3.4);
     overlayContainer.add(overlayBackground);
 
     // Mostrar overlay con el texto
@@ -780,7 +841,7 @@ showTurnOverlay() {
     overlayContainer.add(overlayTextObject);
 
     // Configurar duración del overlay (3 segundos)
-    this.time.delayedCall(3000, () => {
+    this.time.delayedCall(1500, () => {
         // Eliminar el contenedor del overlay
         overlayContainer.destroy();
 
@@ -852,50 +913,21 @@ showTurnOverlay() {
         // Deshabilitar todos los botones
         this.player1Button.disableInteractive();
         this.player2Button.disableInteractive();
-    
+
+        let winner = '';
+
         // Verificar si uno de los jugadores ha perdido toda su vida
         if (this.characterHealth <= 0) {
-            // Mostrar el mensaje de ganador
-            this.showOverlayMessage('Jugador 2');
-            return;
+            winner = 'Jugador 2';
         } else if (this.character2Health <= 0) {
+            winner = 'Jugador 1';
+        }
+
+        if (winner !== '') {
             // Mostrar el mensaje de ganador
-            this.showOverlayMessage('Jugador 1');
+            this.scene.start('OverlayMessage', { winner: winner }); // Volver a la pantalla de inicio
             return;
         }
-    }
-    showOverlayMessage(winner) {
-        // Eliminar todo lo que hay en la pantalla
-        this.children.removeAll();
-    
-        // Establecer el fondo en negro
-        this.cameras.main.setBackgroundColor('#000000');
-    
-        // Mostrar el mensaje de ganador
-        const winnerText = this.add.text(this.sys.game.canvas.width / 2, this.sys.game.canvas.height / 2, `${winner} ha ganado!`, { fontFamily: 'BMmini', fontSize: 48, color: '#ffffff' }).setOrigin(0.5);
-        winnerText.setDepth(1001);
-    
-        // Crear el botón de reinicio
-        const restartButton = this.add.text(this.sys.game.canvas.width / 2, this.sys.game.canvas.height / 2 + 100, 'Restart', { fontFamily: 'BMmini', fontSize: 32, color: '#ffffff' }).setOrigin(0.5);
-        restartButton.setDepth(1002);
-    
-        // Establecer el estilo del botón de reinicio
-        restartButton.setStyle({ color: '#ffffff', padding: { x: 10, y: 5 } }).setInteractive().setDepth(1090).setAlpha(1);
-    
-        // Cambiar el cursor al pasar el ratón sobre el botón de reinicio
-        restartButton.on('pointerover', () => {
-            restartButton.setStyle({ color: '#ffffff', cursor: 'pointer' }).setInteractive().setDepth(1090).setAlpha(1);
-        });
-    
-        // Restaurar el estilo cuando el cursor deje el botón de reinicio
-        restartButton.on('pointerout', () => {
-            restartButton.setStyle({ color: '#ffffff', cursor: 'default' }).setInteractive().setDepth(1090).setAlpha(1);
-        });
-    
-        restartButton.on('pointerdown', () => {
-            // Recargar la página web completa
-            window.location.reload();
-        });
     }
     
     checkWinner() {
@@ -903,8 +935,12 @@ showTurnOverlay() {
         this.healthBar1.once('animationcomplete', () => {
             if (this.healthBar1.anims.currentAnim.key === 'BARRA1_0') {
                 if (this.characterHealth <= 0) {
-                    // Si el personaje 1 ha perdido toda su vida
-                    this.showOverlayMessage('Jugador 2');
+                    this.showTurnOverlay.setAlpha(0)
+
+    
+                    this.scene.get('Pelea').backgroundMusic.stop();
+                    this.scene.start('OverlayMessage', { winner: 'Jugador 2' });
+                    this.scene.stop('Pelea');
                 }
             }
         });
@@ -913,22 +949,81 @@ showTurnOverlay() {
         this.healthBar2.once('animationcomplete', () => {
             if (this.healthBar2.anims.currentAnim.key === 'BARRA2_0') {
                 if (this.character2Health <= 0) {
-                    // Si el personaje 2 ha perdido toda su vida
-                    this.showOverlayMessage('Jugador 1');
+                   this.showTurnOverlay.setAlpha(0)
+    
+                    this.scene.get('Pelea').backgroundMusic.stop();
+                    this.scene.start('OverlayMessage', { winner: 'Jugador 1' });
+                    this.scene.stop('Pelea');
                 }
             }
         });
     }
     
     
+    
 
     update() {
         // Verificar si algún personaje ha perdido toda su vida
         this.checkWinner();
-        
+      
 
     }
     
+}
+
+class OverlayMessage extends Phaser.Scene {
+    constructor() {
+        super({ key: 'OverlayMessage' });
+    }
+
+    preload() {
+        this.load.audio('VICTORY', 'audios/VICTORYSOUND.mp3');
+    }
+
+    create(data) {
+
+           // Detener la música con un fadeout gradual
+           if (this.scene.get('Pelea').backgroundMusic) {
+            
+                    this.scene.get('Pelea').backgroundMusic.stop();
+           }
+        const winner = data.winner; // Obtener el ganador de los datos pasados desde la escena anterior
+
+
+        // Eliminar todo lo que hay en la pantalla
+        this.children.removeAll();
+
+        // Establecer el fondo en negro
+        this.cameras.main.setBackgroundColor('#000000');
+
+        // Mostrar el mensaje de ganador
+        const winnerText = this.add.text(this.sys.game.canvas.width / 2, this.sys.game.canvas.height / 2, `${winner} ha ganado!`, { fontFamily: 'BMmini', fontSize: 48, color: '#ffffff' }).setOrigin(0.5);
+        winnerText.setDepth(1001);
+
+        // Crear el botón de reinicio
+        const restartButton = this.add.text(this.sys.game.canvas.width / 2, this.sys.game.canvas.height / 2 + 100, 'Restart', { fontFamily: 'BMmini', fontSize: 32, color: '#ffffff' }).setOrigin(0.5);
+        restartButton.setDepth(1002);
+
+        // Establecer el estilo del botón de reinicio
+        restartButton.setStyle({ color: '#ffffff', padding: { x: 10, y: 5 } }).setInteractive().setDepth(1090).setAlpha(1);
+
+        // Cambiar el cursor al pasar el ratón sobre el botón de reinicio
+        restartButton.on('pointerover', () => {
+            restartButton.setStyle({ color: '#ffffff', cursor: 'pointer' }).setInteractive().setDepth(1090).setAlpha(1);
+        });
+
+        // Restaurar el estilo cuando el cursor deje el botón de reinicio
+        restartButton.on('pointerout', () => {
+            restartButton.setStyle({ color: '#ffffff', cursor: 'default' }).setInteractive().setDepth(1090).setAlpha(1);
+        });
+
+        this.sound.play('VICTORY', { volume: 0.5 });
+
+        restartButton.on('pointerdown', () => {
+            // Recargar la página web completa
+            window.location.reload();
+        });
+    }
 }
 
 const config = {
@@ -941,7 +1036,7 @@ const config = {
         mode: Phaser.Scale.FIT,
         autoCenter: Phaser.Scale.CENTER_BOTH
     },
-    scene: [InicioJuego, SelectorPersonaje, Pelea] // Añadir la escena SelectorPersonaje al array de escenas
+    scene: [InicioJuego, SelectorPersonaje, Pelea, OverlayMessage] // Añadir la escena SelectorPersonaje al array de escenas
 };
 
 let game = new Phaser.Game(config);
