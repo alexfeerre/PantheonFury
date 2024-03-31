@@ -1751,8 +1751,8 @@ function translateToEnglish(text) {
     return translations[text] || text; // Devuelve la traducción si existe, de lo contrario, devuelve el texto original
 }
 
-// Determina el texto del ganador en función de si es jugador 1 o jugador 2
-const winnerText = this.add.text(this.sys.game.canvas.width / 2, this.sys.game.canvas.height / 2 -20, `${translateToEnglish(winner.toUpperCase())} ${translateToEnglish('ha ganado')}!`, { fontFamily: 'BMmini', fontSize: 48, color: '#b35410' }).setOrigin(0.5);
+// Determina el texto del ganador en función de si es jugador 1 o jugador 2 y el idioma seleccionado
+const winnerText = this.add.text(this.sys.game.canvas.width / 2, this.sys.game.canvas.height / 2 -20, `${winner.toUpperCase()} ${language === 'es' ? 'ha ganado' : translateToEnglish('ha ganado')}!`, { fontFamily: 'BMmini', fontSize: 48, color: '#b35410' }).setOrigin(0.5);
 winnerText.setDepth(900);
 
 // Crear el botón de detalles
