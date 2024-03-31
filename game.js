@@ -54,201 +54,759 @@ class InicioJuego extends Phaser.Scene {
 
         // Hacer clic en el área del botón incluso si no es visible
         startButton.on('pointerdown', () => {
-            this.sound.play('BUTTONEF2');
-            this.scene.start('SelectorPersonaje'); // Cambiar a la escena de selección de personaje cuando se presiona el botón
+            this.sound.play('BUTTONEF2',{volume: 0.5});
+            this.scene.start('Idioma'); // Cambiar a la escena de selección de personaje cuando se presiona el botón
         });
     }
 
     // Cambiar el cursor a su estado normal cuando se inicia la escena de selección de personaje
     update() {
-        this.scene.get('SelectorPersonaje').events.on('start', () => {
+        this.scene.get('Idioma').events.on('start', () => {
             document.body.style.cursor = 'default';
         });
     }
 }
 
 
+class Idioma extends Phaser.Scene {
+    constructor() {
+        super({ key: 'Idioma' });
+    }
+
+    preload() {
+        // Preload del fondo de la escena
+        this.load.image('background_idiom', 'assets/idioma.png');
+
+        this.load.image('slideButton', 'assets/slidebutton.png');
+        this.load.image('slideButtonHover', 'assets/slidebuttonhover.png');
+        this.load.image('slideButtonNext', 'assets/slidebutton.png');
+        this.load.image('slideButtonNextHover', 'assets/slidebuttonhover.png');
+
+
+        
+        // Preload de las slides
+        this.load.image('slide1', 'assets/1slide.png');
+        this.load.image('slide2', 'assets/2slide.png');
+        this.load.image('slide3', 'assets/3slide.png');
+        this.load.image('slide4', 'assets/4slide.png');
+        this.load.image('slide5', 'assets/5slide.png');
+        this.load.image('slide6', 'assets/5slide.png');
+
+
+        // Preload del spritesheet para el fondo animado
+        this.load.spritesheet('animatedBackground', 'assets/instrucciones_fondo.png', { frameWidth: 160, frameHeight: 90 });
+    }
+
+    create() {
+        
+        // Centro de la pantalla
+        const centerX = this.scale.width / 2;
+        const centerY = this.scale.height / 2;
+        // Mostrar el fondo de la escena al inicio
+        this.add.image(centerX, centerY, 'background_idiom').setDisplaySize(640, 360).setOrigin(0.5);
+    
+        // Texto de selección de idioma
+        const languageText = this.add.text(centerX, centerY - 80, 'Selecciona tu idioma:', { fontFamily: 'Arial', fontSize: 32, color: '#db7125' }).setOrigin(0.5);
+    
+        // Botón para seleccionar español
+        const es = this.add.text(centerX, centerY - 5, 'Español', { fontFamily: 'Arial', fontSize: 24, color: '#db7125' })
+            .setOrigin(0.5)
+            .setInteractive()
+            .on('pointerdown', () => {
+                this.selectLanguage('es');
+                // Ocultar los botones de selección de idioma al iniciar la presentación de las diapositivas
+                languageText.visible = false;
+                es.visible = false;
+                en.visible = false;
+            });
+    
+        // Botón para seleccionar inglés
+        const en = this.add.text(centerX, centerY + 75, 'English', { fontFamily: 'Arial', fontSize: 24, color: '#db7125' })
+            .setOrigin(0.5)
+            .setInteractive()
+            .on('pointerdown', () => {
+                this.selectLanguage('en');
+                // Ocultar los botones de selección de idioma al iniciar la presentación de las diapositivas
+                languageText.visible = false;
+                es.visible = false;
+                en.visible = false;
+            });
+            
+    
+        // Botón para la diapositiva anterior
+        this.prevButton = this.add.image(55, 296, 'slideButton').setInteractive().setOrigin(0,0).setDepth(999).setScale(4);
+    
+       // Botón para la siguiente diapositiva
+        this.nextButton = this.add.image(585, 296, 'slideButtonNext').setInteractive().setOrigin(0, 0).setDepth(999).setScale(-4, 4); // Escala negativa en el eje X
+
+        // Asociar eventos a los botones
+        this.prevButton.on('pointerdown', () => {
+            this.showPrevSlide();
+        });
+         // Cambiar la imagen del botón prevButton al hacer hover
+    this.prevButton.on('pointerover', () => {
+        this.prevButton.setTexture('slideButtonHover');
+        document.body.style.cursor = 'pointer';
+    });
+    this.prevButton.on('pointerout', () => {
+        this.prevButton.setTexture('slideButton');
+        document.body.style.cursor = 'default';
+    });
+
+  
+        this.nextButton.on('pointerdown', () => {
+            this.showNextSlide();
+        });
+          // Cambiar la imagen del botón nextButton al hacer hover
+    this.nextButton.on('pointerover', () => {
+        this.nextButton.setTexture('slideButtonNextHover');
+        document.body.style.cursor = 'pointer';
+    });
+    this.nextButton.on('pointerout', () => {
+        this.nextButton.setTexture('slideButtonNext');
+        document.body.style.cursor = 'default';
+    });
+    
+        this.nextButton.setVisible(false);
+        this.prevButton.setVisible(false);
+
+         // Cambiar el cursor al hacer hover sobre los botones de selección de idioma
+    es.on('pointerover', () => {
+        document.body.style.cursor = 'pointer';
+    });
+    es.on('pointerout', () => {
+        document.body.style.cursor = 'default';
+    });
+
+    en.on('pointerover', () => {
+        document.body.style.cursor = 'pointer';
+    });
+    en.on('pointerout', () => {
+        document.body.style.cursor = 'default';
+    });
+
+   
+
+    }
+
+    selectLanguage(language) {
+        // Mostrar los botones "Anterior" y "Siguiente"
+        // Mostrar las instrucciones con slides
+      
+        this.currentSlideIndex = 0;
+        this.language = language;
+        this.showInstructions(language);
+    }
+
+    showInstructions(language) {
+        // Mostrar los botones "Anterior" y "Siguiente"
+    
+        // Mostrar las instrucciones con slides
+        this.slides = [
+            { image: 'slide1', text: 'Al inicio del juego y tras cada turno, aparecerá un mensaje con la indicación de quién iniciará el turno.' },
+            { image: 'slide2', text: 'Cuando sea tu turno, tu botón se iluminará. Púlsalo para comenzar la pregunta.' },
+            { image: 'slide3', text: 'Al pulsar el botón, se abrirá un mensaje con la pregunta a responder y cuatro opciones a responder.' },
+            { image: 'slide4', text: 'Si pulsas la incorrecta se pasará el turno al otro jugador. Si aciertas tu botón brillará y comenzará el ataque. Al acabar el ataque la vida de tu oponente se reducirá.' },
+            { image: 'slide5', text: 'Cada jugador comienza con 5 vidas y ganará aquel jugador que consiga quitar todas las vidas a su oponente.' },
+            { image: 'slide6' },
+
+        ];
+        this.currentSlideIndex = 0;
+        this.language = language;
+        this.showSlide(this.slides[this.currentSlideIndex], language);
+    }
+    
+    showSlide(slide, language) {
+        this.nextButton.setVisible(true);
+        this.prevButton.setVisible(true);
+    
+        // Calcular la escala para ajustar el fondo al tamaño del canvas
+        const scaleX = this.sys.game.canvas.width / 160;
+        const scaleY = this.sys.game.canvas.height / 90;
+        const scale = Math.max(scaleX, scaleY);
+    
+        // Añadir el background y hacer que se reproduzca en bucle
+        const background = this.add.sprite(this.sys.game.canvas.width / 2, this.sys.game.canvas.height / 2, 'animatedBackground').setOrigin(0.5).setScale(scale).setDepth(0);
+        this.anims.create({
+            key: 'animatedBackground',
+            frames: this.anims.generateFrameNumbers('animatedBackground', { start: 0, end: 3 }),
+            frameRate: 15,
+            repeat: -1
+        });
+        background.anims.play('animatedBackground', true);
+    
+        // Mostrar la imagen de la diapositiva
+        const image = this.add.image(this.sys.game.canvas.width / 2, this.sys.game.canvas.height / 2 - 40, slide.image).setOrigin(0.5).setScale(2.5); // Centrar la imagen en el canvas
+    
+        // Mostrar el texto de la diapositiva solo si no es la última slide
+        if (this.currentSlideIndex !== this.slides.length - 1) {
+            let textToShow = slide.text;
+            if (language === 'en') {
+                this.translateText(slide.text, language).then(translatedText => {
+                    textToShow = translatedText;
+                    this.add.text(this.sys.game.canvas.width / 2, this.sys.game.canvas.height / 2 + 130, textToShow, { 
+                        fontSize: '18px',
+                        fill: '#db7125', 
+                        fontFamily: 'BMmini',
+                        resolution: 1,
+                        wordWrap: { width: 422 }
+                    }).setOrigin(0.5);
+                });
+            } else {
+                this.add.text(this.sys.game.canvas.width / 2, this.sys.game.canvas.height / 2 + 130, textToShow, { 
+                    fontSize: '18px',
+                    fill: '#db7125', 
+                    fontFamily: 'BMmini',
+                    resolution: 1,
+                    wordWrap: { width: 422 }
+                }).setOrigin(0.5);
+            }
+        }
+    
+        // Mostrar el botón "Comenzar" solo en la última diapositiva
+        if (this.currentSlideIndex === this.slides.length - 1) {
+            this.showStartButton();
+        }
+    }
+    
+    
+    showStartButton() {
+        let buttonText = 'Comenzar';
+        if (this.language === 'en') {
+            buttonText = 'Start';
+        }
+    
+        const originalFontSize = 30;
+
+        this.startButton = this.add.text(this.sys.game.canvas.width / 2, this.sys.game.canvas.height - 40, buttonText, { fontFamily: 'Arial', fontSize: originalFontSize, color: '#db7125' }).setOrigin(0.5).setInteractive();
+                this.startButton.on('pointerdown', () => {
+                    this.scene.start('SelectorPersonaje', { language: this.language });
+                   
+        });
+         // Cambiar el cursor al hacer hover sobre el botón "Comenzar"
+         this.startButton.on('pointerover', () => {
+            this.startButton.setFontSize(originalFontSize + 5); // Aumentar el tamaño de la fuente en 5
+            document.body.style.cursor = 'pointer';
+        });
+    this.startButton.on('pointerout', () => {
+        document.body.style.cursor = 'default';
+        this.startButton.setFontSize(originalFontSize);
+
+    });
+    }
+    
+    
+    showNextSlide() {
+        if (this.currentSlideIndex < this.slides.length - 1) {
+            this.currentSlideIndex++;
+            this.showSlide(this.slides[this.currentSlideIndex], this.language);
+        }
+    }
+    
+    showPrevSlide() {
+        if (this.currentSlideIndex > 0) {
+            this.currentSlideIndex--;
+            this.showSlide(this.slides[this.currentSlideIndex], this.language);
+        }
+    }
+
+    translateText(textToTranslate, targetLanguage) {
+        return fetch('https://api.mymemory.translated.net/get?q=' + textToTranslate + '&langpair=es|' + targetLanguage)
+            .then(response => response.json())
+            .then(data => {
+                return data.responseData.translatedText;
+            });
+    }
+}
+
+
+
 class SelectorPersonaje extends Phaser.Scene {
     constructor() {
         super({ key: 'SelectorPersonaje' });
+          // Variable para rastrear si se ha iniciado la cuenta atrás
+          this.countdownStarted = false;
+          this.player1Character = null; // Variable para almacenar la elección del jugador 1
+          this.player2Character = null; // Variable para almacenar la elección del jugador 2
+    
+    }
+    init(data) {
+        // Acceder al idioma seleccionado pasado desde la escena Idioma
+        this.language = data.language;
     }
 
     preload(){
-         
         this.load.audio('BUTTONEF2', 'audios/BUTTONEFECT2.mp3');
         this.load.audio('CHARACTERSELECTED', 'audios/CHARACTERSELECTED.mp3');
         this.load.audio('CHOOSE', 'audios/CHOOSE.mp3');
+        this.load.spritesheet('fondoselect', 'assets/FONDOSELECT.png', { frameWidth: 160, frameHeight: 90 });
+        this.load.spritesheet('zeusselect', 'assets/SELECTZEUS.png', { frameWidth: 160, frameHeight: 90 });
+        this.load.spritesheet('hadesselect', 'assets/SELECTHADES.png', { frameWidth: 160, frameHeight: 90 });
+        this.load.spritesheet('poseidonselect', 'assets/SELECTPOSEIDON.png', { frameWidth: 160, frameHeight: 90 });
+        this.load.spritesheet('Z_ICON', 'assets/Z_ICON.png', { frameWidth: 160, frameHeight: 90 });
+        this.load.spritesheet('H_ICON', 'assets/H_ICON.png', { frameWidth: 160, frameHeight: 90 });
+        this.load.spritesheet('P_ICON', 'assets/P_ICON.png', { frameWidth: 160, frameHeight: 90 });
 
-        
+
     }
+
     create() {
+        this.countdownStarted = false;
+
+        // Ajustar el color del canvas
+        this.cameras.main.setBackgroundColor('#0d0600');
+    
+        // Calcular la escala para ajustar el fondo al tamaño del canvas
+        const scaleX = this.sys.game.canvas.width / 160;
+        const scaleY = this.sys.game.canvas.height / 90;
+        const scale = Math.max(scaleX, scaleY);
+    
+        // Añadir el background y hacer que se reproduzca en bucle
+        const background = this.add.sprite(0, 0, 'fondoselect').setOrigin(0, 0).setScale(scale);
+        this.anims.create({
+            key: 'fondo2',
+            frames: this.anims.generateFrameNumbers('fondoselect', { start: 0, end: 3 }),
+            frameRate: 15,
+            repeat: -1
+        });
+        background.anims.play('fondo2', true); 
+    
+        // Añadir la spritesheet Z_ICON al centro del canvas con escala 4 y centrada
+        const zIcon = this.add.sprite(this.cameras.main.centerX-37, this.cameras.main.centerY-45, 'Z_ICON').setScale(2).setOrigin(0.5);
+        const hIcon = this.add.sprite(this.cameras.main.centerX+ 5 , this.cameras.main.centerY+ 35, 'H_ICON').setScale(2).setOrigin(0.5);
+        const pIcon = this.add.sprite(this.cameras.main.centerX +47, this.cameras.main.centerY-45, 'P_ICON').setScale(2).setOrigin(0.5);
+
+        // Crear animaciones para la spritesheet Z_ICON
+        this.anims.create({
+            key: 'staticz',
+            frames: this.anims.generateFrameNumbers('Z_ICON', { start: 0, end: 1 }),
+            frameRate: 10,
+            repeat: -1
+        });
+    
+        this.anims.create({
+            key: 'hoverz',
+            frames: this.anims.generateFrameNumbers('Z_ICON', { start: 2, end: 3 }),
+            frameRate: 10,
+            repeat: -1
+        });
+    
+        this.anims.create({
+            key: 'selectedz',
+            frames: this.anims.generateFrameNumbers('Z_ICON', { start: 3, end: 9 }),
+            frameRate: 10,
+            repeat: 1
+        });
+         // Crear animaciones para la spritesheet H_ICON
+         this.anims.create({
+            key: 'statich',
+            frames: this.anims.generateFrameNumbers('H_ICON', { start: 0, end: 1 }),
+            frameRate: 10,
+            repeat: -1
+        });
+    
+        this.anims.create({
+            key: 'hoverh',
+            frames: this.anims.generateFrameNumbers('H_ICON', { start: 2, end: 3 }),
+            frameRate: 10,
+            repeat: -1
+        });
+    
+        this.anims.create({
+            key: 'selectedh',
+            frames: this.anims.generateFrameNumbers('H_ICON', { start: 3, end: 9 }),
+            frameRate: 10,
+            repeat: 1
+        });
+         // Crear animaciones para la spritesheet P_ICON
+         this.anims.create({
+            key: 'staticp',
+            frames: this.anims.generateFrameNumbers('P_ICON', { start: 0, end: 1 }),
+            frameRate: 10,
+            repeat: -1
+        });
+    
+        this.anims.create({
+            key: 'hoverp',
+            frames: this.anims.generateFrameNumbers('P_ICON', { start: 2, end: 3 }),
+            frameRate: 10,
+            repeat: -1
+        });
+    
+        this.anims.create({
+            key: 'selectedp',
+            frames: this.anims.generateFrameNumbers('P_ICON', { start: 3, end: 9 }),
+            frameRate: 10,
+            repeat: 1
+        });
+    
+        // Reproducir las animaciones en bucle
+        zIcon.anims.play('staticz', true);
+        hIcon.anims.play('statich', true);
+        pIcon.anims.play('staticp', true);
+     
         this.sound.play('CHOOSE',{volume: 0.5});
         const screenWidth = this.cameras.main.width;
         const screenHeight = this.cameras.main.height;
     
         // Fondo negro para la pantalla de selección de personajes
-        this.cameras.main.setBackgroundColor('#000');
+        // this.cameras.main.setBackgroundColor('#000'); // No es necesario ya que el color del canvas se establece al inicio
     
         // Texto de turno de elección para el jugador 1
-        this.turnText = this.add.text(screenWidth / 2, screenHeight * 0.1, 'JUGADOR 1 ELIGE', { 
-            fontSize: '22px',
-            fill: '#fff', 
+        let turnTextKey = this.language === 'en' ? 'PLAYER 1 CHOOSE' : 'JUGADOR 1 ELIGE';
+        this.turnText = this.add.text(screenWidth / 2, screenHeight * 0.1, turnTextKey, { 
+            fontSize: '20px',
+            fill: '#db7125', 
             fontFamily: 'BMmini',
             resolution: 1
         }).setOrigin(0.5);
+
+    
     
         // Variable para almacenar la elección de cada jugador
         this.p1 = null;
         this.p2 = null;
     
-        // Botones para seleccionar personajes
-        const buttonWidth = 100;
-        const buttonHeight = 30;
-        const buttonSpacing = 20;
-        const totalButtonWidth = buttonWidth * 3 + buttonSpacing * 2;
-    
-        const button1X = screenWidth / 2 - totalButtonWidth / 2 + buttonWidth / 2;
-        const button2X = screenWidth / 2 - totalButtonWidth / 2 + buttonWidth + buttonSpacing + buttonWidth / 2;
-        const button3X = screenWidth / 2 - totalButtonWidth / 2 + (buttonWidth + buttonSpacing) * 2 + buttonWidth / 2;
-        const startY = screenHeight * 0.4;
-    
-        // Los botones también se establecen en 6px y se desactiva el antialiasing para mantener la coherencia visual
-        this.button1 = this.add.text(button1X, startY, 'Zeus', { fontSize: '12px', fill: '#fff', resolution: 1 }).setInteractive().setOrigin(0.5);
-        this.button2 = this.add.text(button2X, startY, 'Poseidón', { fontSize: '12px', fill: '#fff', resolution: 1 }).setInteractive().setOrigin(0.5);
-        this.button3 = this.add.text(button3X, startY, 'Hades', { fontSize: '12px', fill: '#fff', resolution: 1 }).setInteractive().setOrigin(0.5);
-          // Eventos de clic para los botones de selección de personajes
-        this.button1.on('pointerdown', () => {
-            if (!this.p1) {
-                this.p1 = 'Zeus';
-                this.sound.play('CHARACTERSELECTED');
-                this.nextPlayerTurn();
-            } else if (!this.p2) {
-                if (this.p1 !== 'Zeus') {
-                    this.p2 = 'Zeus';
-                    this.sound.play('CHARACTERSELECTED');
-                    this.nextPlayerTurn();
-                } else {
-                    this.turnText.setText('Jugador 1 ya eligió este personaje. Elige otro.');
-                }
-            }
-        });
+// Crear botones cuadrados en las posiciones aleatorias con ancho y alto de 50 unidades
+this.button1 = this.add.rectangle(this.cameras.main.centerX-43, this.cameras.main.centerY-45, 75, 75, 0xffffff, 0).setInteractive().setOrigin(0.5).setAlpha(0.6);
+this.button2 = this.add.rectangle(this.cameras.main.centerX+40, this.cameras.main.centerY-45, 75, 75, 0xffffff, 0).setInteractive().setOrigin(0.5).setAlpha(0.6);
+this.button3 = this.add.rectangle(this.cameras.main.centerX, this.cameras.main.centerY+34, 75, 75, 0xffffff, 0).setInteractive().setOrigin(0.5).setAlpha(0.6);
 
-        this.button2.on('pointerdown', () => {
-            if (!this.p1) {
-                this.p1 = 'Poseidon';
-                this.sound.play('CHARACTERSELECTED');
-                this.nextPlayerTurn();
-            } else if (!this.p2) {
-                if (this.p1 !== 'Poseidon') {
-                    this.p2 = 'Poseidon';
-                    this.sound.play('CHARACTERSELECTED');
-                    this.nextPlayerTurn();
-                } else {
-                    this.turnText.setText('Jugador 1 ya eligió este personaje. Elige otro.');
-                }
-            }
-        });
+// Variables para rastrear el estado de los botones
+let button1Pressed = false;
+let button2Pressed = false;
+let button3Pressed = false;
 
-        this.button3.on('pointerdown', () => {
-            if (!this.p1) {
-                this.p1 = 'Hades';
-                this.sound.play('CHARACTERSELECTED');
-                this.nextPlayerTurn();
-            } else if (!this.p2) {
-                if (this.p1 !== 'Hades') {
-                    this.p2 = 'Hades';
-                    this.sound.play('CHARACTERSELECTED');
-                    this.nextPlayerTurn();
-                } else {
-                    this.turnText.setText('Jugador 1 ya eligió este personaje. Elige otro.');
-                }
-            }
-        });
-      
-    }
+// Variable para contar el número de botones pulsados
+let buttonsPressedCount = 0;
 
-    nextPlayerTurn() {
-        if (!this.p1) {
-            this.turnText.setText('Turno de elección del Jugador 1');
-        } else if (!this.p2) {
-            this.turnText.setText('Turno de elección del Jugador 2');
-        } else {
-            // Ambos jugadores han elegido personajes
-            console.log('Jugador 1 ha elegido: ' + this.p1);
-            console.log('Jugador 2 ha elegido: ' + this.p2);
-            // Desactivar botones de selección
-            this.disableCharacterSelectionButtons();
-            // Mostrar mensaje de ambos jugadores han elegido
-            this.turnText.setText('¡Ambos jugadores han elegido! ¡Comienza la cuenta atrás!');
-            // Iniciar cuenta atrás
-            this.startCountdown();
+// Eventos de clic para los botones de selección de personajes
+this.button1.on('pointerdown', () => {
+    if (!button1Pressed && buttonsPressedCount < 2) {
+        this.selectCharacter('Zeus');
+        zIcon.anims.play('selectedz');
+        button1Pressed = true;
+        zIcon.on('animationcomplete', () => {
+            zIcon.setAlpha(0.5); 
+        });
+        document.body.style.cursor = 'default';
+        buttonsPressedCount++;
+        if (buttonsPressedCount === 2) {
+            this.button2.disableInteractive(); // Deshabilitar el segundo botón si ya se han pulsado dos
+            this.button3.disableInteractive(); // Deshabilitar el tercer botón si ya se han pulsado dos
         }
     }
+});
+this.button2.on('pointerdown', () => {
+    if (!button2Pressed && buttonsPressedCount < 2) {
+        this.selectCharacter('Poseidon');
+        pIcon.anims.play('selectedp');
+        button2Pressed = true;
+        pIcon.on('animationcomplete', () => {
+            pIcon.setAlpha(0.5); 
+        });
+        document.body.style.cursor = 'default';
+        buttonsPressedCount++;
+        if (buttonsPressedCount === 2) {
+            this.button1.disableInteractive(); // Deshabilitar el primer botón si ya se han pulsado dos
+            this.button3.disableInteractive(); // Deshabilitar el tercer botón si ya se han pulsado dos
+        }
+    }
+});
+this.button3.on('pointerdown', () => {
+    if (!button3Pressed && buttonsPressedCount < 2) {
+        this.selectCharacter('Hades');
+        hIcon.anims.play('selectedh');
+        button3Pressed = true;
+        hIcon.on('animationcomplete', () => {
+            hIcon.setAlpha(0.5); 
+        });
+        document.body.style.cursor = 'default';
+        buttonsPressedCount++;
+        if (buttonsPressedCount === 2) {
+            this.button1.disableInteractive(); // Deshabilitar el primer botón si ya se han pulsado dos
+            this.button2.disableInteractive(); // Deshabilitar el segundo botón si ya se han pulsado dos
+        }
+    }
+});
 
+// Cambiar el cursor a pointer cuando se hace hover sobre los botones
+this.button1.on('pointerover', () => {
+    if (!button1Pressed && buttonsPressedCount < 2) {
+        zIcon.anims.play('hoverz', true);
+        document.body.style.cursor = 'pointer';
+    }
+});
+this.button2.on('pointerover', () => {
+    if (!button2Pressed && buttonsPressedCount < 2) {
+        pIcon.anims.play('hoverp', true);
+        document.body.style.cursor = 'pointer';
+    }
+});
+this.button3.on('pointerover', () => {
+    if (!button3Pressed && buttonsPressedCount < 2) {
+        hIcon.anims.play('hoverh', true);
+        document.body.style.cursor = 'pointer';
+    }
+});
+
+// Volver a la animación estática al dejar de hacer hover sobre los botones
+this.button1.on('pointerout', () => {
+    if (!button1Pressed && buttonsPressedCount < 2) {
+        zIcon.anims.play('staticz');
+        document.body.style.cursor = 'default';
+    }
+});
+this.button2.on('pointerout', () => {
+    if (!button2Pressed && buttonsPressedCount < 2) {
+        pIcon.anims.play('staticp');
+        document.body.style.cursor = 'default';
+    }
+});
+this.button3.on('pointerout', () => {
+    if (!button3Pressed && buttonsPressedCount < 2) {
+        hIcon.anims.play('statich');
+        document.body.style.cursor = 'default';
+    }
+});
+
+ 
+
+    }
+    
+    selectCharacter(character) {
+        if (!this.p1) {
+            this.p1 = character;
+            this.player1Character = character; 
+            this.sound.play('CHARACTERSELECTED');
+            this.playCharacterAnimation(character, false);
+            this.nextPlayerTurn();
+        } else if (!this.p2) {
+            if (this.p1 !== character) {
+                this.p2 = character;
+                this.player2Character = character;
+                this.sound.play('CHARACTERSELECTED');
+                this.playCharacterAnimation(character, true);
+                this.nextPlayerTurn();
+            } else {
+                let errorMessageKey = this.language === 'en' ? 'THIS CHARACTER HAS ALREADY BEEN CHOSEN' : 'ESTE PERSONAJE YA SE HA ELEGIDO';
+                this.turnText.setText(errorMessageKey);
+            }
+        }
+    }
+    
+    
+    playIdleAnimation(character, flipX) {
+        
+        let idleAnimationKey = '';
+        let frameNumbers = [];
+        switch (character) {
+            case 'Zeus':
+                idleAnimationKey = 'idleZeus';
+                frameNumbers = this.anims.generateFrameNumbers('zeusselect', { start: 9, end: 19 });
+                break;
+            case 'Poseidon':
+                idleAnimationKey = 'idlePoseidon';
+                frameNumbers = this.anims.generateFrameNumbers('poseidonselect', { start: 9, end: 20 });
+                break;
+            case 'Hades':
+                idleAnimationKey = 'idleHades';
+                frameNumbers = this.anims.generateFrameNumbers('hadesselect', { start: 13, end: 20 });
+                break;
+        }
+    
+        const animationConfig = {
+            key: idleAnimationKey,
+            frames: frameNumbers,
+            frameRate:10,
+            repeat: -1
+        };
+    
+        this.anims.create(animationConfig);
+    
+        const characterSprite = this.add.sprite(this.cameras.main.centerX, this.cameras.main.centerY+20, character).setScale(4).setOrigin(0.5);
+    
+        if (flipX) {
+            characterSprite.flipX = true;
+        }
+    
+        characterSprite.on('animationcomplete', () => {
+            this.playIdleAnimation(character, flipX);
+        });
+    
+        characterSprite.anims.play(idleAnimationKey, true);
+    }
+    
+    nextPlayerTurn() {
+        if (!this.p1) {
+            let player1TextKey = this.language === 'en' ? 'PLAYER 1 CHOOSE' : 'JUGADOR 1 ELIGE';
+            this.turnText.setText(player1TextKey);
+        } else if (!this.p2) {
+            let player2TextKey = this.language === 'en' ? 'PLAYER 2 CHOOSE' : 'JUGADOR 2 ELIGE';
+            this.turnText.setText(player2TextKey);
+        } else {
+            console.log('Player 1 has chosen: ' + this.p1);
+            console.log('Player 2 has chosen: ' + this.p2);
+    
+            // Habilitar botones de selección
+            this.enableCharacterSelectionButtons();
+    
+            // Mostrar mensaje de ambos jugadores han elegido
+            let fightTextKey = this.language === 'en' ? 'LET\'S FIGHT!' : '¡A PELEAR!';
+            this.turnText.setText(fightTextKey);
+    
+            // Iniciar cuenta atrás solo una vez
+            if (!this.countdownStarted) {
+                // Marcar que se ha iniciado la cuenta atrás para evitar que se inicie nuevamente
+                this.countdownStarted = true;
+                // Iniciar cuenta atrás
+                this.startCountdown();
+            }
+        }
+    }
+    
+    
+    playCharacterAnimation(character, flipX) {
+        let spritesheetKey = '';
+        let animationKey = '';
+        let frameRate = 15;
+        let repeat = 0;
+        let frameNumbers = [];
+        switch (character) {
+            case 'Zeus':
+                spritesheetKey = 'zeusselect';
+                animationKey = 'selectzeus';
+                frameRate = 10;
+                frameNumbers = this.anims.generateFrameNumbers('zeusselect', { start: 0, end: 20 });
+                break;
+            case 'Poseidon':
+                spritesheetKey = 'poseidonselect';
+                animationKey = 'selectposeidon';
+                frameRate = 10;
+                frameNumbers = this.anims.generateFrameNumbers('poseidonselect', { start: 0, end: 20 });
+                break;
+            case 'Hades':
+                spritesheetKey = 'hadesselect';
+                animationKey = 'selecthades';
+                frameRate = 10;
+                frameNumbers = this.anims.generateFrameNumbers('hadesselect', { start: 0, end: 20 });
+                break;
+        }
+    
+        const characterSprite = this.add.sprite(this.cameras.main.centerX, this.cameras.main.centerY + 20, spritesheetKey).setScale(4).setOrigin(0.5);
+    
+        if (flipX) {
+            characterSprite.flipX = true;
+        }
+    
+        const animationConfig = {
+            key: animationKey,
+            frames: frameNumbers,
+            frameRate: frameRate,
+            repeat: repeat
+        };
+    
+        this.anims.create(animationConfig);
+    
+        characterSprite.on('animationcomplete', () => {
+            characterSprite.destroy(); // Destruir el sprite al completar la animación
+            this.nextPlayerTurn(); // Cambiar de turno habilitando los botones
+            this.playIdleAnimation(character, flipX);
+        });
+    
+        characterSprite.anims.play(animationKey);
+    }
+    
     disableCharacterSelectionButtons() {
-        // Desactivar eventos de clic para los botones de selección de personaje
+        // Desactivar botones de selección
         this.button1.disableInteractive();
         this.button2.disableInteractive();
         this.button3.disableInteractive();
     }
+    
+    enableCharacterSelectionButtons() {
+        // Habilitar botones de selección
+        this.button1.setInteractive();
+        this.button2.setInteractive();
+        this.button3.setInteractive();
+    }
+    
+    
 
     startCountdown() {
-        let counter = 5; // Contador de 5 segundos
+        let counter = 5;
         const screenWidth = this.cameras.main.width;
         const screenHeight = this.cameras.main.height;
-    
-        // Crear texto para mostrar el contador
-        let countdownText = this.add.text(screenWidth / 2, screenHeight * 0.6, 'Tiempo restante: ' + counter, { fontSize: '12px', fill: '#fff' }).setOrigin(0.5);
-    
-       
-    
+
+       // Añadir un ajuste vertical
+        let countdownText = this.add.text(screenWidth / 2, screenHeight * 0.6 + 70, counter, { fontSize: '30px', fill: '#db7125' }).setOrigin(0.5);
+
         // Actualizar el contador cada segundo
         let countdownTimer = this.time.addEvent({
             delay: 1000,
             callback: () => {
                 counter--;
-    
+
                 // Actualizar el texto del contador
-                countdownText.setText('Tiempo restante: ' + counter);
-    
+                countdownText.setText(counter);
+
                 // Verificar si el contador llega a cero
                 if (counter === 0) {
                     countdownTimer.remove(); // Detener el contador
-    
-                                 
-                      // Detener la música con un fadeout gradual
-                if (this.scene.get('InicioJuego').backgroundMusic) {
-                    this.tweens.add({
-                        targets: this.scene.get('InicioJuego').backgroundMusic,
-                        volume: 0,
-                        duration: 2000, // 2 segundos de fadeout
-                        onComplete: () => {
-                            this.scene.get('InicioJuego').backgroundMusic.stop();
-                        }
-                    });
-                }
-    
+                    cancelButton.disableInteractive();
+                    // Detener la música con un fadeout gradual
+                    if (this.scene.get('InicioJuego').backgroundMusic) {
+                        this.tweens.add({
+                            targets: this.scene.get('InicioJuego').backgroundMusic,
+                            volume: 0,
+                            duration: 2000, // 2 segundos de fadeout
+                            onComplete: () => {
+                                this.scene.get('InicioJuego').backgroundMusic.stop();
+                            }
+                        });
+                    }
+
                     // Iniciar animación de transición
                     this.cameras.main.fadeOut(2000); // Desvanece la pantalla durante 2 segundos
-    
+
                     // Después del desvanecimiento, iniciar la siguiente escena
                     this.cameras.main.once(Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE, () => {
-                        this.scene.start('Pelea', { p1: this.p1, p2: this.p2 });
+                        this.scene.start('Pelea', { language: this.language, p1: this.p1, p2: this.p2 , player1Character: this.player1Character, player2Character: this.player2Character });
                     });
                 }
             },
             callbackScope: this,
             loop: true // Hacer que el contador se repita
         });
+
+      // Botón para cancelar la selección de personajes y volver al inicio
+let cancelButtonText = this.language === 'en' ? 'Cancel Selection' : 'Cancelar Selección';
+let cancelButton = this.add.text(screenWidth / 2, screenHeight * 0.7 + 70, cancelButtonText, { fontSize: '13px', fill: '#db7125' }).setInteractive().setOrigin(0.5);
+
+// Guardar el tamaño de la fuente original y el tamaño aumentado
+const originalFontSize = 13;
+
+cancelButton.on('pointerdown', () => {
+    this.sound.play('BUTTONEF1');
+    this.p1 = null;
+    this.p2 = null;
     
-        // Botón para cancelar la selección de personajes y volver al inicio
-        let cancelButton = this.add.text(screenWidth / 2, screenHeight * 0.7, 'Cancelar Selección', { fontSize: '12px', fill: '#fff' }).setInteractive().setOrigin(0.5);
-        cancelButton.on('pointerdown', () => {
-            this.sound.play('BUTTONEF1');
-            this.p1 = null;
-            this.p2 = null;
-            this.scene.start('SelectorPersonaje'); // Volver a la pantalla de inicio
-        });
+    this.scene.start('SelectorPersonaje'); // Volver a la pantalla de inicio
+});
+
+// Cambiar el cursor al hacer hover sobre el botón
+cancelButton.on('pointerover', () => {
+    document.body.style.cursor = 'pointer';
+    cancelButton.setFontSize(originalFontSize + 1); // Aumentar el tamaño de la tipografía
+});
+
+// Restaurar el cursor y el tamaño de la tipografía al salir del hover
+cancelButton.on('pointerout', () => {
+    document.body.style.cursor = 'default';
+    cancelButton.setFontSize(originalFontSize); // Restaurar el tamaño de la tipografía
+});
+
+
     }
 }
 
@@ -257,10 +815,14 @@ class SelectorPersonaje extends Phaser.Scene {
 class Pelea extends Phaser.Scene {
     constructor() {
         super({ key: 'Pelea' });
+        this.shownQuestions = [];
+        this.questionHistory = [];
 
+        this.player1Character = null;
+        this.player2Character = null;
         // Variables para la vida de cada personaje
-        this.characterHealth = 100;
-        this.character2Health = 100;
+        this.characterHealth = 20;
+        this.character2Health = 20;
 
         // Variables para los personajes
         this.character = null;
@@ -293,7 +855,10 @@ class Pelea extends Phaser.Scene {
             Poseidon: 25
         };
     }
-
+    init(data) {
+        // Acceder al idioma seleccionado pasado desde la escena Idioma
+        this.language = data.language;
+    }
     preload() {
         // Cargar los assets necesarios para la escena de pelea
         this.load.spritesheet('Zeus', 'assets/character1_spritesheet.png', { frameWidth: 160, frameHeight: 90 });
@@ -311,12 +876,25 @@ class Pelea extends Phaser.Scene {
     this.load.audio('WRONG', 'audios/WRONG.mp3');
     this.load.audio('RIGHT', 'audios/RIGHT.mp3');
     this.load.audio('VICTORY', 'audios/VICTORYSOUND.mp3');
+    this.load.audio('zeusattack', 'audios/ZEUSATACK.mp3');
+    this.load.audio('poseidonattack', 'audios/POSEIDONATACK.mp3');
+    this.load.audio('hadesattack', 'audios/HADESATACK.mp3');
+    this.load.audio('OPEN', 'audios/OVERLAYOPEN.mp3');
+    this.load.audio('CLOSE', 'audios/OVERLAYCLOSE.mp3');
+
+
+
+    this.load.audio('HEALTH', 'audios/HEALTH.mp3');
 
         this.load.json('questions', 'data/data.json'); 
     }
 
     create(data) {
-      
+        this.player1Character = data.player1Character;
+        this.player2Character = data.player2Character;
+        console.log(`Personaje: ${this.player1Character}`);
+        console.log(`Personaje: ${this.player2Character}`);
+    
         const p1 = data.p1;
         const p2 = data.p2;
        // Crear textos para mostrar los puntos de vida de cada jugador
@@ -334,7 +912,7 @@ this.player2HealthText = this.add.text(700, 180, `Player 2 Health: ${this.charac
        
          // Reproducir música de fondo según el fondo aleatorio seleccionado
          if (randomBackground === 'background_hades') {
-            this.backgroundMusic = this.sound.add('music_hades', { loop: true, volume: 0.3 });
+            this.backgroundMusic = this.sound.add('music_hades', { loop: true, volume: 0.5 });
             
             this.backgroundMusic.play();
         } else if (randomBackground === 'background_poseidon') {
@@ -385,8 +963,8 @@ this.player2HealthText = this.add.text(700, 180, `Player 2 Health: ${this.charac
 
         // Cargar preguntas y respuestas
         this.questionsData = this.cache.json.get('questions');
-        this.player1Button = this.createPlayerButton(65, 297, 'p1', p1).setScale(2.3).setDepth(999);
-        this.player2Button = this.createPlayerButton(575, 297, 'p2', p2).setScale(2.3).setDepth(999);
+        this.player1Button = this.createPlayerButton(57, 300, 'p1', p1).setScale(2.3).setDepth(999);
+        this.player2Button = this.createPlayerButton(577, 300, 'p2', p2).setScale(2.3).setDepth(999);
 
              // Agregar evento de clic para los botones de jugador
              this.player1Button.on('pointerdown', () => {
@@ -496,6 +1074,7 @@ this.player2HealthText = this.add.text(700, 180, `Player 2 Health: ${this.charac
             this.checkWinner();
         }
     });
+   
 
  // Configurar estado inicial de los botones según el turno
  if (this.currentPlayer === 'p1') {
@@ -518,7 +1097,7 @@ this.player2HealthText = this.add.text(700, 180, `Player 2 Health: ${this.charac
 
     
     }
-
+    
     setAnimationsForCharacter(characterKey, sprite) {
         let posY = 180; // Posición y predeterminada
        
@@ -627,42 +1206,75 @@ this.player2HealthText = this.add.text(700, 180, `Player 2 Health: ${this.charac
     }
 
   
+    
 
-// Función para mostrar el overlay de la pregunta
-showQuestionOverlay(characterKey) {
-    // Verificar si ya se está mostrando una pregunta
-    if (this.isShowingQuestion) {
-        return;
+    translateText(textToTranslate, targetLanguage) {
+        return fetch('https://api.mymemory.translated.net/get?q=' + textToTranslate + '&langpair=es|' + targetLanguage)
+            .then(response => response.json())
+            .then(data => {
+                return data.responseData.translatedText;
+            });
     }
-    
-    // Obtener una pregunta aleatoria del JSON
-    const randomQuestion = Phaser.Math.RND.pick(this.questionsData);
-    
-    // Mostrar overlay con la pregunta y opciones
-    this.questionOverlay = this.add.image(this.sys.game.canvas.width / 2, this.sys.game.canvas.height / 2, 'overlay').setOrigin(0.5).setScale(3.4).setDepth(1100);
-    this.questionText = this.add.text(this.sys.game.canvas.width / 2, this.sys.game.canvas.height / 2 - 48, randomQuestion.pregunta, { fontFamily: 'BMmini', fontSize: 16, color: '#b35410', wordWrap: { width: 340 } }).setOrigin(0.5).setDepth(1101);
 
-   // Crear botones para las opciones de respuesta
-this.answerButtons = [];
-const startX = this.sys.game.canvas.width / 2 - 100; // Ajustar el inicio de la primera columna
-const startY = this.sys.game.canvas.height / 2 + 10; 
-randomQuestion.opciones.forEach((opcion, index) => {
-    const columnIndex = index % 2; // Calcular la columna actual
-    const rowIndex = Math.floor(index / 2); // Calcular la fila actual
-    const buttonX = startX + columnIndex * 200; // Calcular la coordenada x del botón
-    const buttonY = startY + rowIndex * 40; // Calcular la coordenada y del botón
-    const button = this.add.text(buttonX, buttonY, opcion, { fontFamily: 'BMmini', fontSize: 14, color: '#b35410' }).setOrigin(0.5).setInteractive().setDepth(1101);
-    button.on('pointerdown', () => {
-        this.processAnswer(characterKey, opcion, randomQuestion.respuesta_correcta);
-        this.removeQuestionOverlay(); // Eliminar el overlay después de responder
-    });
-    this.answerButtons.push(button);
-});
+    showQuestionOverlay(characterKey, language) {
+        // Verificar si ya se han mostrado todas las preguntas
+        if (this.shownQuestions.length === this.questionsData.length) {
+            // Si todas las preguntas se han mostrado, reiniciar el registro
+            this.shownQuestions = [];
+        }
 
-// Actualizar la variable de control
-this.isShowingQuestion = true;
+        // Obtener una pregunta aleatoria que aún no se ha mostrado
+        let availableQuestions = this.questionsData.filter(question => !this.shownQuestions.includes(question));
+        const randomQuestion = Phaser.Math.RND.pick(availableQuestions);
 
-}
+        // Agregar la pregunta actual al registro de preguntas mostradas
+        this.shownQuestions.push(randomQuestion);
+
+        // Determinar el texto de la pregunta y las opciones según el idioma
+        let questionText = randomQuestion.pregunta;
+        let options = randomQuestion.opciones;
+        if (language === 'en') {
+            // Traducir la pregunta y las opciones al inglés
+            questionText =  this.translateText(randomQuestion.pregunta, 'en');
+            options =  this.translateText(randomQuestion.opciones, 'en');
+        }
+
+        // Mostrar overlay con la pregunta y opciones
+        this.questionOverlay = this.add.image(this.sys.game.canvas.width / 2, this.sys.game.canvas.height / 2, 'overlay').setOrigin(0.5).setScale(3.4).setDepth(1100);
+        this.questionText = this.add.text(this.sys.game.canvas.width / 2, this.sys.game.canvas.height / 2 - 48, questionText, { fontFamily: 'BMmini', fontSize: 16, color: '#b35410', wordWrap: { width: 340 } }).setOrigin(0.5).setDepth(1101);
+
+        // Crear botones para las opciones de respuesta
+        this.answerButtons = [];
+        const startX = this.sys.game.canvas.width / 2 - 100; // Ajustar el inicio de la primera columna
+        const startY = this.sys.game.canvas.height / 2 + 10;
+        options.forEach((option, index) => {
+            const columnIndex = index % 2; // Calcular la columna actual
+            const rowIndex = Math.floor(index / 2); // Calcular la fila actual
+            const buttonX = startX + columnIndex * 200; // Calcular la coordenada x del botón
+            const buttonY = startY + rowIndex * 40; // Calcular la coordenada y del botón
+            const button = this.add.text(buttonX, buttonY, option, { fontFamily: 'BMmini', fontSize: 14, color: '#b35410' }).setOrigin(0.5).setInteractive().setDepth(1101);
+            button.on('pointerdown', () => {
+                this.processAnswer(characterKey, option, randomQuestion.respuesta_correcta);
+                this.removeQuestionOverlay(); // Eliminar el overlay después de responder
+            });
+            this.answerButtons.push(button);
+        });
+
+        // Guardar la pregunta en el historial de preguntas, incluyendo el resumen
+        this.questionHistory.push({
+            pregunta: randomQuestion.pregunta,
+            respuesta_correcta: randomQuestion.respuesta_correcta,
+            opciones: randomQuestion.opciones,
+            respuesta_jugador: null,
+            resumen: randomQuestion.resumen,
+            currentPlayer: this.currentPlayer
+        });
+
+        // Actualizar la variable de control
+        this.isShowingQuestion = true;
+    }
+
+
 
 // Función para eliminar el overlay de la pregunta
 removeQuestionOverlay() {
@@ -672,45 +1284,49 @@ removeQuestionOverlay() {
     this.isShowingQuestion = false; // Actualizar la variable de control
 }
 
-
 // Función para procesar la respuesta del jugador
 processAnswer(characterKey, selectedAnswer, correctAnswer) {
     // Desactivar interactividad de los botones de respuesta
     this.answerButtons.forEach(button => button.disableInteractive());
 
+    // Encontrar la pregunta actual en el historial de preguntas
+    const currentQuestion = this.questionHistory[this.questionHistory.length - 1];
+
+    // Registrar la respuesta del jugador en el historial de preguntas
+    currentQuestion.respuesta_jugador = selectedAnswer;
+
     // Al responder correctamente
     if (selectedAnswer === correctAnswer) {
-        this.sound.play('RIGHT',{ volume: 0.5 });
+        this.sound.play('RIGHT', { volume: 0.5 });
 
         // Ejecutar animación de ataque
         this.attackAnimation(characterKey, this.currentPlayer === 'p1' ? this.character : this.character2);
     } else {
-        this.sound.play('WRONG',{ volume: 0.5 });
+        this.sound.play('WRONG', { volume: 0.5 });
 
         // Cambiar de turno directamente sin atacar
         this.currentPlayer = this.currentPlayer === 'p1' ? 'p2' : 'p1';
         this.showTurnOverlay();
         // Actualizar la interactividad de los botones según el nuevo turno
         if (this.currentPlayer === 'p1') {
-           
+
             this.player1Button.setAlpha(1); // Activar el botón del jugador 1
             this.player2Button.setAlpha(0.5); // Desactivar el botón del jugador 2
             this.player2Button.anims.stop().setFrame(0); // Detener la animación del botón del jugador 2
             this.player1Button.anims.play(`button_idle_p1`, true); // Reproducir la animación idle del botón del jugador 1
-    
+
         } else {
-           
+
             this.player1Button.setAlpha(0.5); // Desactivar el botón del jugador 1
             this.player2Button.setAlpha(1); // Activar el botón del jugador 2
             this.player1Button.anims.stop().setFrame(0); // Detener la animación del botón del jugador 1
             this.player2Button.anims.play(`button_idle_p2`, true); // Reproducir la animación idle del botón del jugador 2
-       
+
         }
     }
 }
 
-    
-    attackAnimation(characterKey, characterSprite) {
+attackAnimation(characterKey, characterSprite) {
     // Activar la bandera de ataque en progreso
     this.attackInProgress = true;
 
@@ -731,12 +1347,18 @@ processAnswer(characterKey, selectedAnswer, correctAnswer) {
     switch (characterKey) {
         case 'Zeus':
             frameToReceive = 8;
+            // Reproducir el sonido de ataque de Zeus
+            this.sound.play('zeusattack',{ volume: 0.75 });
             break;
         case 'Poseidon':
             frameToReceive = 27;
+            // Reproducir el sonido de ataque de Poseidón
+            this.sound.play('poseidonattack',{ volume: 0.75 });
             break;
         case 'Hades':
             frameToReceive = 25;
+            // Reproducir el sonido de ataque de Hades
+            this.sound.play('hadesattack',{ volume: 1 });
             break;
         default:
             frameToReceive = 0;
@@ -807,28 +1429,41 @@ processAnswer(characterKey, selectedAnswer, correctAnswer) {
 
 reduceCharacterHealth(damage) {
     this.characterHealth -= damage;
-   
+    this.sound.play('HEALTH');
+
     this.updateHealthBar1(); // Actualizar la barra de vida del jugador 1
     this.player1HealthText.setText(`Player 1 Health: ${this.characterHealth}`); // Actualizar el texto de los puntos de vida del jugador 1
 }
 
 reduceCharacter2Health(damage) {
     this.character2Health -= damage;
-    
+    this.sound.play('HEALTH');
+
     this.updateHealthBar2(); // Actualizar la barra de vida del jugador 2
     this.player2HealthText.setText(`Player 2 Health: ${this.character2Health}`); // Actualizar el texto de los puntos de vida del jugador 2
-}
-// Función para mostrar el overlay de turno
-showTurnOverlay() {
-  
+}showTurnOverlay() {
+    this.sound.play('OPEN',{volume:0.4});
+
+    // Verificar si uno de los jugadores ha perdido toda su vida
+    if (this.characterHealth <= 0 || this.character2Health <= 0) {
+        return; // No mostrar el overlay si uno de los jugadores ha perdido
+    }
+
     // Deshabilitar interactividad de los botones durante la visualización del overlay
     this.player1Button.disableInteractive();
     this.player2Button.disableInteractive();
     
-    // Mostrar overlay de turno con el jugador actual
-    const overlayText = this.currentPlayer === 'p1' ? 'JUGADOR 1' : 'JUGADOR 2';
-    const overlayMessage = `${overlayText}, TU TURNO`;
+    let overlayText = '';
+    let overlayMessage = '';
 
+    if (this.language === 'en') {
+        overlayText = this.currentPlayer === 'p1' ? 'PLAYER 1' : 'PLAYER 2';
+        overlayMessage = 'YOUR TURN';
+    } else {
+        overlayText = this.currentPlayer === 'p1' ? 'JUGADOR 1' : 'JUGADOR 2';
+        overlayMessage = 'TU TURNO';
+    }
+   
     // Crear un contenedor para el overlay
     const overlayContainer = this.add.container(0, 0).setDepth(1000);
 
@@ -837,11 +1472,13 @@ showTurnOverlay() {
     overlayContainer.add(overlayBackground);
 
     // Mostrar overlay con el texto
-    const overlayTextObject = this.add.text(this.sys.game.canvas.width / 2, this.sys.game.canvas.height / 2, overlayMessage, { fontFamily: 'BMmini', fontSize: 22, color: '#b35410' }).setOrigin(0.5);
+    const overlayTextObject = this.add.text(this.sys.game.canvas.width / 2, this.sys.game.canvas.height / 2, overlayText + ', ' + overlayMessage, { fontFamily: 'BMmini', fontSize: 22, color: '#b35410' }).setOrigin(0.5);
     overlayContainer.add(overlayTextObject);
 
     // Configurar duración del overlay (3 segundos)
     this.time.delayedCall(1500, () => {
+        this.sound.play('CLOSE',{volume:0.4});
+
         // Eliminar el contenedor del overlay
         overlayContainer.destroy();
 
@@ -859,6 +1496,7 @@ showTurnOverlay() {
         this.player2Button.disableInteractive();
     }
 }
+
 
 
 
@@ -925,7 +1563,7 @@ showTurnOverlay() {
 
         if (winner !== '') {
             // Mostrar el mensaje de ganador
-            this.scene.start('OverlayMessage', { winner: winner }); // Volver a la pantalla de inicio
+            this.scene.start('OverlayMessage', { winner: winner,language: this.language, player1Character: this.player1Character, player2Character: this.player2Character  }); // Volver a la pantalla de inicio
             return;
         }
     }
@@ -935,12 +1573,14 @@ showTurnOverlay() {
         this.healthBar1.once('animationcomplete', () => {
             if (this.healthBar1.anims.currentAnim.key === 'BARRA1_0') {
                 if (this.characterHealth <= 0) {
-                    this.showTurnOverlay.setAlpha(0)
-
-    
-                    this.scene.get('Pelea').backgroundMusic.stop();
-                    this.scene.start('OverlayMessage', { winner: 'Jugador 2' });
-                    this.scene.stop('Pelea');
+                    // Detener todo el juego
+                    this.stopGame();
+                    // Mostrar el mensaje de ganador para el jugador 2
+                    
+                    this.cameras.main.fadeOut(500); // Transición de desvanecimiento
+                    this.cameras.main.once('camerafadeoutcomplete', () => {
+                        this.scene.start('OverlayMessage', { winner: 'Jugador 2',language: this.language, player1Character: this.player1Character, player2Character: this.player2Character  });
+                    });
                 }
             }
         });
@@ -949,17 +1589,23 @@ showTurnOverlay() {
         this.healthBar2.once('animationcomplete', () => {
             if (this.healthBar2.anims.currentAnim.key === 'BARRA2_0') {
                 if (this.character2Health <= 0) {
-                   this.showTurnOverlay.setAlpha(0)
-    
-                    this.scene.get('Pelea').backgroundMusic.stop();
-                    this.scene.start('OverlayMessage', { winner: 'Jugador 1' });
-                    this.scene.stop('Pelea');
+                    // Detener todo el juego
+                    this.stopGame();
+                    // Mostrar el mensaje de ganador para el jugador 1
+                    this.cameras.main.fadeOut(500); // Transición de desvanecimiento
+                    this.cameras.main.once('camerafadeoutcomplete', () => {
+                        this.scene.start('OverlayMessage', { winner: 'Jugador 1' ,language: this.language, player1Character: this.player1Character, player2Character: this.player2Character });
+                    });
                 }
             }
         });
     }
     
-    
+    stopGame() {
+        // Detener todas las escenas
+        this.scene.stop('Pelea');
+      
+    }
     
 
     update() {
@@ -974,57 +1620,410 @@ showTurnOverlay() {
 class OverlayMessage extends Phaser.Scene {
     constructor() {
         super({ key: 'OverlayMessage' });
+
+        // Definir las variables nextButton y prevButton como propiedades de la clase
+        this.nextButton = null;
+        this.prevButton = null;
+        this.player1Character = null;
+        this.player2Character = null;
+        this.statisticsText = null; // Variable para almacenar el texto "Ver Estadísticas"
+
     }
 
     preload() {
         this.load.audio('VICTORY', 'audios/VICTORYSOUND.mp3');
+        this.load.json('questions', 'data/data.json');
+        this.load.spritesheet('Hades_spritesheet', 'assets/Hades_spritesheet.png', { frameWidth: 160, frameHeight: 90 });
+        this.load.spritesheet('Zeus_spritesheet', 'assets/Zeus_spritesheet.png', { frameWidth: 160, frameHeight: 90 });
+        this.load.spritesheet('Poseidon_spritesheet', 'assets/Poseidon_spritesheet.png', { frameWidth: 160, frameHeight: 90 });
+        this.load.spritesheet('Fondo_detalle', 'assets/DETALLEFONDO.png', { frameWidth: 160, frameHeight: 90 });
+        this.load.spritesheet('Fondo_stats', 'assets/Fondo_stats.png', { frameWidth: 160, frameHeight: 90 });
+
     }
-
+    init(data) {
+        // Acceder al idioma seleccionado pasado desde la escena Idioma
+        this.language = data.language;
+    }
     create(data) {
+         // Eliminar todo lo que hay en la pantalla
+         this.children.removeAll();
+        // Detener la música con un fadeout gradual
+        if (this.scene.get('Pelea').backgroundMusic) {
+            this.scene.get('Pelea').backgroundMusic.stop();
+        }
 
-           // Detener la música con un fadeout gradual
-           if (this.scene.get('Pelea').backgroundMusic) {
+        let winner = data.winner; // Obtener el ganador de los datos pasados desde la escena anterior
+        this.player1Character = data.player1Character;
+        this.player2Character = data.player2Character;
+    
+        // Dependiendo del ganador, mostrar el personaje correspondiente
+        let winnerSpriteSheet = '';
+
+        if (winner === 'Jugador 1') {
+            console.log(`Personaje: ${this.player1Character}`);
+            winnerSpriteSheet = `${this.player1Character}_spritesheet`;
+        } else if (winner === 'Jugador 2') {
+            console.log(`Personaje: ${this.player2Character}`);
+            winnerSpriteSheet = `${this.player2Character}_spritesheet`;
+        }
+
+        // Crear el fondo con el spritesheet del ganador
+        const background = this.add.sprite(this.sys.game.canvas.width / 2, this.sys.game.canvas.height / 2, winnerSpriteSheet).setDepth(1000);
             
-                    this.scene.get('Pelea').backgroundMusic.stop();
-           }
-        const winner = data.winner; // Obtener el ganador de los datos pasados desde la escena anterior
+        // Escalar el fondo para que ocupe todo el canvas manteniendo la proporción del formato 160x90
+        const scaleX = this.sys.game.canvas.width / 160;
+        const scaleY = this.sys.game.canvas.height / 90;
+        const scale = Math.max(scaleX, scaleY); // Usar el máximo de los dos valores para mantener la proporción
+        background.setScale(scale);
 
+        // Establecer el número de fotogramas por segundo para la animación
+        background.anims.create({
+            key: 'backgroundAnimation',
+            frames: this.anims.generateFrameNumbers(winnerSpriteSheet, { start: 0, end: 41 }), // Suponiendo que la animación tiene 12 frames
+            frameRate: 12,
+            repeat: 0 // Repetir una vez y luego detenerse
+        });
 
-        // Eliminar todo lo que hay en la pantalla
-        this.children.removeAll();
+        // Establecer el número de fotogramas por segundo para la animación
+        background.anims.create({
+            key: 'backgroundIdle',
+            frames: this.anims.generateFrameNumbers(winnerSpriteSheet, { start: 30, end: 41 }), // Suponiendo que la animación tiene 12 frames
+            frameRate: 10,
+            repeat: -1 // Repetir en bucle
+        });
 
+        // Reproducir la animación 'backgroundAnimation'
+        background.anims.play('backgroundAnimation');
+
+        // Escuchar el evento 'complete' de la animación 'backgroundAnimation'
+        background.once('animationcomplete-backgroundAnimation', () => {
+            // Al terminar la animación 'backgroundAnimation', reproducir en bucle la animación 'backgroundIdle'
+            background.anims.play('backgroundIdle');
+        });
+
+        // Crear el texto "Ver Estadísticas"
+        this.statisticsText = this.add.text(this.sys.game.canvas.width / 2 +120, this.sys.game.canvas.height - 34, 'Ver Estadísticas', { fontFamily: 'BMmini', fontSize: 18, color: '#b35410' }).setOrigin(0.5).setInteractive().setDepth(999);
+        this.statisticsText.setVisible(false); // Ocultar inicialmente el texto
+
+        // Asociar evento al clic del texto "Ver Estadísticas"
+        this.statisticsText.on('pointerdown', () => {
+            this.showStatistics();
+            // Cambiar la sprite sheet del fondo y su profundidad
+        background.setTexture('Fondo_stats').setDepth(0);
+
+        // Crear una nueva animación para el fondo_detalle
+        background.anims.create({
+            key: 'backgroundStats',
+            frames: this.anims.generateFrameNumbers('Fondo_stats', { start: 0, end: 3 }), // Ajusta el rango de frames según tu spritesheet
+            frameRate: 12,
+            repeat: -1
+        });
+        // Reproducir la animación infinita
+        background.anims.play('backgroundStats');
+        });
+
+        this.statisticsText.on('pointerout', () => {
+            document.body.style.cursor = 'default';
+        });
+        
+        this.statisticsText.on('pointerover', () => {
+            document.body.style.cursor = 'pointer';
+        });
+
+        // Ajustar el fondo para que esté centrado en ambos ejes
+        background.setOrigin(0.5);
         // Establecer el fondo en negro
-        this.cameras.main.setBackgroundColor('#000000');
-
+        this.cameras.main.setBackgroundColor('#0d0600');
         // Mostrar el mensaje de ganador
-        const winnerText = this.add.text(this.sys.game.canvas.width / 2, this.sys.game.canvas.height / 2, `${winner} ha ganado!`, { fontFamily: 'BMmini', fontSize: 48, color: '#ffffff' }).setOrigin(0.5);
-        winnerText.setDepth(1001);
+      // Define un diccionario de traducción
+// Define un diccionario de traducción
+const translations = {
+    'HA GANADO!': 'HAS WON!',
+    'Ver Detalles': 'See Details',
+    'de Partida': 'of Match',
+    'JUGADOR 1': 'PLAYER 1',
+    'JUGADOR 2': 'PLAYER 2',
+    'ha ganado': 'HAS WON'
+};
 
+// Función para traducir texto al inglés
+function translateToEnglish(text) {
+    return translations[text] || text; // Devuelve la traducción si existe, de lo contrario, devuelve el texto original
+}
+
+// Determina el texto del ganador en función de si es jugador 1 o jugador 2
+const winnerText = this.add.text(this.sys.game.canvas.width / 2, this.sys.game.canvas.height / 2 -20, `${translateToEnglish(winner.toUpperCase())} ${translateToEnglish('ha ganado')}!`, { fontFamily: 'BMmini', fontSize: 48, color: '#b35410' }).setOrigin(0.5);
+winnerText.setDepth(900);
+
+// Crear el botón de detalles
+const detailsButton = this.add.text(this.sys.game.canvas.width / 2, this.sys.game.canvas.height / 2 + 108, [translateToEnglish('Ver Detalles'), translateToEnglish('de Partida')], {
+    fontFamily: 'BMmini',
+    fontSize: 20,
+    color: '#b35410',
+    wordWrap: { width: 160, useAdvancedWrap: true },
+    align: 'center'
+}).setOrigin(0.5);
+detailsButton.setDepth(902);
+
+        // Establecer el estilo del botón de detalles
+        detailsButton.setStyle({ color: '#b35410', padding: { x: 10, y: 5 } }).setInteractive().setDepth(990).setAlpha(1);
+
+        this.sound.play('VICTORY', { volume: 0.4 });
+
+        // Al hacer clic en el botón de detalles
+        detailsButton.on('pointerover', () => {
+            document.body.style.cursor = 'pointer';
+
+            });
+        detailsButton.on('pointerout', () => {
+            document.body.style.cursor = 'default';
+
+            });
+        detailsButton.on('pointerdown', () => {
+        // Cambiar la sprite sheet del fondo y su profundidad
+        background.setTexture('Fondo_detalle').setDepth(0);
+
+        // Crear una nueva animación para el fondo_detalle
+        background.anims.create({
+            key: 'backgroundDetail',
+            frames: this.anims.generateFrameNumbers('Fondo_detalle', { start: 0, end: 3 }), // Ajusta el rango de frames según tu spritesheet
+            frameRate: 12,
+            repeat: -1
+        });
+
+        // Reproducir la animación infinita
+        background.anims.play('backgroundDetail');
+
+        this.showQuestionSlides();
+        // Ocultar el resto de la interfaz
+        winnerText.setVisible(false);
+        detailsButton.setVisible(false);
+        });
+
+
+
+      
+    }
+   
+    
+    showQuestionSlides() {
+        // Create a list to store question and answer slides
+        this.questionSlides = [];
+    
+        // Iterate through the question and answer history and create slides
+        this.scene.get('Pelea').questionHistory.forEach((questionData, index) => {
+            const slide = this.add.container(this.sys.game.canvas.width / 2, this.sys.game.canvas.height / 2);
+            const questionText = this.add.text(125, -105, questionData.pregunta, { fontFamily: 'BMmini', fontSize: 20, color: '#b35410', wordWrap: { width: 335 } }).setOrigin(0.5);
+            const currentPlayerText = this.add.text(-190, -139, [
+                'Respondió:',
+                `${questionData.currentPlayer === 'p1' ? 'Player 1' : 'Player 2'}`
+            ], { 
+                fontFamily: 'BMmini', 
+                fontSize: 18, 
+                color: '#b35410',
+                align: 'center', 
+            }).setOrigin(0.5);
+    
+            // Getting the corresponding character sprite sheet for the player of this slide
+            const player1CharacterSprite = `${this.player1Character.toLowerCase()}select`;
+            const player2CharacterSprite = `${this.player2Character.toLowerCase()}select`;
+    
+            // Creating the sprite for the character
+            const characterSprite = this.add.sprite(48, 40, questionData.currentPlayer === 'p1' ? player1CharacterSprite : player2CharacterSprite).setScale(4).setOrigin(0.5);
+    
+            // Defining the idle animation of the character based on the character type of both players
+            let idleAnimationKey;
+            let frameNumbers;
+    
+            switch (questionData.currentPlayer === 'p1' ? this.player1Character : this.player2Character) {
+                case 'Zeus':
+                    idleAnimationKey = 'idleZeus';
+                    frameNumbers = this.anims.generateFrameNumbers('zeusselect', { start: 9, end: 19 });
+                    break;
+                case 'Poseidon':
+                    idleAnimationKey = 'idlePoseidon';
+                    frameNumbers = this.anims.generateFrameNumbers('poseidonselect', { start: 9, end: 20 });
+                    break;
+                case 'Hades':
+                    idleAnimationKey = 'idleHades';
+                    frameNumbers = this.anims.generateFrameNumbers('hadesselect', { start: 13, end: 20 });
+                    break;
+                default:
+                    idleAnimationKey = 'idleDefault';
+                    frameNumbers = this.anims.generateFrameNumbers(characterSpriteSheet, { start: 0, end: 9 });
+                    break;
+            }
+    
+            // Creating the idle animation for the character sprite
+            characterSprite.anims.create({
+                key: idleAnimationKey,
+                frames: frameNumbers,
+                frameRate: 10,
+                repeat: -1
+            });
+    
+            characterSprite.anims.play(idleAnimationKey); // Play the idle animation
+    
+            const answerComparisonText = this.add.text(120, -6, `${questionData.respuesta_jugador || 'Not answered'} - ${questionData.respuesta_jugador === questionData.respuesta_correcta ? 'Correct answer' : 'Incorrect answer'}`, { fontFamily: 'BMmini', fontSize: 16, color: '#b35410', wordWrap: { width: 600 } }).setOrigin(0.5);
+            const summaryText = this.add.text(122, 70, `Correct answer was: ${questionData.respuesta_correcta}. ${questionData.resumen}`, { 
+                fontFamily: 'BMmini', 
+                fontSize: 16, 
+                color: '#b35410', 
+                wordWrap: { width: 370 },
+                align: 'left',
+                padding: { top: 0, bottom: 0 } 
+            }).setOrigin(0.5);
+    
+            // Translate if language is English
+            if (this.language === 'en') {
+                currentPlayerText.text = currentPlayerText.text.replace('Respondió:', 'Answered:');
+                answerComparisonText.text = answerComparisonText.text.replace('Resp. Correcta', 'Correct answer').replace('Resp. Incorrecta', 'Incorrect answer');
+                summaryText.text = summaryText.text.replace('La respuesta correcta era:', 'The correct answer was:').replace('resumen', 'summary');
+            }
+    
+            slide.add([currentPlayerText, questionText, answerComparisonText, summaryText, characterSprite]);
+            slide.setVisible(false);
+    
+            this.questionSlides.push(slide);
+        });
+    
+        // Show the first slide
+        this.currentSlideIndex = 0;
+        this.questionSlides[this.currentSlideIndex].setVisible(true);
+    
+        // Set up the next button
+        this.nextButton = this.add.rectangle(577, 303, 50, 50, 0xffffff, 0).setInteractive().setOrigin(0);
+    
+        // Set up the previous button
+        this.prevButton = this.add.rectangle(250, 303, 50, 50, 0xffffff, 0).setInteractive().setOrigin(0);
+    
+        // Associate events with the buttons
+        this.nextButton.on('pointerdown', () => {
+            this.showNextSlide();
+        });
+        this.nextButton.on('pointerover', () => {
+            document.body.style.cursor = 'pointer';
+        });
+        this.nextButton.on('pointerout', () => {
+            document.body.style.cursor = 'default';
+        });
+        this.prevButton.on('pointerdown', () => {
+            this.showPrevSlide();
+        });
+        this.prevButton.on('pointerover', () => {
+            document.body.style.cursor = 'pointer';
+        });
+        this.prevButton.on('pointerout', () => {
+            document.body.style.cursor = 'default';
+        });
+    }
+    
+    
+    
+    
+    showNextSlide() {
+        if (this.currentSlideIndex < this.questionSlides.length - 1) {
+            this.questionSlides[this.currentSlideIndex].setVisible(false);
+            this.currentSlideIndex++;
+            this.questionSlides[this.currentSlideIndex].setVisible(true);
+    
+            // Verificar si estamos en la última diapositiva
+            if (this.currentSlideIndex === this.questionSlides.length - 1) {
+                this.statisticsText.setVisible(true); // Mostrar el texto "Ver Estadísticas"
+            } else {
+                this.statisticsText.setVisible(false); // Ocultar el texto en otras diapositivas
+            }
+        } else {
+            // Estás en la última diapositiva
+        }
+    }
+    
+    showPrevSlide() {
+        if (this.currentSlideIndex > 0) {
+            this.questionSlides[this.currentSlideIndex].setVisible(false);
+            this.currentSlideIndex--;
+            this.questionSlides[this.currentSlideIndex].setVisible(true);
+             // Verificar si estamos en la última diapositiva
+             if (this.currentSlideIndex === this.questionSlides.length - 1) {
+                this.statisticsText.setVisible(true); // Mostrar el texto "Ver Estadísticas"
+            } else {
+                this.statisticsText.setVisible(false); // Ocultar el texto en otras diapositivas
+            }
+        }
+    }
+    
+    
+
+    showStatistics() {
+        this.statisticsText.setVisible(false); 
+        // Ocultar los botones de siguiente y anterior
+        this.nextButton.setVisible(false);
+        this.prevButton.setVisible(false);
+    
+        // Eliminar la última diapositiva
+        this.questionSlides[this.currentSlideIndex].destroy();
+        this.questionSlides.pop();
+    
+        // Calcular y mostrar las estadísticas
+        const statsPlayer1 = this.generateStatsTable('Jugador 1', this.calculateStats('p1'));
+        const statsPlayer2 = this.generateStatsTable('Jugador 2', this.calculateStats('p2'));
+    
+        // Posicionar las tablas de estadísticas
+        statsPlayer1.setPosition(126, 165); 
+        statsPlayer2.setPosition(510, 165); 
+    
+        // Crear el botón de volver a detalles
+        const continueButton = this.add.text(this.sys.game.canvas.width / 2, this.sys.game.canvas.height/2 - 20, 'Volver a detalles', { fontFamily: 'BMmini', fontSize: 14, color: '#b35410' , align: 'center'}).setOrigin(0.5).setDepth(1000).setInteractive();
+        continueButton.on('pointerdown', () => {
+            this.scene.start('OverlayMessage');
+        });
+    
         // Crear el botón de reinicio
-        const restartButton = this.add.text(this.sys.game.canvas.width / 2, this.sys.game.canvas.height / 2 + 100, 'Restart', { fontFamily: 'BMmini', fontSize: 32, color: '#ffffff' }).setOrigin(0.5);
-        restartButton.setDepth(1002);
-
-        // Establecer el estilo del botón de reinicio
-        restartButton.setStyle({ color: '#ffffff', padding: { x: 10, y: 5 } }).setInteractive().setDepth(1090).setAlpha(1);
-
-        // Cambiar el cursor al pasar el ratón sobre el botón de reinicio
+        const restartButton = this.add.text(this.sys.game.canvas.width / 2, this.sys.game.canvas.height / 2 + 28, 'Reiniciar juego', { fontFamily: 'BMmini', fontSize: 14, color: '#b35410' , align: 'center'}).setOrigin(0.5).setDepth(1000).setInteractive();
+    
+        // Cambiar el cursor al pasar el ratón sobre los botones
+        continueButton.on('pointerover', () => {
+            continueButton.setStyle({cursor: 'pointer'});
+        });
         restartButton.on('pointerover', () => {
-            restartButton.setStyle({ color: '#ffffff', cursor: 'pointer' }).setInteractive().setDepth(1090).setAlpha(1);
+            restartButton.setStyle({cursor: 'pointer'});
         });
-
-        // Restaurar el estilo cuando el cursor deje el botón de reinicio
-        restartButton.on('pointerout', () => {
-            restartButton.setStyle({ color: '#ffffff', cursor: 'default' }).setInteractive().setDepth(1090).setAlpha(1);
-        });
-
-        this.sound.play('VICTORY', { volume: 0.5 });
-
+    
+        
+    
+        // Al hacer clic en el botón de reinicio
         restartButton.on('pointerdown', () => {
             // Recargar la página web completa
             window.location.reload();
         });
     }
+    
+    
+
+    
+    calculateStats(playerKey) {
+        const questionHistory = this.scene.get('Pelea').questionHistory;
+        const answeredQuestions = questionHistory.filter(question => question.respuesta_jugador !== null && question.currentPlayer === playerKey);
+        const correctAnswers = answeredQuestions.filter(question => question.respuesta_jugador === question.respuesta_correcta);
+        const accuracy = (correctAnswers.length / answeredQuestions.length) * 100 || 0;
+    
+        return {
+            answeredQuestions: answeredQuestions.length,
+            correctAnswers: correctAnswers.length,
+            accuracy: accuracy.toFixed(2) + '%'
+        };
+    }
+
+    generateStatsTable(playerName, stats) {
+        const table = this.add.text(0, 0, `${playerName}\n\n\n\n\nEstadísticas\nde las preguntas\n\n Contestó: ${stats.answeredQuestions}\n\nAcertó: ${stats.correctAnswers}\n\nPorcentaje de \n acierto: ${stats.accuracy}`, { fontFamily: 'BMmini', fontSize: 16, color: '#b35410', align: 'center' , lineSpacing: -4});
+        table.setOrigin(0.5);
+        return table;
+    }
+
+   
 }
+
+
 
 const config = {
     type: Phaser.WEBGL,
@@ -1036,7 +2035,7 @@ const config = {
         mode: Phaser.Scale.FIT,
         autoCenter: Phaser.Scale.CENTER_BOTH
     },
-    scene: [InicioJuego, SelectorPersonaje, Pelea, OverlayMessage] // Añadir la escena SelectorPersonaje al array de escenas
+    scene: [InicioJuego, Idioma, SelectorPersonaje, Pelea, OverlayMessage] // Añadir la escena SelectorPersonaje al array de escenas
 };
 
 let game = new Phaser.Game(config);

@@ -3,287 +3,734 @@
       "id": 1,
       "pregunta": "¿Quién es el dios del cielo y el trueno en la mitología griega?",
       "opciones": [ "Poseidón", "Hades", "Apolo", "Zeus"],
-      "respuesta_correcta": "Zeus"
+      "respuesta_correcta": "Zeus",
+      "resumen": "Zeus es el rey de los dioses olímpicos y el principal dios del panteón griego. Gobierna el cielo y el trueno, siendo una figura central en la mitología por su poder y papel en la creación y el destino de los mortales."
+
+      
     },
     {
       "id": 2,
       "pregunta": "¿Quién es el dios del mar y los terremotos en la mitología griega?",
       "opciones": [ "Zeus", "Hades","Poseidón", "Apolo"],
-      "respuesta_correcta": "Poseidón"
+      "respuesta_correcta": "Poseidón",
+      "resumen": "Poseidón es el dios del mar, los terremotos y los caballos en la mitología griega. Su dominio sobre los océanos lo convierte en una figura poderosa y a menudo impredecible, asociada con la furia del mar y el control sobre los elementos acuáticos."
+
     },
     {
       "id": 3,
       "pregunta": "¿Quién es el dios del inframundo en la mitología griega?",
       "opciones": ["Hades", "Zeus", "Atenea", "Dionisio"],
-      "respuesta_correcta": "Hades"
+      "respuesta_correcta": "Hades",
+      "resumen": "Hades es el señor del inframundo y el mundo de los muertos en la mitología griega. Gobierna sobre las almas de los fallecidos y es temido por su implacable dominio sobre el reino de los muertos."
+
     },
     {
       "id": 4,
       "pregunta": "¿Quién es el dios del sol y la luz en la mitología griega?",
       "opciones": ["Apolo", "Helios", "Hermes", "Dionisio"],
-      "respuesta_correcta": "Helios"
+      "respuesta_correcta": "Helios",
+      "resumen": "Helios personifica el sol en la mitología griega, siendo responsable de traer luz al mundo con su carro dorado. Es una figura prominente en muchos mitos, representando la luz, la claridad y la visión divina."
+
+      
     },
     {
       "id": 5,
       "pregunta": "¿Quién es el dios de la medicina y la curación en la mitología griega?",
       "opciones": ["Apolo", "Hermes", "Atenea", "Asclepio"],
-      "respuesta_correcta": "Asclepio"
+      "respuesta_correcta": "Asclepio",
+      "resumen": "Asclepio es el dios de la medicina y la curación en la mitología griega, reverenciado por su habilidad para sanar enfermedades y heridas. Su legado incluye el símbolo de la vara de Asclepio, que se ha convertido en el emblema de la medicina moderna."
+
     },
     {
       "id": 6,
       "pregunta": "¿Quién es el dios del vino y la vegetación en la mitología griega?",
       "opciones": ["Dionisio", "Hermes", "Apolo", "Hades"],
-      "respuesta_correcta": "Dionisio"
+      "respuesta_correcta": "Dionisio",
+      "resumen": "Dionisio es el dios del vino, la fertilidad y la celebración en la mitología griega. Es conocido por su naturaleza extrovertida y por inspirar rituales de culto en honor a su divinidad, simbolizando el renacimiento y el ciclo de la naturaleza."
+
     },
     {
       "id": 7,
       "pregunta": "¿Quién es el dios del amor y el deseo sexual en la mitología griega?",
       "opciones": ["Afrodita", "Dionisio", "Eros", "Hermes"],
-      "respuesta_correcta": "Eros"
+      "respuesta_correcta": "Eros",
+      "resumen": "Eros, también conocido como Cupido en la mitología romana, es el dios del amor y el deseo sexual en la mitología griega. Se le representa con alas, disparando flechas doradas que inflaman el corazón de los dioses y mortales por igual."
+
     },
     {
       "id": 8, 
       "pregunta": "¿Quién es la diosa de la sabiduría y la estrategia en la mitología griega?",
       "opciones": ["Afrodita", "Artemisa", "Hera", "Atenea"],
-      "respuesta_correcta": "Atenea"
+      "respuesta_correcta": "Atenea",
+      "resumen": "Atenea es la diosa de la sabiduría y la estrategia en la mitología griega. Se la conoce por su inteligencia estratégica y su habilidad para la guerra justa."
+
     },
     {
       "id": 9,
       "pregunta": "¿Cuál es el nombre del río que separa el mundo de los vivos del inframundo en la mitología griega?",
       "opciones": ["Aqueronte", "Cocito", "Lethe", "Estigia"],
-      "respuesta_correcta": "Estigia"
+      "respuesta_correcta": "Estigia",
+      "resumen": "El río que separa el mundo de los vivos del inframundo en la mitología griega es el Estigia. Es conocido por su asociación con los juramentos, ya que se creía que jurar sobre sus aguas era irrevocable."
+
     },
     {
       "id": 10,
       "pregunta": "¿Cuál es el nombre del río que los muertos deben cruzar para llegar al inframundo en la mitología griega?",
       "opciones": ["Aqueronte", "Estigia", "Cocito", "Lethe"],
-      "respuesta_correcta": "Aqueronte"
+      "respuesta_correcta": "Aqueronte",
+      "resumen": "El río que los muertos deben cruzar para llegar al inframundo en la mitología griega es el Aqueronte. Se cree que es un río de dolor y aflicción, simbolizando el paso del mundo de los vivos al mundo de los muertos."
+
     },
     {
       "id": 11,
       "pregunta": "¿Cuál es el nombre del río que se cree que corre por el inframundo en la mitología griega?",
       "opciones": ["Estigia","Leteo", "Aqueronte", "Cocito"],
-      "respuesta_correcta": "Leteo"
+      "respuesta_correcta": "Leteo",
+      "resumen": "En la mitología griega, se cree que el río que corre por el inframundo es el Leteo. Se le atribuye el poder de borrar la memoria de aquellos que beben de sus aguas, permitiéndoles renacer sin recuerdos de su vida pasada."
+
     },
     {
       "id": 12,
       "pregunta": "¿Cuál es el nombre del perro de tres cabezas que guarda la entrada del inframundo en la mitología griega?",
       "opciones": ["Ortro", "Cerbero", "Tifón", "Esquilo"],
-      "respuesta_correcta": "Cerbero"
+      "respuesta_correcta": "Cerbero",
+      "resumen": "El perro de tres cabezas que guarda la entrada del inframundo en la mitología griega es Cerbero. Su función es evitar que los muertos escapen y que los vivos ingresen al inframundo."
+
     },
     {
       "id": 13,
       "pregunta": "¿Cuál es el nombre del barquero que transporta las almas a través del río Estigia en la mitología griega?",
       "opciones": ["Caronte", "Caribdis", "Caros", "Centauro"],
-      "respuesta_correcta": "Caronte"
+      "respuesta_correcta": "Caronte",
+      "resumen": "El barquero que transporta las almas a través del río Estigia en la mitología griega es Caronte. Se le paga con una moneda colocada en la boca del difunto para garantizar su paso al inframundo."
+
     },
     {
       "id": 14,
       "pregunta": "¿Cuál es el nombre del monstruo con cuerpo de león, cabeza de cabra y cola de serpiente en la mitología griega?",
       "opciones": ["Cerbero", "Tifón","Quimera", "Esfinge"],
-      "respuesta_correcta": "Quimera"
+      "respuesta_correcta": "Quimera",
+      "resumen": "El monstruo con cuerpo de león, cabeza de cabra y cola de serpiente en la mitología griega es la Quimera. Es un símbolo de fuerza y terror, y su derrota representa la victoria sobre los obstáculos imposibles."
+
     },
     {
       "id": 15,
       "pregunta": "¿Cuál es el nombre del monstruo con cabeza de toro y cuerpo de hombre en la mitología griega?",
       "opciones": ["Quimera", "Cerbero", "Esquilo", "Minotauro"],
-      "respuesta_correcta": "Minotauro"
+      "respuesta_correcta": "Minotauro",
+      "resumen": "El monstruo con cabeza de toro y cuerpo de hombre en la mitología griega es el Minotauro. Habita en el laberinto de Creta y es derrotado por Teseo en una de las leyendas más famosas de la mitología griega."
+
     },
     {
       "id": 16,
       "pregunta": "¿Cuál es el nombre de las criaturas con cola de serpiente y cabeza de mujer en la mitología griega?",
       "opciones": ["Hespérides", "Ninfas", "Centauros", "Gorgonas"],
-      "respuesta_correcta": "Gorgonas"
+      "respuesta_correcta": "Gorgonas",
+      "resumen": "Las criaturas con cola de serpiente y cabeza de mujer en la mitología griega son las Gorgonas. La más famosa de ellas es Medusa, cuya mirada puede convertir a los seres vivos en piedra."
+
     },
     {
       "id": 17,
       "pregunta": "¿Cuál es el nombre del titán que fue condenado a sostener el cielo sobre sus hombros en la mitología griega?",
       "opciones": ["Atlas", "Prometeo", "Cronos", "Urano"],
-      "respuesta_correcta": "Atlas"
+      "respuesta_correcta": "Atlas",
+      "resumen": "El titán condenado a sostener el cielo sobre sus hombros en la mitología griega es Atlas. Su castigo se debe a su participación en la Titanomaquia, la guerra entre los titanes y los dioses olímpicos."
+
     },
     {
       "id": 18,
       "pregunta": "¿Cuál es el nombre del dios alado del amor en la mitología griega?",
       "opciones": ["Hermes", "Eros", "Dionisio", "Apolo"],
-      "respuesta_correcta": "Eros"
+      "respuesta_correcta": "Eros",
+      "resumen": "Eros es el dios alado del amor en la mitología griega. Se le representa como un joven alado armado con arco y flechas, que provoca el amor y el deseo en los dioses y los mortales."
+
     },
     {
       "id": 19,
       "pregunta": "¿Cuál es el nombre del dios del viento del norte en la mitología griega?",
       "opciones": ["Eolo", "Zéfiro","Bóreas", "Notos"],
-      "respuesta_correcta": "Bóreas"
+      "respuesta_correcta": "Bóreas",
+      "resumen": "Bóreas es el dios del viento del norte en la mitología griega. Se le representa como un ser alado que sopla desde el norte, trayendo consigo el frío del invierno."
+
     },
     {
       "id": 20,
       "pregunta": "¿Cuál es el nombre del dios alado mensajero en la mitología griega?",
       "opciones": ["Hermes", "Eros", "Apolo", "Dionisio"],
-      "respuesta_correcta": "Hermes"
+      "respuesta_correcta": "Hermes",
+      "resumen": "Hermes es el dios alado mensajero en la mitología griega. Es el mensajero de los dioses, conocido por su velocidad y astucia, además de ser el patrón de los viajeros, los comerciantes y los ladrones."
+
     },
     {
       "id": 21,  
-      "pregunta": "¿Cuál es el nombre de la diosa de la caza y la luna en la mitología griega?",
+      "pregunta": "¿Cuál es el nombre de la diosa de la caza en la mitología griega?",
       "opciones": ["Atenea", "Hera", "Afrodita", "Artemisa"],
-      "respuesta_correcta": "Artemisa"
+      "respuesta_correcta": "Artemisa",
+      "resumen": "Artemisa es la diosa de la caza en la mitología griega. También es conocida como la protectora de los animales salvajes y la patrona de las doncellas."
+
     },
     {
       "id": 22, 
       "pregunta": "¿Cuál es el nombre del dios de la aurora en la mitología griega?",
       "opciones": [ "Éos", "Selene", "Hemera", "Hécate"],
-      "respuesta_correcta": "Éos"
+      "respuesta_correcta": "Éos",
+      "resumen": "Éos es el dios de la aurora en la mitología griega. Es la personificación del amanecer, trayendo consigo la luz del nuevo día."
+
     },
     {
       "id": 23, 
-      "pregunta": "¿Cuál es el nombre del dios de la aurora en la mitología griega?",
-      "opciones": [ "Deméter", "Persefone", "Hades", "Cronos"],
-      "respuesta_correcta": "Deméter"
+      "pregunta": "¿De quién se protegía Odiseo atándose al mástil de su barco?",
+      "opciones": [ "De las quimeras", "De las esfinges", "De las sirenas", "De las hidras"],
+      "respuesta_correcta": "Deméter",
+      "resumen": "Odiseo se protegía atándose al mástil de su barco de las sirenas, seres mitológicos que atraían a los marineros con su canto y los conducían a la perdición. Deméter es la diosa de la agricultura y no está relacionada con esta historia."
+
     },
     {
       "id": 24,
       "pregunta": "¿Cuál es el nombre de la diosa de la luna en la mitología griega?",
       "opciones": ["Eos","Selene", "Hera", "Atenea"],
-      "respuesta_correcta": "Selene"
+      "respuesta_correcta": "Selene",
+      "resumen": "Selene es la diosa de la luna en la mitología griega. Es la personificación de la Luna y hermana de Helios, el dios del sol."
+
     },
     {
       "id": 25,
       "pregunta": "¿Cuál es el nombre de la diosa de la discordia y la rivalidad en la mitología griega?",
       "opciones": ["Eris", "Némesis", "Hécate", "Atenea"],
-      "respuesta_correcta": "Eris"
+      "respuesta_correcta": "Eris",
+      "resumen": "Eris es la diosa de la discordia y la rivalidad en la mitología griega. Es conocida por sembrar la discordia entre los dioses y los mortales, siendo responsable de la manzana de la discordia que provocó la guerra de Troya."
+
     },
     {
       "id": 26,
       "pregunta": "¿Cuál es el nombre de la diosa del amor y la belleza en la mitología griega?",
       "opciones": ["Afrodita", "Atenea", "Hera", "Artemisa"],
-      "respuesta_correcta": "Afrodita"
+      "respuesta_correcta": "Afrodita",
+      "resumen": "Afrodita es la diosa del amor y la belleza en la mitología griega. Es considerada la personificación del amor y se le atribuyen numerosos mitos relacionados con el deseo y la pasión."
+
     },
     {
       "id": 27,
       "pregunta": "¿Cuál es el nombre del dios del sol, la música y la poesía en la mitología griega?",
       "opciones": [ "Dionisio", "Hermes", "Helios", "Apolo"],
-      "respuesta_correcta": "Apolo"
+      "respuesta_correcta": "Apolo",
+      "resumen": "Apolo es el dios del sol, la música y la poesía en la mitología griega. También es conocido como el patrón de las artes, la medicina y la profecía, siendo uno de los dioses más versátiles y poderosos del panteón griego."
+
     },
     {
       "id": 28, 
       "pregunta": "¿Cuál es el nombre del dios del sueño en la mitología griega?",
       "opciones": [ "Morfeo", "Thanatos", "Oneiroi", "Hipnos"],
-      "respuesta_correcta": "Hipnos"
+      "respuesta_correcta": "Hipnos",
+      "resumen": "Hipnos es el dios del sueño en la mitología griega. Es el responsable de inducir el sueño en los mortales y los dioses, siendo representado como un joven alado que lleva consigo un ramo de amapolas, símbolo del sueño."
+
     },
     {
       "id": 29, 
       "pregunta": "¿Quién es el dios del tiempo y el destino en la mitología griega?",
       "opciones": [ "Ananké", "Tique","Cronos", "Moiras"],
-      "respuesta_correcta": "Cronos"
+      "respuesta_correcta": "Cronos",
+      "resumen": "Cronos es el dios del tiempo y el destino en la mitología griega. Es conocido por ser el titán que gobernaba el tiempo y por su participación en la mitología como el padre de los dioses olímpicos, incluido Zeus."
+
     }, {
       "id": 30, 
       "pregunta": "¿Cuál es el nombre de la diosa de la justicia y la ley en la mitología griega?",
       "opciones": [ "Némesis","Temis", "Diké", "Eunomia"],
-      "respuesta_correcta": "Temis"
+      "respuesta_correcta": "Temis",
+      "resumen": "Temis es la diosa de la justicia y la ley en la mitología griega. Es conocida por su papel en mantener el orden y la equidad en el mundo, siendo una figura importante en la administración de la justicia entre los dioses y los mortales."
+
     },{
       "id": 31, 
       "pregunta": "¿Quién es el dios del comercio, los viajeros y los ladrones en la mitología griega?",
       "opciones": [ "Hermes", "Mercurio", "Tique", "Afrodita"],
-      "respuesta_correcta": "Hermes"
+      "respuesta_correcta": "Hermes",
+      "resumen": "Hermes es el dios del comercio, los viajeros y los ladrones en la mitología griega. Es reconocido por ser el mensajero de los dioses y por su astucia e ingenio, siendo también el patrón de los comerciantes y los viajeros."
+
     },
     {
       "id": 32, 
       "pregunta": "¿Cuál es el nombre de la diosa de la venganza en la mitología griega?",
       "opciones": [ "Erínies","Némesis", "Tisífone", "Electra"],
-      "respuesta_correcta": "Némesis"
+      "respuesta_correcta": "Némesis",
+      "resumen": "Némesis es la diosa de la venganza en la mitología griega. Representa el equilibrio y la retribución, castigando a aquellos que violan la ley divina o actúan con arrogancia y exceso de confianza."
+
     }, {
       "id": 33, 
       "pregunta": "¿Cuál es el nombre de la diosa de la memoria en la mitología griega?",
       "opciones": [ "Melpómene", "Clío", "Terpsícore", "Mnemósine"],
-      "respuesta_correcta": "Mnemósine"
+      "respuesta_correcta": "Mnemósine",
+      "resumen": "Mnemósine es la diosa de la memoria en la mitología griega. Es la madre de las nueve Musas y es venerada por su papel en preservar la memoria y la historia, siendo una fuente de inspiración para las artes y la poesía."
+
     },{
       "id": 34, 
       "pregunta": "¿Quién es el dios del miedo y el terror en la mitología griega?",
       "opciones": [ "Deimos","Fobos", "Eris", "Érebo"],
-      "respuesta_correcta": "Fobos"
+      "respuesta_correcta": "Fobos",
+      "resumen": "Fobos es el dios del miedo y el terror en la mitología griega. Es uno de los hijos de Ares y Afrodita, y personifica el miedo que inspiran los horrores de la guerra, siendo acompañado por su hermano Deimos en el campo de batalla."
+
     },{
       "id": 35, 
       "pregunta": "¿Qué héroe griego mató al Minotauro en el laberinto de Creta?",
       "opciones": [ "Perseo", "Heracles", "Jasón", "Teseo"],
-      "respuesta_correcta": "Teseo"
+      "respuesta_correcta": "Teseo",
+      "resumen": "Teseo es el héroe griego que mató al Minotauro en el laberinto de Creta. Con valentía y astucia, logró derrotar a esta temible criatura, liberando a Atenas de su tributo anual de jóvenes sacrificados."
+
     },{
       "id": 36, 
       "pregunta": "¿Quién fue la esposa de Hades y reina del inframundo en la mitología griega?",
       "opciones": [ "Perséfone", "Hera", "Artemisa", "Afrodita"],
-      "respuesta_correcta": "Perséfone"
+      "respuesta_correcta": "Perséfone",
+      "resumen": "Perséfone fue la esposa de Hades y reina del inframundo en la mitología griega. Su historia está marcada por su secuestro por parte de Hades y su posterior papel como gobernante junto a él en el reino de los muertos."
+
     },{
       "id": 37, 
       "pregunta": "¿Qué héroe griego utilizó la cabeza de Medusa para convertir a sus enemigos en piedra?",
       "opciones": [ "Teseo","Perseo", "Aquiles", "Odiseo"],
-      "respuesta_correcta": "Perseo"
+      "respuesta_correcta": "Perseo",
+      "resumen": "Perseo es el héroe griego que utilizó la cabeza de Medusa para convertir a sus enemigos en piedra. Con la ayuda de los dioses y objetos mágicos, logró derrotar a la Gorgona y utilizar su cabeza como un arma poderosa."
+
     },{
       "id": 38, 
       "pregunta": "¿Qué figura mitológica griega es conocida por su habilidad para cambiar objetos en oro mediante su toque?",
       "opciones": [ "Dédalo", "Ícaro", "Dánae", "Midas"],
-      "respuesta_correcta": "Midas"
+      "respuesta_correcta": "Midas",
+      "resumen": "Midas es conocido por su habilidad para cambiar objetos en oro mediante su toque. Esta capacidad, otorgada por Dionisio, llevó a Midas a enfrentar desafíos y dilemas en su vida, mostrando los peligros de la avaricia y el deseo desmedido."
+
     },{
       "id": 39, 
       "pregunta": "¿Cuál es el nombre del titán que robó el fuego de los dioses para entregárselo a los humanos en la mitología griega?",
       "opciones": [ "Atlas","Prometeo", "Cronos", "Urano"],
-      "respuesta_correcta": "Prometeo"
+      "respuesta_correcta": "Prometeo",
+      "resumen": "Prometeo es conocido por robar el fuego de los dioses y dárselo a los humanos como un acto de benevolencia. Este acto simboliza el regalo del conocimiento y la civilización a la humanidad, lo que llevó a que Prometeo fuera castigado por Zeus."
+
     },{
       "id": 40, 
       "pregunta": "¿Quién fue el músico y poeta legendario que perdió a su amada Eurídice y descendió al inframundo para intentar recuperarla?",
       "opciones": ["Anfión", "Arion", "Orfeo", "Talos"],
-      "respuesta_correcta": "Orfeo"
+      "respuesta_correcta": "Orfeo",
+      "resumen": "Orfeo, un músico y poeta legendario, intentó rescatar a su amada Eurídice del inframundo con su música conmovedora. Esta historia destaca el poder de la música y el amor en la mitología griega."
+
     },{
       "id": 41, 
       "pregunta": "¿Cuál es el nombre de la profetisa en la mitología griega que emitía oráculos en Delfos?",
       "opciones": ["Sibila", "Cassandra", "Helena","Pitia"],
-      "respuesta_correcta": "Pitia"
+      "respuesta_correcta": "Pitia",
+      "resumen": "La Pitia era la profetisa en Delfos, cuyos oráculos eran muy respetados en la antigua Grecia. La tradición cuenta que ella recibía sus poderes proféticos inhalando vapores misteriosos en la cueva de Delfos."
+
     },{
       "id": 42, 
       "pregunta": "¿Qué héroe de la mitología griega fue enviado a buscar las manzanas doradas del Jardín de las Hespérides como uno de sus doce trabajos?",
       "opciones": ["Perseo","Heracles (Hércules)", "Jasón", "Teseo"],
-      "respuesta_correcta": "Heracles (Hércules)"
+      "respuesta_correcta": "Heracles (Hércules)",
+      "resumen": "Heracles (Hércules) fue enviado en una de sus doce tareas a buscar las manzanas doradas del Jardín de las Hespérides. Esta tarea simboliza la búsqueda heroica y la superación de desafíos imposibles."
+
     },{
       "id": 43, 
       "pregunta": "¿Dónde se encontraba el Jardín de las Hespérides, donde crecían las manzanas doradas?",
       "opciones": ["Al oeste del mundo", "En el monte Olimpo", "En el inframundo", "En el reino de Hades"],
-      "respuesta_correcta": "Al oeste del mundo"
+      "respuesta_correcta": "Al oeste del mundo",
+      "resumen": "El Jardín de las Hespérides, donde crecían las manzanas doradas, se encontraba al oeste del mundo, más allá de los límites conocidos. Este lugar representa un punto remoto y misterioso en la mitología griega."
+
     },{
       "id": 44, 
       "pregunta": "¿En la Odisea de Homero, ¿en qué lugar encuentra Ulises (Odiseo) a los compañeros que han olvidado su hogar después de comer el loto?",
       "opciones": ["En la Isla de Circe", "En la cueva de Polifemo", "En la Isla de los Lotófagos", "En la isla de Calipso"],
-      "respuesta_correcta": "En la Isla de los Lotófagos"
+      "respuesta_correcta": "En la Isla de los Lotófagos",
+      "resumen": "En la Odisea de Homero, Ulises (Odiseo) encuentra a sus compañeros que han olvidado su hogar después de comer el loto en la Isla de los Lotófagos. Este episodio resalta la tentación y la pérdida de la identidad."
+
     },{
       "id": 45, 
       "pregunta": "¿Cuál era el nombre de la hechicera que convertía a los hombres en cerdos en la Odisea de Homero?",
       "opciones": ["Calipso","Circe", "Medea", "Penélope"],
-      "respuesta_correcta": "Circe"
+      "respuesta_correcta": "Circe",
+      "resumen": "Circe era la hechicera que convertía a los hombres en cerdos en la Odisea de Homero. Este episodio destaca los peligros de la magia y la transformación en la mitología griega."
+
     }
     ,{
       "id": 46, 
       "pregunta": "En la historia de Jasón y los Argonautas, ¿qué papel desempeñó Medea, la hija del rey Eetes de Cólquida?",
       "opciones": ["Hechicera y amante de Jasón", "Princesa encarcelada", "Guardiana del Vellocino de Oro", "Navegante experta"],
-      "respuesta_correcta": "Hechicera y amante de Jasón"
+      "respuesta_correcta": "Hechicera y amante de Jasón",
+      "resumen": "En la historia de Jasón y los Argonautas, Medea desempeñó el papel de hechicera y amante de Jasón. Su relación con Jasón y sus poderes mágicos desempeñan un papel crucial en la búsqueda del Vellocino de Oro."
+
     } ,{
       "id": 47, 
       "pregunta": "¿Cuál era el nombre del rey de Cólquida que poseía el Vellocino de Oro en la mitología griega?",
       "opciones": ["Pelias", "Laertes", "Creonte", "Eetes"],
-      "respuesta_correcta": "Eetes"
+      "respuesta_correcta": "Eetes",
+      "resumen": "Eetes era el rey de Cólquida que poseía el Vellocino de Oro en la mitología griega. Este objeto legendario fue el objetivo de la famosa búsqueda de Jasón y los Argonautas."
+
     },{
       "id": 48, 
       "pregunta": "En la mitología griega, ¿quién era el cíclope que fue cegado por Ulises (Odiseo) en la Odisea de Homero?",
       "opciones": ["Circe", "Escila","Polifemo", "Caribdis"],
-      "respuesta_correcta": "Polifemo"
+      "respuesta_correcta": "Polifemo",
+      "resumen": "Polifemo, el cíclope hijo de Poseidón, fue cegado por Ulises (Odiseo) en un intento por escapar de su cueva y salvar a sus hombres. Esta acción desencadenó la ira de Poseidón hacia Ulises, lo que complicó su viaje de regreso a Ítaca."
+
     },{
       "id": 49, 
       "pregunta": "¿Quién era el esposo de Afrodita en la mitología griega, engañado por la relación clandestina entre Afrodita y Ares?",
       "opciones": ["Hefesto", "Zeus", "Poseidón", "Hermes"],
-      "respuesta_correcta": "Hefesto"
+      "respuesta_correcta": "Hefesto",
+      "resumen": "Hefesto, el habilidoso artesano y dios del fuego, era el esposo de Afrodita. Fue engañado por la relación secreta entre Afrodita y Ares, lo que llevó a una serie de eventos en la mitología griega."
+
     },{
       "id": 50, 
       "pregunta": "¿Qué truco ideó Hefesto para atrapar a Afrodita y Ares en adulterio en la mitología griega?",
       "opciones": ["Creó una ilusión de un amante", "Los espió con un espejo","Los atrapó en una red mágica", "Los llamó a una falsa reunión"],
-      "respuesta_correcta": "Los atrapó en una red mágica"
+      "respuesta_correcta": "Los atrapó en una red mágica",
+      "resumen": "Hefesto diseñó una red mágica para atrapar a Afrodita y Ares en adulterio mientras estaban juntos. Este evento es un punto clave en la mitología griega y tiene consecuencias significativas para los personajes involucrados."
+
     },{
       "id": 51, 
       "pregunta": "¿Qué héroe griego da ahora nombre a una debilidad 'única'?",
       "opciones": ["Ares", "Perseo", "Aquiles", "Hércules"],
-      "respuesta_correcta": "Aquiles"
+      "respuesta_correcta": "Aquiles",
+      "resumen": "Aquiles, el famoso héroe de la Guerra de Troya, da nombre a la 'tendencia' o debilidad única de una persona, conocida como el 'talón de Aquiles'. Esta expresión se refiere a una vulnerabilidad o punto débil particular."
+
+    },{
+      "id": 52, 
+      "pregunta": "¿A quién simboliza el pavo real?",
+      "opciones": ["A Hestia", "A Afrodita", "A Deméter", "A Hera"],
+      "respuesta_correcta": "A Hera",
+      "resumen": "El pavo real simboliza a Hera, la reina de los dioses en la mitología griega. Se asocia con su belleza, majestuosidad y poder. En la mitología, Hera es a menudo representada con un pavo real."
+
+    },{
+      "id": 53, 
+      "pregunta": "¿Qué mito representa «Las hilanderas» de Velázquez?",
+      "opciones": ["El de Europa", "El de Ío", "El de Aracne", "El de Medea"],
+      "respuesta_correcta": "El de Aracne",
+      "resumen": "«Las hilanderas» de Velázquez representa el mito de Aracne, una talentosa tejedora que desafió a Atenea a un concurso de habilidades. Este mito ilustra la arrogancia humana y la ira de los dioses."
+
+    },{
+      "id": 54, 
+      "pregunta": "¿Cuál de estos dioses no tiene un planeta a su nombre en el sistema solar?",
+      "opciones": ["Apolo", "Afrodita", "Ares", "Cronos"],
+      "respuesta_correcta": "Apolo",
+      "resumen": "Apolo, dios de la música, la poesía y otras artes en la mitología griega, no tiene un planeta a su nombre en el sistema solar. Aunque se le asociaba con el Sol, ningún planeta lleva su nombre en la astronomía moderna."
+
+    },{
+      "id": 55, 
+      "pregunta": "¿Qué nombre recibía el cetro de Hermes?",
+      "opciones": ["Caduceo", "Pétaso", "Cornucopia", "Vellocino"],
+      "respuesta_correcta": "Caduceo",
+      "resumen": "El cetro de Hermes, el mensajero de los dioses en la mitología griega, se llamaba Caduceo. Este símbolo estaba asociado con el comercio, la elocuencia y la guía espiritual, y se representa como un bastón entrelazado con dos serpientes y a menudo con alas en la parte superior."
+
+    },{
+      "id": 56, 
+      "pregunta": "¿Quién compitió y perdió contra Atenea por el patronazgo de Atenas?",
+      "opciones": ["Hera", "Ares", "Zeus", "Poseidón"],
+      "respuesta_correcta": "Poseidón",
+      "resumen": "Poseidón compitió contra Atenea por el patronazgo de Atenas, ofreciendo un regalo que resultó no ser tan útil para la ciudad. Atenea ganó con el regalo del olivo, que proporcionaba alimento, aceite y madera, convirtiéndose así en la protectora de Atenas."
+
+    },{
+      "id": 57, 
+      "pregunta": "¿Cómo se llamaba el abuelo de Zeus?",
+      "opciones": ["Urano", "Cronos", "Gea", "Caos"],
+      "respuesta_correcta": "Urano",
+      "resumen": "El abuelo de Zeus se llamaba Urano, el dios del cielo y la personificación del firmamento en la mitología griega. Es el progenitor de los titanes y los dioses olímpicos, siendo una figura central en el origen del universo según la mitología griega."
+
+    },{
+      "id": 58, 
+      "pregunta": "¿Qué diosa griega no fue invitada a la boda de Peleo y Tetis?",
+      "opciones": ["Afrodita", "Atenea", "Eris", "Hera"],
+      "respuesta_correcta": "Eris",
+      "resumen": "Eris no fue invitada a la boda debido a su propensión al conflicto y la discordia, lo que finalmente desencadenó la Guerra de Troya al lanzar la manzana de la discordia."
+
+    },{
+      "id": 59, 
+      "pregunta": "¿De qué diosa griega se enamoró el gigante Orión?",
+      "opciones": ["Artemisa", "Hestia", "Afrodita", "Némesis"],
+      "respuesta_correcta": "Afrodita",
+      "resumen": "Orión se enamoró de Afrodita, lo que desencadenó una serie de eventos que condujeron a su muerte y posterior colocación en el cielo como la constelación de Orión."
+
+    },{
+      "id": 60, 
+      "pregunta": "¿Cuál es el nombre del dios de los pastores, los rebaños y los bosques en la mitología griega?",
+      "opciones": ["Pan", "Deméter", "Gaia", "Hera"],
+      "respuesta_correcta": "Pan",
+      "resumen": "Pan es conocido como el dios de los pastores, los rebaños y los bosques. Es una figura pastoral que a menudo se representa con patas de cabra, cuernos y una flauta."
+
+    },{
+      "id": 61, 
+      "pregunta": "¿Cuál es el nombre del titán que gobernaba el cielo en la mitología griega?",
+      "opciones": ["Cronos", "Atlas", "Urano", "Prometeo"],
+      "respuesta_correcta": "Urano",
+      "resumen": "Urano era el titán que gobernaba el cielo en la mitología griega. Era el esposo y, más tarde, el enemigo de Gea (la Tierra)."
+
+    },{
+      "id": 62,
+      "pregunta": "¿Cuál es el nombre del río que simboliza el olvido en la mitología griega?",
+      "opciones": ["Styx", "Lethe", "Acheron", "Phlegethon"],
+      "respuesta_correcta": "Lethe",
+      "resumen": "Lethe es el río que simboliza el olvido en la mitología griega. Los difuntos beberían de sus aguas para olvidar sus vidas pasadas antes de renacer."
+
+    },{
+      "id": 63, 
+      "pregunta": "¿Cuál está considerado el primer robot en la mitología griega?",
+      "opciones": ["Talos", "Medea", "Gorgonas", "Cronos"],
+      "respuesta_correcta": "Talos",
+      "resumen": "Talos es considerado el primer robot en la mitología griega. Era un autómata de bronce creado por Hefesto para proteger la isla de Creta."
+
+    },{
+      "id": 64, 
+      "pregunta": "¿Quién es la madre de Atenea?",
+      "opciones": ["Artemisa", "Hera", "Gea", "Metis"],
+      "respuesta_correcta": "Metis",
+      "resumen": "Metis es la madre de Atenea. Fue tragada por Zeus cuando estaba embarazada de Atenea, y luego Atenea nació de la cabeza de Zeus completamente desarrollada."
+
+    },{
+      "id": 65, 
+      "pregunta": "¿Cómo se llama la deidad de la oscuridad?",
+      "opciones": ["Nyx", "Érebo", "Tánatos", "Hades"],
+      "respuesta_correcta": "Érebo",
+      "resumen": "Érebo es la deidad de la oscuridad en la mitología griega, asociado con la profundidad del inframundo y la oscuridad primordial."
+
+    },{
+      "id": 66, 
+      "pregunta": "¿Quién de estos dioses no es hijo de Zeus?",
+      "opciones": ["Hefesto", "Perseo", "Afrodita", "Perséfone"],
+      "respuesta_correcta": "Afrodita",
+      "resumen": "Afrodita no es hija de Zeus, sino que nació de la espuma del mar después de que Urano fuera mutilado y sus genitales fueran arrojados al mar."
+
+    },{
+      "id": 67, 
+      "pregunta": "¿Por qué Cronos se tragó a sus hijos?",
+      "opciones": ["Porque tenía hambre", "Por una maldición", "No quería tener hijos", "Por una tradición familiar"],
+      "respuesta_correcta": "Por una maldición",
+      "resumen": "Cronos se tragó a sus hijos por una maldición que temía que uno de ellos lo derrocara, como él había hecho con su propio padre, Urano."
+
+    },{
+      "id": 68, 
+      "pregunta": "En qué convirtió Zeus a Leda para fecundarla?",
+      "opciones": ["En dragón", "En ardilla", "En caballo", "En cisne"],
+      "respuesta_correcta": "En cisne",
+      "resumen": "Zeus se transformó en un cisne para seducir a Leda. Esta unión dio lugar al nacimiento de Helena de Troya y a los gemelos Cástor y Pólux."
+
+    },{
+      "id": 69, 
+      "pregunta": "¿Con qué objeto se representa a Cronos?",
+      "opciones": ["Flecha", "Reloj de Arena", "Hoz", "Espada"],
+      "respuesta_correcta": "Hoz",
+      "resumen": "Cronos, en la mitología griega, es comúnmente representado con una hoz debido a su asociación con el tiempo y su papel como el dios del tiempo y de la cosecha. La hoz simboliza su poder para segar la vida y el tiempo."
+
+    },{
+      "id": 70, 
+      "pregunta": "¿Cuál es el equivalente romano de Hades?",
+      "opciones": ["Plutón", "Neptuno", "Urano", "Júpiter"],
+      "respuesta_correcta": "Plutón",
+      "resumen": "En la mitología romana, Hades es equivalente a Plutón. Plutón es el dios del inframundo, responsable de gobernar sobre los muertos y las riquezas ocultas bajo la tierra."
+
+    },{
+      "id": 71, 
+      "pregunta": "¿Quién es el dios de la burla y la locura?",
+      "opciones": ["Nereo", "Momo", "Pindo", "Lethe"],
+      "respuesta_correcta": "Momo",
+      "resumen": "Momo es el dios de la burla y la locura en la mitología griega. Su presencia se asocia con la crítica satírica y la ironía, representando la naturaleza caprichosa y a veces caótica de la vida."
+
+    },{
+      "id": 72, 
+      "pregunta": "¿Cuál es uno de los atributos de Apolo?",
+      "opciones": ["Un casco", "Un escudo", "Una lira", "Un reloj"],
+      "respuesta_correcta": "Una lira",
+      "resumen": "Uno de los atributos más conocidos de Apolo es la lira. Como dios de la música, la poesía y las artes, Apolo está a menudo representado tocando este instrumento, que simboliza la armonía y la belleza."
+
+    },{
+      "id": 73, 
+      "pregunta": "¿Quién es la hermana melliza de Apolo?",
+      "opciones": ["Helena", "Atenea", "Afrodita", "Artemisa"],
+      "respuesta_correcta": "Artemisa",
+      "resumen": "Artemisa es la hermana melliza de Apolo en la mitología griega. Ella es la diosa de la caza, la naturaleza salvaje y la protectora de las doncellas. Juntos, Apolo y Artemisa forman un poderoso dúo divino."
+
+    },{
+      "id": 74, 
+      "pregunta": "¿Quién le dió la caja a Pandora?",
+      "opciones": ["Zeus", "Poseidón", "Hades", "Ares"],
+      "respuesta_correcta": "Zeus",
+      "resumen": "En la mitología griega, Zeus le dio la caja a Pandora como un castigo a los humanos por su curiosidad. La caja, que en realidad era una jarra, contenía todos los males del mundo, pero también la esperanza."
+
+    },{
+      "id": 75, 
+      "pregunta": "Hestia es la diosa de:",
+      "opciones": ["La agricultura", "La sabiduría", "La belleza", "El hogar"],
+      "respuesta_correcta": "El hogar",
+      "resumen": "Hestia es la diosa del hogar en la mitología griega. Ella personifica el fuego sagrado del hogar y la familia, siendo honrada con las primeras ofrendas en los hogares y templos griegos."
+
+    },{
+      "id": 76, 
+      "pregunta": "¿Cuál es el nombre de Hermes en la mitología romana?",
+      "opciones": ["Baco", "Marte", "Mercurio", "Plutón"],
+      "respuesta_correcta": "Mercurio",
+      "resumen": "En la mitología romana, Hermes es conocido como Mercurio. Mercurio es el mensajero de los dioses, asociado con la rapidez, el comercio, los viajeros y los ladrones."
+
+    },{
+      "id": 77, 
+      "pregunta": "¿Quién construyo el laberinto de Creta?",
+      "opciones": ["Dédalo", "Pan", "Hefesto", "Fauno"],
+      "respuesta_correcta": "Dédalo",
+      "resumen": "Dédalo fue el hábil artesano que construyó el laberinto de Creta según la mitología griega. Este laberinto fue diseñado para contener al Minotauro, una criatura mitad hombre y mitad toro."
+
+    },{
+      "id": 78, 
+      "pregunta": "¿Quién mató a la hidra de Lerna?",
+      "opciones": ["Aquiles", "Heracles(Hércules)", "Perseo", "Teseo"],
+      "respuesta_correcta": "Heracles(Hércules)",
+      "resumen": "Heracles, conocido en la mitología romana como Hércules, fue quien mató a la hidra de Lerna como parte de sus doce trabajos. La hidra era una serpiente acuática con múltiples cabezas, y derrotarla fue una hazaña legendaria."
+
+    },{
+      "id": 79, 
+      "pregunta": "Nix es la diosa de:",
+      "opciones": ["La muerte", "La discordia", "El tiempo", "La noche"],
+      "respuesta_correcta": "La noche",
+      "resumen": "Nix es la personificación de la noche en la mitología griega. Como diosa de la noche, preside sobre el descanso y la oscuridad, siendo una figura poderosa en el ciclo diario y en las leyendas nocturnas."
+
+    },{
+      "id": 80, 
+      "pregunta": "¿Quién mató a Aquiles?",
+      "opciones": ["Patroclo", "Paris", "Menelao", "Héctor"],
+      "respuesta_correcta": "Paris",
+      "resumen": "Paris es el personaje responsable de la muerte de Aquiles al disparar una flecha envenenada que alcanza su talón, su único punto vulnerable. Esta acción lleva a la muerte del gran héroe de la Guerra de Troya."
+
+    },{
+      "id": 81, 
+      "pregunta": "¿Cuál es uno de los atributos de Atenea?",
+      "opciones": ["La lechuza", "El caballo", "La lanza", "La paloma"],
+      "respuesta_correcta": "La lechuza",
+      "resumen": "La lechuza es uno de los símbolos asociados con Atenea, la diosa griega de la sabiduría, la estrategia militar y la artesanía. Representa su sabiduría y su capacidad para ver en la oscuridad."
+
+    },{
+      "id": 82, 
+      "pregunta": "¿De quién era hijo Polifemo?",
+      "opciones": ["Zeus", "Hades", "Poseidón", "Apolo"],
+      "respuesta_correcta": "Poseidón",
+      "resumen": "Polifemo, el cíclope de la mitología griega, es hijo de Poseidón, el dios del mar. Esta relación paterna influye en algunas de las historias en las que aparece Polifemo."
+
+    },{
+      "id": 83, 
+      "pregunta": "Niké es la diosa de:",
+      "opciones": ["La suerte", "La venganza", "La salud", "La victoria"],
+      "respuesta_correcta": "La victoria",
+      "resumen": "Niké es la personificación de la victoria en la mitología griega. A menudo se la representa alada, simbolizando la velocidad y el triunfo en la guerra, los deportes y otras competiciones."
+
+    },{
+      "id": 84, 
+      "pregunta": "¿Quién es la diosa del arcoíris en la mitología griega?",
+      "opciones": ["Hera", "Talia", "Iris", "Hestia"],
+      "respuesta_correcta": "Iris",
+      "resumen": "Iris es la mensajera de los dioses y la personificación del arcoíris en la mitología griega. Su aparición se asocia comúnmente con mensajes divinos y la conexión entre el cielo y la tierra."
+
+    },{
+      "id": 85, 
+      "pregunta": "¿Cuál no es un dios olímpico?",
+      "opciones": ["Tritón", "Ares", "Apolo", "Hefesto"],
+      "respuesta_correcta": "Tritón",
+      "resumen": "Tritón es una divinidad marina y mensajero de los mares, hijo de Poseidón y Anfítrite. Aunque es una figura poderosa, no forma parte del panteón olímpico, que se compone de doce dioses principales."
+
+    },{
+      "id": 86, 
+      "pregunta": "¿Cuántos trabajos le encomendó el rey Euristeo a Heracles?",
+      "opciones": ["8", "10", "12", "16"],
+      "respuesta_correcta": "12",
+      "resumen": "El rey Euristeo, como castigo impuesto por Hera, encomendó a Heracles realizar doce trabajos extraordinarios, conocidos como los 'Doce Trabajos de Heracles', que incluían hazañas como matar al león de Nemea y limpiar los establos de Augías."
+
+    },{
+      "id": 87, 
+      "pregunta": "¿Qué tipo de criatura es Quirón?",
+      "opciones": ["Minotauro", "Centauro", "Quimera", "Sátiro"],
+      "respuesta_correcta": "Centauro",
+      "resumen": "Quirón es un centauro, una criatura mitad hombre y mitad caballo, conocido por su sabiduría y habilidades en la medicina y las artes. A menudo se lo describe como un mentor para héroes griegos famosos como Aquiles y Asclepio."
+
+    },{
+      "id": 88, 
+      "pregunta": "¿Quién es el hermano gemelo de Hipnos?",
+      "opciones": ["Helios", "Deimos", "Ares", "Tánatos"],
+      "respuesta_correcta": "Tánatos",
+      "resumen": "Hipnos, el dios del sueño, tiene un hermano gemelo llamado Tánatos, quien personifica la muerte pacífica y es considerado una figura menos amigable que su hermano. Juntos, representan aspectos inevitables de la existencia humana."
+
+    },{
+      "id": 89, 
+      "pregunta": "¿Cómo se llama la ninfa de la cual se enamoró Apolo?",
+      "opciones": ["Calisto", "Dafne", "Doris", "Temis"],
+      "respuesta_correcta": "Dafne",
+      "resumen": "Apolo se enamoró de Dafne, una ninfa que, para escapar de su amor no correspondido, fue transformada en un laurel por su padre, el río Peneo. Esta historia es un tema recurrente en el arte y la literatura clásica."
+
+    },{
+      "id": 90, 
+      "pregunta": "¿Quiénes le dan el rayo a Zeus?",
+      "opciones": ["Las ninfas", "Las harpías", "Los titanes", "Los cíclopes"],
+      "respuesta_correcta": "Los cíclopes",
+      "resumen": "En la mitología griega, los cíclopes fueron los artesanos que forjaron el rayo de Zeus. Su contribución fue crucial en la lucha contra los titanes."
+
+    },{
+      "id": 91, 
+      "pregunta": "¿Cómo se llama el escudo que Hefesto elaboró para Zeus?",
+      "opciones": ["Égira", "Égita", "Égida", "Égima"],
+      "respuesta_correcta": "Égida",
+      "resumen": "El escudo elaborado por Hefesto para Zeus se llama Égida. Este escudo tenía poderes protectores y simbolizaba la autoridad divina de Zeus."
+
+    },{
+      "id": 92, 
+      "pregunta": "¿Qué arma se asocia con Hades?",
+      "opciones": ["Tridente", "Lanza", "Bidente", "Cadenas"],
+      "respuesta_correcta": "Bidente",
+      "resumen": "El bidente es el arma asociada con Hades, el dios del inframundo en la mitología griega. Este arma era un símbolo de su autoridad sobre los muertos y el inframundo."
+
+    },{
+      "id": 93, 
+      "pregunta": "¿Qué animales guiaban el carro de Poseidón?",
+      "opciones": ["Delfines", "Ballenas", "Tiburones", "Hipocampos"],
+      "respuesta_correcta": "Hipocampos",
+      "resumen": "En la mitología griega, los hipocampos, criaturas mitad caballo y mitad pez, eran los animales que tiraban del carro de Poseidón, el dios del mar."
+
+    },{
+      "id": 94, 
+      "pregunta": "¿Cuál es el nombre romano de la diosa Afrodita?",
+      "opciones": ["Marte", "Júpiter", "Venus", "Minerva"],
+      "respuesta_correcta": "Venus",
+      "resumen": "En la mitología romana, Afrodita, la diosa del amor y la belleza en la mitología griega, es conocida como Venus. Ambas deidades comparten características similares."
+
+    },{
+      "id": 95, 
+      "pregunta": "¿Quién es el padre de Afrodita?",
+      "opciones": ["Atlas", "Urano", "Zeus", "Cronos"],
+      "respuesta_correcta": "Urano",
+      "resumen": "Según la mitología griega, Urano, el dios del cielo, es el padre de Afrodita, nacida de la espuma del mar después de que Urano fuera castrado por su hijo Cronos."
+
+    },{
+      "id": 96, 
+      "pregunta": "¿De qué son diosas las musas?",
+      "opciones": ["De las artes", "De la fama", "Del destino", "Del poder"],
+      "respuesta_correcta": "De las artes",
+      "resumen": "Las musas son diosas griegas que personifican las artes y las ciencias. Se les considera fuentes de inspiración para los artistas, músicos y poetas."
+
+    },{
+      "id": 97, 
+      "pregunta": "¿Cómo se llama la criatura que poseía un cuerpo de león y cabeza humana?",
+      "opciones": ["Quimera", "Minotauro", "Sátiro", "Esfinge"],
+      "respuesta_correcta": "Esfinge",
+      "resumen": "La esfinge es una criatura mítica con cuerpo de león, alas de águila y cabeza humana. En la mitología griega, desafiaba a los viajeros con enigmas mortales."
+
+    },{
+      "id": 98, 
+      "pregunta": "¿ Qué hijo mortal de un dios murió al ver su reflejo? ",
+      "opciones": ["Teseo", "Narciso", "Perseo", "Ananké"],
+      "respuesta_correcta": "Narciso",
+      "resumen": "Narciso, hijo del dios río Cefiso, murió al enamorarse de su propio reflejo en un estanque. Esta historia es el origen del término 'narcisismo'."
+
+    },{
+      "id": 99, 
+      "pregunta": "¿Cómo hizo Aquiles para ser casi invencible?",
+      "opciones": ["Es hijo de Zeus", "Nació inmortal", "Se bañó en el Estigia", "Usaba su escudo mágico"],
+      "respuesta_correcta": "Se bañó en el Estigia",
+      "resumen": "Según la mitología griega, Aquiles fue sumergido en el río Estigia por su madre, excepto por el talón por el que lo sostenía. Este baño lo hizo casi invulnerable, excepto en su talón."
+
+    },{
+      "id": 100, 
+      "pregunta": "¿Cuál de estos dioses es uno de los doce titanes?",
+      "opciones": ["Rea", "Apolo", "Nix", "Zeus"],
+      "respuesta_correcta": "Rea",
+      "resumen": "Rea es una de los doce titanes, hijos de Urano y Gea en la mitología griega. Es conocida como la madre de los principales dioses olímpicos, como Zeus, Poseidón y Hades."
+
     }
   ]
   
