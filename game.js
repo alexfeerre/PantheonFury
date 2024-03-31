@@ -821,8 +821,8 @@ class Pelea extends Phaser.Scene {
         this.player1Character = null;
         this.player2Character = null;
         // Variables para la vida de cada personaje
-        this.characterHealth = 20;
-        this.character2Health = 20;
+        this.characterHealth = 100;
+        this.character2Health = 100;
 
         // Variables para los personajes
         this.character = null;
@@ -1702,24 +1702,24 @@ class OverlayMessage extends Phaser.Scene {
         });
 
         // Crear el texto "Ver Estadísticas"
-        this.statisticsText = this.add.text(this.sys.game.canvas.width / 2 +120, this.sys.game.canvas.height - 34, 'Ver Estadísticas', { fontFamily: 'BMmini', fontSize: 18, color: '#b35410' }).setOrigin(0.5).setInteractive().setDepth(999);
+        this.statisticsText = this.add.text(this.sys.game.canvas.width / 2 +120, this.sys.game.canvas.height - 34, this.language === 'en' ? 'View Statistics' : 'Ver Estadísticas', { fontFamily: 'BMmini', fontSize: 18, color: '#b35410' }).setOrigin(0.5).setInteractive().setDepth(999);
         this.statisticsText.setVisible(false); // Ocultar inicialmente el texto
 
         // Asociar evento al clic del texto "Ver Estadísticas"
         this.statisticsText.on('pointerdown', () => {
             this.showStatistics();
             // Cambiar la sprite sheet del fondo y su profundidad
-        background.setTexture('Fondo_stats').setDepth(0);
+            background.setTexture('Fondo_stats').setDepth(0);
 
-        // Crear una nueva animación para el fondo_detalle
-        background.anims.create({
-            key: 'backgroundStats',
-            frames: this.anims.generateFrameNumbers('Fondo_stats', { start: 0, end: 3 }), // Ajusta el rango de frames según tu spritesheet
-            frameRate: 12,
-            repeat: -1
-        });
-        // Reproducir la animación infinita
-        background.anims.play('backgroundStats');
+            // Crear una nueva animación para el fondo_detalle
+            background.anims.create({
+                key: 'backgroundStats',
+                frames: this.anims.generateFrameNumbers('Fondo_stats', { start: 0, end: 3 }), // Ajusta el rango de frames según tu spritesheet
+                frameRate: 12,
+                repeat: -1
+            });
+            // Reproducir la animación infinita
+            background.anims.play('backgroundStats');
         });
 
         this.statisticsText.on('pointerout', () => {
@@ -1735,28 +1735,28 @@ class OverlayMessage extends Phaser.Scene {
         // Establecer el fondo en negro
         this.cameras.main.setBackgroundColor('#0d0600');
         // Mostrar el mensaje de ganador
-      // Define un diccionario de traducción
-// Define un diccionario de traducción
-const translations = {
-    'HA GANADO!': 'HAS WON!',
-    'Ver Detalles': 'See Details',
-    'de Partida': 'of Match',
-    'JUGADOR 1': 'PLAYER 1',
-    'JUGADOR 2': 'PLAYER 2',
-    'ha ganado': 'HAS WON'
-};
+        // Define un diccionario de traducción
+        const translations = {
+            'HA GANADO!': 'HAS WON!',
+            'Ver Detalles': 'See Details',
+            'de Partida': 'of Match',
+            'JUGADOR 1': 'PLAYER 1',
+            'JUGADOR 2': 'PLAYER 2',
+            'ha ganado': 'HAS WON'
+        };
 
-// Función para traducir texto al inglés
-function translateToEnglish(text) {
-    return translations[text] || text; // Devuelve la traducción si existe, de lo contrario, devuelve el texto original
-}
+        // Función para traducir texto al inglés
+        function translateToEnglish(text) {
+            return translations[text] || text; // Devuelve la traducción si existe, de lo contrario, devuelve el texto original
+        }
+const language = data.language
 
 // Determina el texto del ganador en función de si es jugador 1 o jugador 2 y el idioma seleccionado
-const winnerText = this.add.text(this.sys.game.canvas.width / 2, this.sys.game.canvas.height / 2 -20, `${winner.toUpperCase()} ${language === 'es' ? 'ha ganado' : translateToEnglish('ha ganado')}!`, { fontFamily: 'BMmini', fontSize: 48, color: '#b35410' }).setOrigin(0.5);
+const winnerText = this.add.text(this.sys.game.canvas.width / 2, this.sys.game.canvas.height / 2 -20, `${language === 'en' ? translateToEnglish(winner.toUpperCase()) : winner.toUpperCase()} ${language === 'en' ? translateToEnglish('ha ganado') : 'ha ganado'}!`, { fontFamily: 'BMmini', fontSize: 48, color: '#b35410' }).setOrigin(0.5);
 winnerText.setDepth(900);
 
 // Crear el botón de detalles
-const detailsButton = this.add.text(this.sys.game.canvas.width / 2, this.sys.game.canvas.height / 2 + 108, [translateToEnglish('Ver Detalles'), translateToEnglish('de Partida')], {
+const detailsButton = this.add.text(this.sys.game.canvas.width / 2, this.sys.game.canvas.height / 2 + 108, [language === 'en' ? translateToEnglish('Ver Detalles') : 'Ver Detalles', language === 'en' ? translateToEnglish('de Partida') : 'de Partida'], {
     fontFamily: 'BMmini',
     fontSize: 20,
     color: '#b35410',
@@ -1864,16 +1864,16 @@ detailsButton.setDepth(902);
     
             characterSprite.anims.play(idleAnimationKey); // Play the idle animation
     
-            const answerComparisonText = this.add.text(120, -6, `${questionData.respuesta_jugador || 'Not answered'} - ${questionData.respuesta_jugador === questionData.respuesta_correcta ? 'Correct answer' : 'Incorrect answer'}`, { fontFamily: 'BMmini', fontSize: 16, color: '#b35410', wordWrap: { width: 600 } }).setOrigin(0.5);
-            const summaryText = this.add.text(122, 70, `Correct answer was: ${questionData.respuesta_correcta}. ${questionData.resumen}`, { 
-                fontFamily: 'BMmini', 
-                fontSize: 16, 
-                color: '#b35410', 
-                wordWrap: { width: 370 },
-                align: 'left',
-                padding: { top: 0, bottom: 0 } 
-            }).setOrigin(0.5);
-    
+            const answerComparisonText = this.add.text(120, -6, `${questionData.respuesta_jugador || 'Not answered'} - ${questionData.respuesta_jugador === questionData.respuesta_correcta ? 'Resp. Correcta' : 'Resp. Incorrecta'}`, { fontFamily: 'BMmini', fontSize: 16, color: '#b35410', wordWrap: { width: 600 } }).setOrigin(0.5);
+        const summaryText = this.add.text(122, 70, `La respuesta correcta era: ${questionData.respuesta_correcta}. ${questionData.resumen}`, { 
+            fontFamily: 'BMmini', 
+            fontSize: 16, 
+            color: '#b35410', 
+            wordWrap: { width: 370 },
+            align: 'left',
+            padding: { top: 0, bottom: 0 } 
+        }).setOrigin(0.5);
+
             // Translate if language is English
             if (this.language === 'en') {
                 currentPlayerText.text = currentPlayerText.text.replace('Respondió:', 'Answered:');
@@ -1955,6 +1955,8 @@ detailsButton.setDepth(902);
     
 
     showStatistics() {
+        const language = this.scene.get("Idioma").language;
+
         this.statisticsText.setVisible(false); 
         // Ocultar los botones de siguiente y anterior
         this.nextButton.setVisible(false);
@@ -1969,24 +1971,32 @@ detailsButton.setDepth(902);
         const statsPlayer2 = this.generateStatsTable('Jugador 2', this.calculateStats('p2'));
     
         // Posicionar las tablas de estadísticas
-        statsPlayer1.setPosition(126, 165); 
-        statsPlayer2.setPosition(510, 165); 
+        statsPlayer1.setPosition(126, 173); 
+        statsPlayer2.setPosition(510, 173); 
     
         // Crear el botón de volver a detalles
-        const continueButton = this.add.text(this.sys.game.canvas.width / 2, this.sys.game.canvas.height/2 - 20, 'Volver a detalles', { fontFamily: 'BMmini', fontSize: 14, color: '#b35410' , align: 'center'}).setOrigin(0.5).setDepth(1000).setInteractive();
+        const continueButtonText = language === 'en' ? 'Back to Details' : 'Volver a detalles';
+        const continueButton = this.add.text(this.sys.game.canvas.width / 2, this.sys.game.canvas.height/2 - 20, continueButtonText, { fontFamily: 'BMmini', fontSize: 14, color: '#b35410' , align: 'center'}).setOrigin(0.5).setDepth(1000).setInteractive();
         continueButton.on('pointerdown', () => {
             this.scene.start('OverlayMessage');
         });
-    
+
         // Crear el botón de reinicio
-        const restartButton = this.add.text(this.sys.game.canvas.width / 2, this.sys.game.canvas.height / 2 + 28, 'Reiniciar juego', { fontFamily: 'BMmini', fontSize: 14, color: '#b35410' , align: 'center'}).setOrigin(0.5).setDepth(1000).setInteractive();
-    
+        const restartButtonText = language === 'en' ? 'Restart Game' : 'Reiniciar juego';
+        const restartButton = this.add.text(this.sys.game.canvas.width / 2, this.sys.game.canvas.height / 2 + 28, restartButtonText, { fontFamily: 'BMmini', fontSize: 14, color: '#b35410' , align: 'center'}).setOrigin(0.5).setDepth(1000).setInteractive();
+
         // Cambiar el cursor al pasar el ratón sobre los botones
         continueButton.on('pointerover', () => {
             continueButton.setStyle({cursor: 'pointer'});
         });
+        continueButton.on('pointerout', () => {
+            continueButton.setStyle({cursor: 'default'});
+        });
         restartButton.on('pointerover', () => {
             restartButton.setStyle({cursor: 'pointer'});
+        });
+        restartButton.on('pointerout', () => {
+            restartButton.setStyle({cursor: 'default'});
         });
     
         
@@ -2014,13 +2024,25 @@ detailsButton.setDepth(902);
         };
     }
 
+    
+
     generateStatsTable(playerName, stats) {
-        const table = this.add.text(0, 0, `${playerName}\n\n\n\n\nEstadísticas\nde las preguntas\n\n Contestó: ${stats.answeredQuestions}\n\nAcertó: ${stats.correctAnswers}\n\nPorcentaje de \n acierto: ${stats.accuracy}`, { fontFamily: 'BMmini', fontSize: 16, color: '#b35410', align: 'center' , lineSpacing: -4});
+        // Obtener el idioma desde la escena "Idioma"
+        const language = this.scene.get("Idioma").language;
+    
+        let translatedPlayerName;
+        if (playerName === 'Jugador 1') {
+            translatedPlayerName = language === 'en' ? 'Player 1' : 'Jugador 1';
+        } else {
+            translatedPlayerName = language === 'en' ? 'Player 2' : 'Jugador 2';
+        }
+    
+        const table = this.add.text(0, 0, `${translatedPlayerName}\n\n\n\n\n${language === 'en' ? 'Statistics' : 'Estadísticas'}\n${language === 'en' ? 'of the questions' : 'de las preguntas'}\n\n${language === 'en' ? 'Answered' : 'Contestó'}: ${stats.answeredQuestions}\n\n${language === 'en' ? 'Correct' : 'Acertó'}: ${stats.correctAnswers}\n\n${language === 'en' ? 'Success' : 'Porcentaje'}\n${language === 'en' ? 'percentage' : 'de acierto'}:\n ${stats.accuracy}`, { fontFamily: 'BMmini', fontSize: 16, color: '#b35410', align: 'center' , lineSpacing: -4});
         table.setOrigin(0.5);
         return table;
     }
-
-   
+    
+    
 }
 
 
