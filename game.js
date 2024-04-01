@@ -280,7 +280,7 @@ class Idioma extends Phaser.Scene {
 
         this.startButton = this.add.text(this.sys.game.canvas.width / 2, this.sys.game.canvas.height - 40, buttonText, { fontFamily: 'Arial', fontSize: originalFontSize, color: '#db7125' }).setOrigin(0.5).setInteractive();
                 this.startButton.on('pointerdown', () => {
-                    this.scene.start('SelectorPersonaje', { language: this.language });
+                    this.scene.start('SelectorPersonaje', { language: this.language , });
                    
         });
          // Cambiar el cursor al hacer hover sobre el botón "Comenzar"
@@ -821,8 +821,8 @@ class Pelea extends Phaser.Scene {
         this.player1Character = null;
         this.player2Character = null;
         // Variables para la vida de cada personaje
-        this.characterHealth = 100;
-        this.character2Health = 100;
+        this.characterHealth = 20;
+        this.character2Health = 20;
 
         // Variables para los personajes
         this.character = null;
@@ -969,7 +969,7 @@ this.player2HealthText = this.add.text(700, 180, `Player 2 Health: ${this.charac
              // Agregar evento de clic para los botones de jugador
              this.player1Button.on('pointerdown', () => {
                 if (!this.isShowingQuestion && this.currentPlayer === 'p1') {
-                    this.showQuestionOverlay(data.p1);
+                    this.showQuestionOverlay(data.p1, this.language);
                     this.player1Button.disableInteractive(); // Deshabilitar el botón después de hacer clic
                 }
             });
@@ -977,7 +977,7 @@ this.player2HealthText = this.add.text(700, 180, `Player 2 Health: ${this.charac
 
             this.player2Button.on('pointerdown', () => {
                 if (!this.isShowingQuestion && this.currentPlayer === 'p2') {
-                    this.showQuestionOverlay(data.p2);
+                    this.showQuestionOverlay(data.p2, this.language);
                     this.player2Button.disableInteractive(); // Deshabilitar el botón después de hacer clic
                 }
             });
@@ -1207,7 +1207,6 @@ this.player2HealthText = this.add.text(700, 180, `Player 2 Health: ${this.charac
 
   
     
-
     translateText(textToTranslate, targetLanguage) {
         return fetch('https://api.mymemory.translated.net/get?q=' + textToTranslate + '&langpair=es|' + targetLanguage)
             .then(response => response.json())
@@ -1215,64 +1214,78 @@ this.player2HealthText = this.add.text(700, 180, `Player 2 Health: ${this.charac
                 return data.responseData.translatedText;
             });
     }
-
-    showQuestionOverlay(characterKey, language) {
-        // Verificar si ya se han mostrado todas las preguntas
-        if (this.shownQuestions.length === this.questionsData.length) {
-            // Si todas las preguntas se han mostrado, reiniciar el registro
-            this.shownQuestions = [];
-        }
-
-        // Obtener una pregunta aleatoria que aún no se ha mostrado
-        let availableQuestions = this.questionsData.filter(question => !this.shownQuestions.includes(question));
-        const randomQuestion = Phaser.Math.RND.pick(availableQuestions);
-
-        // Agregar la pregunta actual al registro de preguntas mostradas
-        this.shownQuestions.push(randomQuestion);
-
-        // Determinar el texto de la pregunta y las opciones según el idioma
-        let questionText = randomQuestion.pregunta;
-        let options = randomQuestion.opciones;
-        if (language === 'en') {
-            // Traducir la pregunta y las opciones al inglés
-            questionText =  this.translateText(randomQuestion.pregunta, 'en');
-            options =  this.translateText(randomQuestion.opciones, 'en');
-        }
-
-        // Mostrar overlay con la pregunta y opciones
-        this.questionOverlay = this.add.image(this.sys.game.canvas.width / 2, this.sys.game.canvas.height / 2, 'overlay').setOrigin(0.5).setScale(3.4).setDepth(1100);
-        this.questionText = this.add.text(this.sys.game.canvas.width / 2, this.sys.game.canvas.height / 2 - 48, questionText, { fontFamily: 'BMmini', fontSize: 16, color: '#b35410', wordWrap: { width: 340 } }).setOrigin(0.5).setDepth(1101);
-
-        // Crear botones para las opciones de respuesta
-        this.answerButtons = [];
-        const startX = this.sys.game.canvas.width / 2 - 100; // Ajustar el inicio de la primera columna
-        const startY = this.sys.game.canvas.height / 2 + 10;
-        options.forEach((option, index) => {
-            const columnIndex = index % 2; // Calcular la columna actual
-            const rowIndex = Math.floor(index / 2); // Calcular la fila actual
-            const buttonX = startX + columnIndex * 200; // Calcular la coordenada x del botón
-            const buttonY = startY + rowIndex * 40; // Calcular la coordenada y del botón
-            const button = this.add.text(buttonX, buttonY, option, { fontFamily: 'BMmini', fontSize: 14, color: '#b35410' }).setOrigin(0.5).setInteractive().setDepth(1101);
-            button.on('pointerdown', () => {
-                this.processAnswer(characterKey, option, randomQuestion.respuesta_correcta);
-                this.removeQuestionOverlay(); // Eliminar el overlay después de responder
-            });
-            this.answerButtons.push(button);
-        });
-
-        // Guardar la pregunta en el historial de preguntas, incluyendo el resumen
-        this.questionHistory.push({
-            pregunta: randomQuestion.pregunta,
-            respuesta_correcta: randomQuestion.respuesta_correcta,
-            opciones: randomQuestion.opciones,
-            respuesta_jugador: null,
-            resumen: randomQuestion.resumen,
-            currentPlayer: this.currentPlayer
-        });
-
-        // Actualizar la variable de control
-        this.isShowingQuestion = true;
+    
+   async showQuestionOverlay(characterKey) {
+    const language = this.scene.get("Idioma").language;
+    console.log(language)
+    // Verificar si ya se está mostrando una pregunta
+    if (this.isShowingQuestion) {
+        return; // Salir si ya se está mostrando una pregunta
     }
+
+    // Verificar si ya se han mostrado todas las preguntas
+    if (this.shownQuestions.length === this.questionsData.length) {
+        // Si todas las preguntas se han mostrado, reiniciar el registro
+        this.shownQuestions = [];
+    }
+
+    // Obtener una pregunta aleatoria que aún no se ha mostrado
+    let availableQuestions = this.questionsData.filter(question => !this.shownQuestions.includes(question));
+    const randomQuestion = Phaser.Math.RND.pick(availableQuestions);
+
+    // Agregar la pregunta actual al registro de preguntas mostradas
+    this.shownQuestions.push(randomQuestion);
+
+    // Determinar el texto de la pregunta y las opciones según el idioma seleccionado
+    let questionText = randomQuestion.pregunta;
+    let options = randomQuestion.opciones;
+
+    // Traducir la pregunta y las opciones si el idioma seleccionado es inglés
+    if (language === 'en') {
+        questionText = randomQuestion.pregunta_english;
+        options = randomQuestion.opciones_english;
+    }
+
+    // Mostrar overlay con la pregunta y opciones
+    this.questionOverlay = this.add.image(this.sys.game.canvas.width / 2, this.sys.game.canvas.height / 2, 'overlay').setOrigin(0.5).setScale(3.4).setDepth(1100);
+    this.questionText = this.add.text(this.sys.game.canvas.width / 2, this.sys.game.canvas.height / 2 - 48, questionText, { fontFamily: 'BMmini', fontSize: 16, color: '#b35410', wordWrap: { width: 340 } }).setOrigin(0.5).setDepth(1101);
+
+    // Crear botones para las opciones de respuesta
+    this.answerButtons = [];
+    const startX = this.sys.game.canvas.width / 2 - 100; // Ajustar el inicio de la primera columna
+    const startY = this.sys.game.canvas.height / 2 + 10;
+    options.forEach((option, index) => {
+        const columnIndex = index % 2; // Calcular la columna actual
+        const rowIndex = Math.floor(index / 2); // Calcular la fila actual
+        const buttonX = startX + columnIndex * 200; // Calcular la coordenada x del botón
+        const buttonY = startY + rowIndex * 40; // Calcular la coordenada y del botón
+        const button = this.add.text(buttonX, buttonY, option, { fontFamily: 'BMmini', fontSize: 14, color: '#b35410' }).setOrigin(0.5).setInteractive().setDepth(1101);
+        button.on('pointerdown', () => {
+            this.processAnswer(characterKey, option, randomQuestion.respuesta_correcta);
+            this.removeQuestionOverlay(); // Eliminar el overlay después de responder
+        });
+        this.answerButtons.push(button);
+    });
+
+    // Guardar la pregunta en el historial de preguntas, incluyendo el resumen
+    this.questionHistory.push({
+        pregunta: questionText, // Usar la pregunta traducida si está en inglés
+        respuesta_correcta: (language === 'en' ? randomQuestion.respuesta_correcta_english : randomQuestion.respuesta_correcta), // Usar la respuesta correcta en inglés si está disponible
+        opciones: options, // Usar las opciones traducidas si están en inglés
+        respuesta_jugador: null,
+        resumen: (language === 'en' ? randomQuestion.resumen_english : randomQuestion.resumen), // Usar el resumen en inglés si está disponible
+        currentPlayer: this.currentPlayer
+    });
+
+    // Actualizar la variable de control
+    this.isShowingQuestion = true;
+}
+
+    
+        
+    
+
+    
 
 
 
@@ -1283,7 +1296,6 @@ removeQuestionOverlay() {
     this.answerButtons.forEach(button => button.destroy());
     this.isShowingQuestion = false; // Actualizar la variable de control
 }
-
 // Función para procesar la respuesta del jugador
 processAnswer(characterKey, selectedAnswer, correctAnswer) {
     // Desactivar interactividad de los botones de respuesta
@@ -1291,6 +1303,18 @@ processAnswer(characterKey, selectedAnswer, correctAnswer) {
 
     // Encontrar la pregunta actual en el historial de preguntas
     const currentQuestion = this.questionHistory[this.questionHistory.length - 1];
+
+    // Verificar si el idioma seleccionado es inglés
+    const language = this.scene.get("Idioma").language;
+
+    // Obtener la pregunta y opciones según el idioma seleccionado
+    let pregunta = currentQuestion.pregunta;
+    let opciones = currentQuestion.opciones;
+
+    if (language === 'en') {
+        pregunta = currentQuestion.pregunta_english;
+        opciones = currentQuestion.opciones_english;
+    }
 
     // Registrar la respuesta del jugador en el historial de preguntas
     currentQuestion.respuesta_jugador = selectedAnswer;
@@ -1325,6 +1349,7 @@ processAnswer(characterKey, selectedAnswer, correctAnswer) {
         }
     }
 }
+
 
 attackAnimation(characterKey, characterSprite) {
     // Activar la bandera de ataque en progreso
