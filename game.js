@@ -1299,6 +1299,9 @@ removeQuestionOverlay() {
 // Función para procesar la respuesta del jugador
 processAnswer(characterKey, selectedAnswer, correctAnswer) {
     // Desactivar interactividad de los botones de respuesta
+    this.an// Función para procesar la respuesta del jugador
+processAnswer(characterKey, selectedAnswer, correctAnswer) {
+    // Desactivar interactividad de los botones de respuesta
     this.answerButtons.forEach(button => button.disableInteractive());
 
     // Encontrar la pregunta actual en el historial de preguntas
@@ -1307,20 +1310,17 @@ processAnswer(characterKey, selectedAnswer, correctAnswer) {
     // Verificar si el idioma seleccionado es inglés
     const language = this.scene.get("Idioma").language;
 
-    // Obtener la pregunta y opciones según el idioma seleccionado
-    let pregunta = currentQuestion.pregunta;
-    let opciones = currentQuestion.opciones;
-
+    // Obtener la respuesta correcta según el idioma seleccionado
+    let correctAnswerLocalized = correctAnswer;
     if (language === 'en') {
-        pregunta = currentQuestion.pregunta_english;
-        opciones = currentQuestion.opciones_english;
+        correctAnswerLocalized = currentQuestion.respuesta_correcta_english;
     }
 
     // Registrar la respuesta del jugador en el historial de preguntas
     currentQuestion.respuesta_jugador = selectedAnswer;
 
     // Al responder correctamente
-    if (selectedAnswer === correctAnswer) {
+    if (selectedAnswer === correctAnswerLocalized) {
         this.sound.play('RIGHT', { volume: 0.5 });
 
         // Ejecutar animación de ataque
@@ -1333,22 +1333,22 @@ processAnswer(characterKey, selectedAnswer, correctAnswer) {
         this.showTurnOverlay();
         // Actualizar la interactividad de los botones según el nuevo turno
         if (this.currentPlayer === 'p1') {
-
             this.player1Button.setAlpha(1); // Activar el botón del jugador 1
             this.player2Button.setAlpha(0.5); // Desactivar el botón del jugador 2
             this.player2Button.anims.stop().setFrame(0); // Detener la animación del botón del jugador 2
             this.player1Button.anims.play(`button_idle_p1`, true); // Reproducir la animación idle del botón del jugador 1
-
         } else {
-
             this.player1Button.setAlpha(0.5); // Desactivar el botón del jugador 1
             this.player2Button.setAlpha(1); // Activar el botón del jugador 2
             this.player1Button.anims.stop().setFrame(0); // Detener la animación del botón del jugador 1
             this.player2Button.anims.play(`button_idle_p2`, true); // Reproducir la animación idle del botón del jugador 2
-
         }
     }
+
+    // Eliminar el overlay después de responder
+    this.removeQuestionOverlay();
 }
+
 
 
 attackAnimation(characterKey, characterSprite) {
