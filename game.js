@@ -81,6 +81,8 @@ class Idioma extends Phaser.Scene {
         this.load.image('slideButtonHover', 'assets/slidebuttonhover.png');
         this.load.image('slideButtonNext', 'assets/slidebutton.png');
         this.load.image('slideButtonNextHover', 'assets/slidebuttonhover.png');
+        this.load.audio('BUTTONEF2', 'audios/BUTTONEFECT2.mp3');
+        this.load.audio('BUTTONEF1', 'audios/BUTTONEFFECT1.mp3');
 
 
         
@@ -113,6 +115,8 @@ class Idioma extends Phaser.Scene {
             .setOrigin(0.5)
             .setInteractive()
             .on('pointerdown', () => {
+                this.sound.play('BUTTONEF2',{volume: 0.5});
+
                 this.selectLanguage('es');
                 // Ocultar los botones de selección de idioma al iniciar la presentación de las diapositivas
                 languageText.visible = false;
@@ -125,6 +129,8 @@ class Idioma extends Phaser.Scene {
             .setOrigin(0.5)
             .setInteractive()
             .on('pointerdown', () => {
+                this.sound.play('BUTTONEF2',{volume: 0.5});
+
                 this.selectLanguage('en');
                 // Ocultar los botones de selección de idioma al iniciar la presentación de las diapositivas
                 languageText.visible = false;
@@ -141,6 +147,7 @@ class Idioma extends Phaser.Scene {
 
         // Asociar eventos a los botones
         this.prevButton.on('pointerdown', () => {
+            this.sound.play('BUTTONEF1',{volume: 0.5});
             this.showPrevSlide();
         });
          // Cambiar la imagen del botón prevButton al hacer hover
@@ -155,6 +162,7 @@ class Idioma extends Phaser.Scene {
 
   
         this.nextButton.on('pointerdown', () => {
+            this.sound.play('BUTTONEF1',{volume: 0.5});
             this.showNextSlide();
         });
           // Cambiar la imagen del botón nextButton al hacer hover
@@ -280,6 +288,8 @@ class Idioma extends Phaser.Scene {
 
         this.startButton = this.add.text(this.sys.game.canvas.width / 2, this.sys.game.canvas.height - 40, buttonText, { fontFamily: 'Arial', fontSize: originalFontSize, color: '#db7125' }).setOrigin(0.5).setInteractive();
                 this.startButton.on('pointerdown', () => {
+                                this.sound.play('BUTTONEF2',{volume: 0.5});
+
                     this.scene.start('SelectorPersonaje', { language: this.language , });
                    
         });
@@ -1270,7 +1280,7 @@ this.player2HealthText = this.add.text(700, 180, `Player 2 Health: ${this.charac
     // Guardar la pregunta en el historial de preguntas, incluyendo el resumen
     this.questionHistory.push({
         pregunta: questionText, // Usar la pregunta traducida si está en inglés
-        respuesta_correcta: (language === 'en' ? randomQuestion.respuesta_correcta_english : randomQuestion.respuesta_correcta), // Usar la respuesta correcta en inglés si está disponible
+        respuesta_correcta: (language === 'en' ? randomQuestion.respuesta_correcta : randomQuestion.respuesta_correcta), // Usar la respuesta correcta en inglés si está disponible
         opciones: options, // Usar las opciones traducidas si están en inglés
         respuesta_jugador: null,
         resumen: (language === 'en' ? randomQuestion.resumen_english : randomQuestion.resumen), // Usar el resumen en inglés si está disponible
@@ -1297,7 +1307,7 @@ removeQuestionOverlay() {
     this.isShowingQuestion = false; // Actualizar la variable de control
 }
 // Función para procesar la respuesta del jugador
-processAnswer(characterKey, selectedAnswer, correctAnswer) {
+processAnswer(characterKey, selectedAnswer, correctAnswers) {
     // Desactivar interactividad de los botones de respuesta
     this.answerButtons.forEach(button => button.disableInteractive());
 
@@ -1320,7 +1330,7 @@ processAnswer(characterKey, selectedAnswer, correctAnswer) {
     currentQuestion.respuesta_jugador = selectedAnswer;
 
     // Al responder correctamente
-    if (selectedAnswer === correctAnswer) {
+    if (correctAnswers.includes(selectedAnswer)) {
         this.sound.play('RIGHT', { volume: 0.5 });
 
         // Ejecutar animación de ataque
@@ -1349,6 +1359,7 @@ processAnswer(characterKey, selectedAnswer, correctAnswer) {
         }
     }
 }
+
 
 
 attackAnimation(characterKey, characterSprite) {
@@ -1663,6 +1674,9 @@ class OverlayMessage extends Phaser.Scene {
         this.load.spritesheet('Poseidon_spritesheet', 'assets/Poseidon_spritesheet.png', { frameWidth: 160, frameHeight: 90 });
         this.load.spritesheet('Fondo_detalle', 'assets/DETALLEFONDO.png', { frameWidth: 160, frameHeight: 90 });
         this.load.spritesheet('Fondo_stats', 'assets/Fondo_stats.png', { frameWidth: 160, frameHeight: 90 });
+        this.load.audio('BUTTONEF1', 'audios/BUTTONEFFECT1.mp3');
+        this.load.audio('BUTTONEF2', 'audios/BUTTONEFFECT2.mp3');
+        this.load.audio('WINMUSIC', 'audios/WINMUSIC.mp3');
 
     }
     init(data) {
@@ -1676,6 +1690,8 @@ class OverlayMessage extends Phaser.Scene {
         if (this.scene.get('Pelea').backgroundMusic) {
             this.scene.get('Pelea').backgroundMusic.stop();
         }
+       
+
 
         let winner = data.winner; // Obtener el ganador de los datos pasados desde la escena anterior
         this.player1Character = data.player1Character;
@@ -1732,6 +1748,8 @@ class OverlayMessage extends Phaser.Scene {
 
         // Asociar evento al clic del texto "Ver Estadísticas"
         this.statisticsText.on('pointerdown', () => {
+            this.sound.play('BUTTONEF2',{volume: 0.5});
+
             this.showStatistics();
             // Cambiar la sprite sheet del fondo y su profundidad
             background.setTexture('Fondo_stats').setDepth(0);
@@ -1793,7 +1811,14 @@ detailsButton.setDepth(902);
         // Establecer el estilo del botón de detalles
         detailsButton.setStyle({ color: '#b35410', padding: { x: 10, y: 5 } }).setInteractive().setDepth(990).setAlpha(1);
 
-        this.sound.play('VICTORY', { volume: 0.4 });
+        var victorySound = this.sound.add('VICTORY');
+        victorySound.play({ volume: 0.4 });
+        
+        // Reproducir el audio 'WINMUSIC' con un volumen del 0.3 cuando el audio 'VICTORY' termine
+        victorySound.once('complete', function() {
+            var winMusic = this.sound.add('WINMUSIC', { loop: true });
+            winMusic.play({ volume: 0.2 });
+        }, this);
 
         // Al hacer clic en el botón de detalles
         detailsButton.on('pointerover', () => {
@@ -1805,6 +1830,7 @@ detailsButton.setDepth(902);
 
             });
         detailsButton.on('pointerdown', () => {
+            this.sound.play('BUTTONEF1',{volume: 0.5});
         // Cambiar la sprite sheet del fondo y su profundidad
         background.setTexture('Fondo_detalle').setDepth(0);
 
@@ -1889,16 +1915,26 @@ detailsButton.setDepth(902);
     
             characterSprite.anims.play(idleAnimationKey); // Play the idle animation
     
-            const answerComparisonText = this.add.text(120, -6, `${questionData.respuesta_jugador || 'Not answered'} - ${questionData.respuesta_jugador === questionData.respuesta_correcta ? 'Resp. Correcta' : 'Resp. Incorrecta'}`, { fontFamily: 'BMmini', fontSize: 16, color: '#b35410', wordWrap: { width: 600 } }).setOrigin(0.5);
-        const summaryText = this.add.text(122, 70, `La respuesta correcta era: ${questionData.respuesta_correcta}. ${questionData.resumen}`, { 
-            fontFamily: 'BMmini', 
-            fontSize: 16, 
-            color: '#b35410', 
-            wordWrap: { width: 370 },
-            align: 'left',
-            padding: { top: 0, bottom: 0 } 
-        }).setOrigin(0.5);
-
+            // Determine the correct answer(s) to display in the summary
+            let correctAnswerText;
+            if (this.language === 'en') {
+                // If English, use the second option in the correct answers array
+                correctAnswerText = questionData.respuesta_correcta[1];
+            } else {
+                // If Spanish, use the first option in the correct answers array
+                correctAnswerText = questionData.respuesta_correcta[0];
+            }
+    
+            const answerComparisonText = this.add.text(120, -6, `${questionData.respuesta_jugador || 'Not answered'} - ${questionData.respuesta_jugador === questionData.respuesta_correcta[0] || questionData.respuesta_jugador === questionData.respuesta_correcta[1] ? 'Resp. Correcta' : 'Resp. Incorrecta'}`, { fontFamily: 'BMmini', fontSize: 16, color: '#b35410', wordWrap: { width: 600 } }).setOrigin(0.5);
+            const summaryText = this.add.text(122, 70, `La respuesta correcta era: ${correctAnswerText}. ${questionData.resumen}`, { 
+                fontFamily: 'BMmini', 
+                fontSize: 16, 
+                color: '#b35410', 
+                wordWrap: { width: 370 },
+                align: 'left',
+                padding: { top: 0, bottom: 0 } 
+            }).setOrigin(0.5);
+    
             // Translate if language is English
             if (this.language === 'en') {
                 currentPlayerText.text = currentPlayerText.text.replace('Respondió:', 'Answered:');
@@ -1924,6 +1960,7 @@ detailsButton.setDepth(902);
     
         // Associate events with the buttons
         this.nextButton.on('pointerdown', () => {
+            this.sound.play('BUTTONEF1',{volume: 0.5});
             this.showNextSlide();
         });
         this.nextButton.on('pointerover', () => {
@@ -1933,6 +1970,7 @@ detailsButton.setDepth(902);
             document.body.style.cursor = 'default';
         });
         this.prevButton.on('pointerdown', () => {
+            this.sound.play('BUTTONEF1',{volume: 0.5});
             this.showPrevSlide();
         });
         this.prevButton.on('pointerover', () => {
@@ -1942,6 +1980,7 @@ detailsButton.setDepth(902);
             document.body.style.cursor = 'default';
         });
     }
+    
     
     
     
@@ -2003,8 +2042,11 @@ detailsButton.setDepth(902);
         const continueButtonText = language === 'en' ? 'Back to Details' : 'Volver a detalles';
         const continueButton = this.add.text(this.sys.game.canvas.width / 2, this.sys.game.canvas.height/2 - 20, continueButtonText, { fontFamily: 'BMmini', fontSize: 14, color: '#b35410' , align: 'center'}).setOrigin(0.5).setDepth(1000).setInteractive();
         continueButton.on('pointerdown', () => {
+            this.sound.play('BUTTONEF2', { volume: 0.5 });
+            this.sound.stopAll();
             this.scene.start('OverlayMessage');
         });
+       
 
         // Crear el botón de reinicio
         const restartButtonText = language === 'en' ? 'Restart Game' : 'Reiniciar juego';
@@ -2028,18 +2070,17 @@ detailsButton.setDepth(902);
     
         // Al hacer clic en el botón de reinicio
         restartButton.on('pointerdown', () => {
+            this.sound.play('BUTTONEF2',{volume: 0.5});
             // Recargar la página web completa
             window.location.reload();
         });
     }
     
     
-
-    
     calculateStats(playerKey) {
         const questionHistory = this.scene.get('Pelea').questionHistory;
         const answeredQuestions = questionHistory.filter(question => question.respuesta_jugador !== null && question.currentPlayer === playerKey);
-        const correctAnswers = answeredQuestions.filter(question => question.respuesta_jugador === question.respuesta_correcta);
+        const correctAnswers = answeredQuestions.filter(question => question.respuesta_correcta.includes(question.respuesta_jugador));
         const accuracy = (correctAnswers.length / answeredQuestions.length) * 100 || 0;
     
         return {
@@ -2048,9 +2089,6 @@ detailsButton.setDepth(902);
             accuracy: accuracy.toFixed(2) + '%'
         };
     }
-
-    
-
     generateStatsTable(playerName, stats) {
         // Obtener el idioma desde la escena "Idioma"
         const language = this.scene.get("Idioma").language;
@@ -2066,7 +2104,7 @@ detailsButton.setDepth(902);
         table.setOrigin(0.5);
         return table;
     }
-    
+        
     
 }
 
