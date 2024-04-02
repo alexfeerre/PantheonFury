@@ -922,7 +922,7 @@ this.player2HealthText = this.add.text(700, 180, `Player 2 Health: ${this.charac
        
          // Reproducir música de fondo según el fondo aleatorio seleccionado
          if (randomBackground === 'background_hades') {
-            this.backgroundMusic = this.sound.add('music_hades', { loop: true, volume: 0.5 });
+            this.backgroundMusic = this.sound.add('music_hades', { loop: true, volume: 0.4 });
             
             this.backgroundMusic.play();
         } else if (randomBackground === 'background_poseidon') {
