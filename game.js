@@ -2108,8 +2108,6 @@ detailsButton.setDepth(902);
     
 }
 
-
-
 const config = {
     type: Phaser.WEBGL,
     width: 640,
@@ -2123,4 +2121,46 @@ const config = {
     scene: [InicioJuego, Idioma, SelectorPersonaje, Pelea, OverlayMessage] // Añadir la escena SelectorPersonaje al array de escenas
 };
 
-let game = new Phaser.Game(config);
+let game;
+let message;
+let landscapeDetected = false;
+
+function checkOrientationAndStartGame() {
+    const isLandscape = window.innerWidth > window.innerHeight;
+    if (isLandscape) {
+        if (!landscapeDetected) {
+            landscapeDetected = true;
+            if (message) {
+                document.body.removeChild(message);
+                message = null;
+            }
+            if (!game) {
+                game = new Phaser.Game(config);
+            }
+        }
+    } else {
+        landscapeDetected = false;
+        if (!message) {
+            // Mostrar mensaje de "Por favor, gire su dispositivo"
+            message = document.createElement('div');
+            message.textContent = 'Por favor, gire su dispositivo ;)';
+            message.style.position = 'absolute';
+            message.style.top = '50%';
+            message.style.left = '50%';
+            message.style.transform = 'translate(-50%, -50%)';
+            message.style.fontSize = '24px';
+            message.style.color = '#db7125';
+            message.style.textAlign = 'center';
+            document.body.appendChild(message);
+        }
+        if (game) {
+            game.destroy(true); // Detener el juego si ya estaba iniciado
+            game = null;
+        }
+    }
+}
+
+// Verificar la orientación continuamente
+setInterval(() => {
+    checkOrientationAndStartGame();
+}, 500); // Verificar cada 500 milisegundos
