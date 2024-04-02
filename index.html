@@ -17,14 +17,27 @@
             display: block;
         }
         @font-face {
-    font-family: 'BMmini';
-    src: url('BMmini.ttf'); /* Reemplaza 'ruta/a/mi_fuente.ttf' con la ruta real de tu archivo de fuente */
-}
+            font-family: 'BMmini';
+            src: url('BMmini.ttf'); /* Reemplaza 'ruta/a/mi_fuente.ttf' con la ruta real de tu archivo de fuente */
+        }
     </style>
 </head>
 <body>
+    <script>
+        window.onload = function() {
+            if (window.matchMedia("(orientation: portrait)").matches || window.innerWidth < window.innerHeight) {
+                    document.body.style.backgroundColor = "#0d0600"; 
+                    document.documentElement.style.backgroundColor = "#0d0600";                 document.body.innerHTML = "<h1 style='color: #db7125; text-align: center; margin-top: 40vh;'>Por favor, gira tu dispositivo ;)</h1>";
+            } else {
+                var script = document.createElement('script');
+                script.src = 'game.js';
+                document.body.appendChild(script);
+            }
+        };
+    </script>
+    
     <script src="https://cdn.jsdelivr.net/npm/gzipper.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/phaser@3.80.0/dist/phaser.min.js"></script>
-    <script src="game.js"></script>
+   
 </body>
 </html>
