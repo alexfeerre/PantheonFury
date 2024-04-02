@@ -831,8 +831,8 @@ class Pelea extends Phaser.Scene {
         this.player1Character = null;
         this.player2Character = null;
         // Variables para la vida de cada personaje
-        this.characterHealth = 20;
-        this.character2Health = 20;
+        this.characterHealth = 100;
+        this.character2Health = 100;
 
         // Variables para los personajes
         this.character = null;

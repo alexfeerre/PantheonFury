@@ -904,7 +904,7 @@
               "respuesta_correcta": ["Égida", "Aegis"],
         "resumen": "El escudo elaborado por Hefesto para Zeus se llama Égida. Este escudo tenía poderes protectores y simbolizaba la autoridad divina de Zeus.",
         "pregunta_english": "What is the name of the shield that Hephaestus crafted for Zeus?",
-        "opciones_english": ["Aegis", "Aegit", "Aegis", "Aegim"],
+        "opciones_english": ["Aegis", "Aegit", "Aegir", "Aegim"],
         "resumen_english": "The shield crafted by Hephaestus for Zeus is called the Aegis. This shield had protective powers and symbolized Zeus's divine authority."
       },{
         "id": 92,
