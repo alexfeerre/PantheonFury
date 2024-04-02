@@ -2100,7 +2100,7 @@ detailsButton.setDepth(902);
             translatedPlayerName = language === 'en' ? 'Player 2' : 'Jugador 2';
         }
     
-        const table = this.add.text(0, 0, `${translatedPlayerName}\n\n\n\n\n${language === 'en' ? 'Statistics' : 'Estadísticas'}\n${language === 'en' ? 'of the questions' : 'de las preguntas'}\n\n${language === 'en' ? 'Answered' : 'Contestó'}: ${stats.answeredQuestions}\n\n${language === 'en' ? 'Correct' : 'Acertó'}: ${stats.correctAnswers}\n\n${language === 'en' ? 'Success' : 'Porcentaje'}\n${language === 'en' ? 'percentage' : 'de acierto'}:\n ${stats.accuracy}`, { fontFamily: 'BMmini', fontSize: 16, color: '#b35410', align: 'center' , lineSpacing: -4});
+        const table = this.add.text(0, 0, `${translatedPlayerName}\n\n\n\n\n${language === 'en' ? 'Statistics' : 'Estadísticas'}\n${language === 'en' ? 'of questions' : 'de preguntas'}\n\n${language === 'en' ? 'Answered' : 'Contestó'}: ${stats.answeredQuestions}\n\n${language === 'en' ? 'Correct' : 'Acertó'}: ${stats.correctAnswers}\n\n${language === 'en' ? 'Success' : 'Porcentaje'}\n${language === 'en' ? 'percentage' : 'de acierto'}:\n ${stats.accuracy}`, { fontFamily: 'BMmini', fontSize: 16, color: '#b35410', align: 'center' , lineSpacing: -4});
         table.setOrigin(0.5);
         return table;
     }
