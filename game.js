@@ -45,24 +45,26 @@ class InicioJuego extends Phaser.Scene {
 
         // Establecer cursor de puntero al pasar el ratón sobre el botón
         startButton.on('pointerover', () => {
-            document.body.style.cursor = 'pointer';
+            document.body.style.cursor = "url('assets/pointer.png'), pointer";
         });
         // Restaurar cursor por defecto al salir del botón
         startButton.on('pointerout', () => {
-            document.body.style.cursor = 'default';
+            document.body.style.cursor = "url('assets/cursor.png'), default";
         });
 
         // Hacer clic en el área del botón incluso si no es visible
         startButton.on('pointerdown', () => {
             this.sound.play('BUTTONEF2',{volume: 0.5});
             this.scene.start('Idioma'); // Cambiar a la escena de selección de personaje cuando se presiona el botón
+            document.body.style.cursor = "url('assets/pointer.png'), pointer";
+
         });
     }
 
     // Cambiar el cursor a su estado normal cuando se inicia la escena de selección de personaje
     update() {
         this.scene.get('Idioma').events.on('start', () => {
-            document.body.style.cursor = 'default';
+            document.body.style.cursor = "url('assets/cursor.png'), default";
         });
     }
 }
@@ -116,6 +118,7 @@ class Idioma extends Phaser.Scene {
             .setInteractive()
             .on('pointerdown', () => {
                 this.sound.play('BUTTONEF2',{volume: 0.5});
+                document.body.style.cursor = "url('assets/pointer.png'), pointer";
 
                 this.selectLanguage('es');
                 // Ocultar los botones de selección de idioma al iniciar la presentación de las diapositivas
@@ -130,6 +133,7 @@ class Idioma extends Phaser.Scene {
             .setInteractive()
             .on('pointerdown', () => {
                 this.sound.play('BUTTONEF2',{volume: 0.5});
+                document.body.style.cursor = "url('assets/pointer.png'), pointer";
 
                 this.selectLanguage('en');
                 // Ocultar los botones de selección de idioma al iniciar la presentación de las diapositivas
@@ -149,30 +153,34 @@ class Idioma extends Phaser.Scene {
         this.prevButton.on('pointerdown', () => {
             this.sound.play('BUTTONEF1',{volume: 0.5});
             this.showPrevSlide();
+            document.body.style.cursor = "url('assets/pointer.png'), pointer";
+
         });
          // Cambiar la imagen del botón prevButton al hacer hover
     this.prevButton.on('pointerover', () => {
         this.prevButton.setTexture('slideButtonHover');
-        document.body.style.cursor = 'pointer';
+        document.body.style.cursor = "url('assets/pointer.png'), pointer";
     });
     this.prevButton.on('pointerout', () => {
         this.prevButton.setTexture('slideButton');
-        document.body.style.cursor = 'default';
+        document.body.style.cursor = "url('assets/cursor.png'), default";
     });
 
   
         this.nextButton.on('pointerdown', () => {
             this.sound.play('BUTTONEF1',{volume: 0.5});
             this.showNextSlide();
+            document.body.style.cursor = "url('assets/pointer.png'), pointer";
+
         });
           // Cambiar la imagen del botón nextButton al hacer hover
     this.nextButton.on('pointerover', () => {
         this.nextButton.setTexture('slideButtonNextHover');
-        document.body.style.cursor = 'pointer';
+        document.body.style.cursor = "url('assets/pointer.png'), pointer";
     });
     this.nextButton.on('pointerout', () => {
         this.nextButton.setTexture('slideButtonNext');
-        document.body.style.cursor = 'default';
+        document.body.style.cursor = "url('assets/cursor.png'), default";
     });
     
         this.nextButton.setVisible(false);
@@ -180,17 +188,17 @@ class Idioma extends Phaser.Scene {
 
          // Cambiar el cursor al hacer hover sobre los botones de selección de idioma
     es.on('pointerover', () => {
-        document.body.style.cursor = 'pointer';
+        document.body.style.cursor = "url('assets/pointer.png'), pointer";
     });
     es.on('pointerout', () => {
-        document.body.style.cursor = 'default';
+        document.body.style.cursor = "url('assets/cursor.png'), default";
     });
 
     en.on('pointerover', () => {
-        document.body.style.cursor = 'pointer';
+        document.body.style.cursor = "url('assets/pointer.png'), pointer";
     });
     en.on('pointerout', () => {
-        document.body.style.cursor = 'default';
+        document.body.style.cursor = "url('assets/cursor.png'), default";
     });
 
    
@@ -289,6 +297,7 @@ class Idioma extends Phaser.Scene {
         this.startButton = this.add.text(this.sys.game.canvas.width / 2, this.sys.game.canvas.height - 40, buttonText, { fontFamily: 'Arial', fontSize: originalFontSize, color: '#db7125' }).setOrigin(0.5).setInteractive();
                 this.startButton.on('pointerdown', () => {
                                 this.sound.play('BUTTONEF2',{volume: 0.5});
+                                document.body.style.cursor = "url('assets/pointer.png'), pointer";
 
                     this.scene.start('SelectorPersonaje', { language: this.language , });
                    
@@ -296,10 +305,10 @@ class Idioma extends Phaser.Scene {
          // Cambiar el cursor al hacer hover sobre el botón "Comenzar"
          this.startButton.on('pointerover', () => {
             this.startButton.setFontSize(originalFontSize + 5); // Aumentar el tamaño de la fuente en 5
-            document.body.style.cursor = 'pointer';
+            document.body.style.cursor = "url('assets/pointer.png'), pointer";
         });
     this.startButton.on('pointerout', () => {
-        document.body.style.cursor = 'default';
+        document.body.style.cursor = "url('assets/cursor.png'), default";
         this.startButton.setFontSize(originalFontSize);
 
     });
@@ -499,7 +508,7 @@ this.button1.on('pointerdown', () => {
         zIcon.on('animationcomplete', () => {
             zIcon.setAlpha(0.5); 
         });
-        document.body.style.cursor = 'default';
+        document.body.style.cursor = "url('assets/cursor.png'), default";
         buttonsPressedCount++;
         if (buttonsPressedCount === 2) {
             this.button2.disableInteractive(); // Deshabilitar el segundo botón si ya se han pulsado dos
@@ -515,7 +524,7 @@ this.button2.on('pointerdown', () => {
         pIcon.on('animationcomplete', () => {
             pIcon.setAlpha(0.5); 
         });
-        document.body.style.cursor = 'default';
+        document.body.style.cursor = "url('assets/cursor.png'), default";
         buttonsPressedCount++;
         if (buttonsPressedCount === 2) {
             this.button1.disableInteractive(); // Deshabilitar el primer botón si ya se han pulsado dos
@@ -531,7 +540,7 @@ this.button3.on('pointerdown', () => {
         hIcon.on('animationcomplete', () => {
             hIcon.setAlpha(0.5); 
         });
-        document.body.style.cursor = 'default';
+        document.body.style.cursor = "url('assets/cursor.png'), default";
         buttonsPressedCount++;
         if (buttonsPressedCount === 2) {
             this.button1.disableInteractive(); // Deshabilitar el primer botón si ya se han pulsado dos
@@ -544,19 +553,19 @@ this.button3.on('pointerdown', () => {
 this.button1.on('pointerover', () => {
     if (!button1Pressed && buttonsPressedCount < 2) {
         zIcon.anims.play('hoverz', true);
-        document.body.style.cursor = 'pointer';
+        document.body.style.cursor = "url('assets/pointer.png'), pointer";
     }
 });
 this.button2.on('pointerover', () => {
     if (!button2Pressed && buttonsPressedCount < 2) {
         pIcon.anims.play('hoverp', true);
-        document.body.style.cursor = 'pointer';
+        document.body.style.cursor = "url('assets/pointer.png'), pointer";
     }
 });
 this.button3.on('pointerover', () => {
     if (!button3Pressed && buttonsPressedCount < 2) {
         hIcon.anims.play('hoverh', true);
-        document.body.style.cursor = 'pointer';
+        document.body.style.cursor = "url('assets/pointer.png'), pointer";
     }
 });
 
@@ -564,19 +573,19 @@ this.button3.on('pointerover', () => {
 this.button1.on('pointerout', () => {
     if (!button1Pressed && buttonsPressedCount < 2) {
         zIcon.anims.play('staticz');
-        document.body.style.cursor = 'default';
+        document.body.style.cursor = "url('assets/cursor.png'), default";
     }
 });
 this.button2.on('pointerout', () => {
     if (!button2Pressed && buttonsPressedCount < 2) {
         pIcon.anims.play('staticp');
-        document.body.style.cursor = 'default';
+        document.body.style.cursor = "url('assets/cursor.png'), default";
     }
 });
 this.button3.on('pointerout', () => {
     if (!button3Pressed && buttonsPressedCount < 2) {
         hIcon.anims.play('statich');
-        document.body.style.cursor = 'default';
+        document.body.style.cursor = "url('assets/cursor.png'), default";
     }
 });
 
@@ -800,19 +809,20 @@ cancelButton.on('pointerdown', () => {
     this.sound.play('BUTTONEF1');
     this.p1 = null;
     this.p2 = null;
-    
+    document.body.style.cursor = "url('assets/pointer.png'), pointer";
+
     this.scene.start('SelectorPersonaje'); // Volver a la pantalla de inicio
 });
 
 // Cambiar el cursor al hacer hover sobre el botón
 cancelButton.on('pointerover', () => {
-    document.body.style.cursor = 'pointer';
+    document.body.style.cursor = "url('assets/pointer.png'), pointer";
     cancelButton.setFontSize(originalFontSize + 1); // Aumentar el tamaño de la tipografía
 });
 
 // Restaurar el cursor y el tamaño de la tipografía al salir del hover
 cancelButton.on('pointerout', () => {
-    document.body.style.cursor = 'default';
+    document.body.style.cursor = "url('assets/cursor.png'), default";
     cancelButton.setFontSize(originalFontSize); // Restaurar el tamaño de la tipografía
 });
 
@@ -981,6 +991,8 @@ this.player2HealthText = this.add.text(700, 180, `Player 2 Health: ${this.charac
                 if (!this.isShowingQuestion && this.currentPlayer === 'p1') {
                     this.showQuestionOverlay(data.p1, this.language);
                     this.player1Button.disableInteractive(); // Deshabilitar el botón después de hacer clic
+                    document.body.style.cursor = "url('assets/cursor.png'), default";
+
                 }
             });
             
@@ -989,6 +1001,8 @@ this.player2HealthText = this.add.text(700, 180, `Player 2 Health: ${this.charac
                 if (!this.isShowingQuestion && this.currentPlayer === 'p2') {
                     this.showQuestionOverlay(data.p2, this.language);
                     this.player2Button.disableInteractive(); // Deshabilitar el botón después de hacer clic
+                    document.body.style.cursor = "url('assets/cursor.png'), default";
+
                 }
             });
             
@@ -1209,6 +1223,8 @@ this.player2HealthText = this.add.text(700, 180, `Player 2 Health: ${this.charac
             if (!this.isShowingQuestion && this.currentPlayer === player) {
                 this.sound.play('BUTTONEF1');
                 this.showQuestionOverlay(characterKey);
+                document.body.style.cursor = "url('assets/cursor.png'), default";
+
             }
         });
     
@@ -1273,6 +1289,8 @@ this.player2HealthText = this.add.text(700, 180, `Player 2 Health: ${this.charac
         button.on('pointerdown', () => {
             this.processAnswer(characterKey, option, randomQuestion.respuesta_correcta);
             this.removeQuestionOverlay(); // Eliminar el overlay después de responder
+            document.body.style.cursor = "url('assets/cursor.png'), default";
+
         });
         this.answerButtons.push(button);
     });
@@ -1782,6 +1800,7 @@ class OverlayMessage extends Phaser.Scene {
         // Asociar evento al clic del texto "Ver Estadísticas"
         this.statisticsText.on('pointerdown', () => {
             this.sound.play('BUTTONEF2',{volume: 0.5});
+            document.body.style.cursor = "url('assets/pointer.png'), pointer";
 
             this.showStatistics();
             // Cambiar la sprite sheet del fondo y su profundidad
@@ -1799,11 +1818,11 @@ class OverlayMessage extends Phaser.Scene {
         });
 
         this.statisticsText.on('pointerout', () => {
-            document.body.style.cursor = 'default';
+            document.body.style.cursor = "url('assets/cursor.png'), default";
         });
         
         this.statisticsText.on('pointerover', () => {
-            document.body.style.cursor = 'pointer';
+            document.body.style.cursor = "url('assets/pointer.png'), pointer";
         });
 
         // Ajustar el fondo para que esté centrado en ambos ejes
@@ -1855,17 +1874,18 @@ detailsButton.setDepth(902);
 
         // Al hacer clic en el botón de detalles
         detailsButton.on('pointerover', () => {
-            document.body.style.cursor = 'pointer';
+            document.body.style.cursor = "url('assets/pointer.png'), pointer";
 
             });
         detailsButton.on('pointerout', () => {
-            document.body.style.cursor = 'default';
+            document.body.style.cursor = "url('assets/cursor.png'), default";
 
             });
         detailsButton.on('pointerdown', () => {
             this.sound.play('BUTTONEF1',{volume: 0.5});
         // Cambiar la sprite sheet del fondo y su profundidad
         background.setTexture('Fondo_detalle').setDepth(0);
+        document.body.style.cursor = "url('assets/pointer.png'), pointer";
 
         // Crear una nueva animación para el fondo_detalle
         background.anims.create({
@@ -1995,22 +2015,26 @@ detailsButton.setDepth(902);
         this.nextButton.on('pointerdown', () => {
             this.sound.play('BUTTONEF1',{volume: 0.5});
             this.showNextSlide();
+            document.body.style.cursor = "url('assets/pointer.png'), pointer";
+
         });
         this.nextButton.on('pointerover', () => {
-            document.body.style.cursor = 'pointer';
+            document.body.style.cursor = "url('assets/pointer.png'), pointer";
         });
         this.nextButton.on('pointerout', () => {
-            document.body.style.cursor = 'default';
+            document.body.style.cursor = "url('assets/cursor.png'), default";
         });
         this.prevButton.on('pointerdown', () => {
             this.sound.play('BUTTONEF1',{volume: 0.5});
             this.showPrevSlide();
+            document.body.style.cursor = "url('assets/pointer.png'), pointer";
+
         });
         this.prevButton.on('pointerover', () => {
-            document.body.style.cursor = 'pointer';
+            document.body.style.cursor = "url('assets/pointer.png'), pointer";
         });
         this.prevButton.on('pointerout', () => {
-            document.body.style.cursor = 'default';
+            document.body.style.cursor = "url('assets/cursor.png'), default";
         });
     }
     
@@ -2078,6 +2102,8 @@ detailsButton.setDepth(902);
             this.sound.play('BUTTONEF2', { volume: 0.5 });
             this.sound.stopAll();
             this.scene.start('OverlayMessage');
+            document.body.style.cursor = "url('assets/pointer.png'), pointer";
+
         });
        
 
@@ -2087,16 +2113,16 @@ detailsButton.setDepth(902);
 
         // Cambiar el cursor al pasar el ratón sobre los botones
         continueButton.on('pointerover', () => {
-            continueButton.setStyle({cursor: 'pointer'});
+            document.body.style.cursor = "url('assets/pointer.png'), pointer";
         });
         continueButton.on('pointerout', () => {
-            continueButton.setStyle({cursor: 'default'});
+            document.body.style.cursor = "url('assets/cursor.png'), default";
         });
         restartButton.on('pointerover', () => {
-            restartButton.setStyle({cursor: 'pointer'});
+            document.body.style.cursor = "url('assets/pointer.png'), pointer";
         });
         restartButton.on('pointerout', () => {
-            restartButton.setStyle({cursor: 'default'});
+            document.body.style.cursor = "url('assets/cursor.png'), default";
         });
     
         
@@ -2104,8 +2130,11 @@ detailsButton.setDepth(902);
         // Al hacer clic en el botón de reinicio
         restartButton.on('pointerdown', () => {
             this.sound.play('BUTTONEF2',{volume: 0.5});
+            document.body.style.cursor = "url('assets/pointer.png'), pointer";
+
             // Recargar la página web completa
             window.location.reload();
+
         });
     }
     
@@ -2197,3 +2226,4 @@ function checkOrientationAndStartGame() {
 setInterval(() => {
     checkOrientationAndStartGame();
 }, 500); // Verificar cada 500 milisegundos
+
