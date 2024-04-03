@@ -889,7 +889,7 @@
       },
       {
         "id": 90,
-        "pregunta": "¿Quién es el padre de todos los dioses en la mitología griega?",
+        "pregunta": "¿Quién es el padre de todos los titanes en la mitología griega?",
         "opciones": ["Urano", "Zeus", "Cronos", "Océano"],
               "respuesta_correcta": ["Urano", "Uranus"],
         "resumen": "En la mitología griega, Urano es considerado el padre de todos los dioses y titanes. Es la personificación del cielo y el esposo de Gaia, la Tierra. Urano es una figura primordial en el origen del universo y los dioses griegos.",

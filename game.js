@@ -214,7 +214,7 @@ class Idioma extends Phaser.Scene {
             { image: 'slide1', text: 'Al inicio del juego y tras cada turno, aparecerá un mensaje con la indicación de quién iniciará el turno.' },
             { image: 'slide2', text: 'Cuando sea tu turno, tu botón se iluminará. Púlsalo para comenzar la pregunta.' },
             { image: 'slide3', text: 'Al pulsar el botón, se abrirá un mensaje con la pregunta a responder y cuatro opciones a responder.' },
-            { image: 'slide4', text: 'Si pulsas la incorrecta se pasará el turno al otro jugador. Si aciertas tu botón brillará y comenzará el ataque. Al acabar el ataque la vida de tu oponente se reducirá.' },
+            { image: 'slide4', text: 'Si pulsas la incorrecta se restará vida al jugador que contestó y se pasará el turno al otro jugador. Si aciertas tu botón brillará y comenzará el ataque. Al acabar el ataque la vida de tu oponente se reducirá.' },
             { image: 'slide5', text: 'Cada jugador comienza con 5 vidas y ganará aquel jugador que consiga quitar todas las vidas a su oponente.' },
             { image: 'slide6' },
 
@@ -1338,27 +1338,58 @@ processAnswer(characterKey, selectedAnswer, correctAnswers) {
     } else {
         this.sound.play('WRONG', { volume: 0.5 });
 
-        // Cambiar de turno directamente sin atacar
-        this.currentPlayer = this.currentPlayer === 'p1' ? 'p2' : 'p1';
-        this.showTurnOverlay();
-        // Actualizar la interactividad de los botones según el nuevo turno
-        if (this.currentPlayer === 'p1') {
+        // Reproducir animación de recibir del personaje correspondiente
+        const characterSprite = this.currentPlayer === 'p1' ? this.character : this.character2;
+        this.receiveAnimation(characterSprite, () => {
+            // Reducir la salud del personaje correspondiente
+            if (this.currentPlayer === 'p1') {
+                this.reduceCharacterHealth();
+            } else {
+                this.reduceCharacter2Health();
+            }
 
-            this.player1Button.setAlpha(1); // Activar el botón del jugador 1
-            this.player2Button.setAlpha(0.5); // Desactivar el botón del jugador 2
-            this.player2Button.anims.stop().setFrame(0); // Detener la animación del botón del jugador 2
-            this.player1Button.anims.play(`button_idle_p1`, true); // Reproducir la animación idle del botón del jugador 1
-
-        } else {
-
-            this.player1Button.setAlpha(0.5); // Desactivar el botón del jugador 1
-            this.player2Button.setAlpha(1); // Activar el botón del jugador 2
-            this.player1Button.anims.stop().setFrame(0); // Detener la animación del botón del jugador 1
-            this.player2Button.anims.play(`button_idle_p2`, true); // Reproducir la animación idle del botón del jugador 2
-
-        }
+            // Escuchar el evento 'animationcomplete' de la actualización de la barra de salud
+            const healthBar = characterSprite === this.character ? this.healthBar1 : this.healthBar2;
+            healthBar.once('animationcomplete', () => {
+                // Cambiar de turno
+                this.currentPlayer = this.currentPlayer === 'p1' ? 'p2' : 'p1';
+                // Mostrar overlay de turno
+                this.showTurnOverlay();
+                // Habilitar o deshabilitar los botones según el turno actual
+                this.updateTurnButtons();
+                // Desactivar la bandera de ataque en progreso
+                this.attackInProgress = false;
+                if (this.currentPlayer === 'p1') {
+                    this.player1Button.setAlpha(1); // Activar el botón del jugador 1
+                    this.player2Button.setAlpha(0.5); // Desactivar el botón del jugador 2
+                    this.player2Button.anims.stop().setFrame(0); // Detener la animación del botón del jugador 2
+                    this.player1Button.anims.play(`button_idle_p1`, true); // Reproducir la animación idle del botón del jugador 1
+                } else {
+                    this.player1Button.setAlpha(0.5); // Desactivar el botón del jugador 1
+                    this.player2Button.setAlpha(1); // Activar el botón del jugador 2
+                    this.player1Button.anims.stop().setFrame(0); // Detener la animación del botón del jugador 1
+                    this.player2Button.anims.play(`button_idle_p2`, true); // Reproducir la animación idle del botón del jugador 2
+                }
+            });
+        });
     }
 }
+
+receiveAnimation(characterSprite, callback) {
+    // Reproducir animación de recibir del personaje
+    const receiveAnimation = characterSprite.anims.play(`recibir_${characterSprite.texture.key}`, true);
+
+    // Escuchar el evento 'animationcomplete' de la animación de recibir
+    receiveAnimation.once('animationcomplete', () => {
+        // Volver a la animación idle del personaje
+        characterSprite.anims.play(`idle_${characterSprite.texture.key}`, true);
+        // Ejecutar el callback una vez completada la animación
+        if (callback) {
+            callback();
+        }
+    });
+}
+
 
 
 
@@ -1463,21 +1494,23 @@ attackAnimation(characterKey, characterSprite) {
 }
 
 
-reduceCharacterHealth(damage) {
-    this.characterHealth -= damage;
+reduceCharacterHealth() {
+    this.characterHealth -= 20;
     this.sound.play('HEALTH');
 
     this.updateHealthBar1(); // Actualizar la barra de vida del jugador 1
     this.player1HealthText.setText(`Player 1 Health: ${this.characterHealth}`); // Actualizar el texto de los puntos de vida del jugador 1
 }
 
-reduceCharacter2Health(damage) {
-    this.character2Health -= damage;
+reduceCharacter2Health() {
+    this.character2Health -= 20;
     this.sound.play('HEALTH');
 
     this.updateHealthBar2(); // Actualizar la barra de vida del jugador 2
     this.player2HealthText.setText(`Player 2 Health: ${this.character2Health}`); // Actualizar el texto de los puntos de vida del jugador 2
-}showTurnOverlay() {
+}
+
+showTurnOverlay() {
     this.sound.play('OPEN',{volume:0.4});
 
     // Verificar si uno de los jugadores ha perdido toda su vida
